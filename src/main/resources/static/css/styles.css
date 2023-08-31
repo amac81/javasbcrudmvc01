@@ -1,0 +1,18 @@
+body {
+  background-color: #f9f9f9;
+}
+
+.error{
+	font-size: 14px;
+	color:red;
+}
+
+.field{
+	font-size: 14px;
+	color:dodgerblue;
+}
+
+.maindiv{
+	margin-top:20px;
+	margin-left: 20px;
+}
