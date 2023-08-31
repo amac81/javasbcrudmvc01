@@ -17,10 +17,10 @@ javasbcrudmvc01 it's a Project developed as learning exercise the Spring Boot 3:
 - Handling exceptions;
 
 - Users should be able to:
- - Get a list of employees
- - Add a new employee
- - Update an employee
- - Delete an employee
+	- Get a list of employees;
+	- Add a new employee;
+	- Update an employee;
+	- Delete an employee;
 
 ## Conceptual model
 ...
