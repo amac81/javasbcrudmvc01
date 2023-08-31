@@ -25,6 +25,7 @@ public class Employee implements Serializable {
 	private String firstName;
 	@Size(min = 1, message = "is required")
 	private String lastName;
+	private String email;
 	private double salary;
 	@Size(min = 1, message = "is required")
 	private LocalDate hireDate;
@@ -34,10 +35,11 @@ public class Employee implements Serializable {
 	public Employee() {
 	}
 
-	public Employee(Long id, String firstName, String lastName, double salary, LocalDate hireDate, String department) {
+	public Employee(Long id, String firstName, String lastName, String email, double salary, LocalDate hireDate, String department) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.email = email;
 		this.salary = salary;
 		this.hireDate = hireDate;
 		this.department = department;
@@ -61,6 +63,15 @@ public class Employee implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public double getSalary() {

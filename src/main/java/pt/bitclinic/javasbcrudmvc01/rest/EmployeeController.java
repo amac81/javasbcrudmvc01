@@ -1,46 +1,53 @@
 package pt.bitclinic.javasbcrudmvc01.rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
+import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 
 @Controller
+@RequestMapping("/employees")
 public class EmployeeController {
-
-/*	List<Employee> customers = new ArrayList<>();
+	 
+	//private List <Employee> employees;
 	
-		
-	// Pre-process all web requests coming into our Controller
-	// Pre-process every String form data; remove leading and trailing white space
-	// if String only has white space... "trim" it to null
-	@InitBinder
-	public void initBinder(WebDataBinder webDataBinder) {
-		// removes whitespaces - leading and trailing
-		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-
-		webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	private EmployeeService employeeService;
+	
+	public EmployeeController(EmployeeService employeeService) {
+		this.employeeService =  employeeService;
 	}
+	
+	/*@PostConstruct
+	private void loadInMemoryData() {
+		//create test data
+		Employee employee1 = new Employee(1L, "John", "Doe", "doe1122@yahoo.com", 60000.00, LocalDate.of(2020, 5, 15), "HR");
+		Employee employee2 = new Employee(2L, "Jane", "Smith", "jane.smith@mail.org", 75000.00, LocalDate.of(2019, 8, 22), "Finance");
+		Employee employee3 = new Employee(3L, "Michael", "Johnson", "mj222@gmail.com", 55000.00, LocalDate.of(2021, 3, 10), "IT");
+		Employee employee4 = new Employee(4L, "Emily", "Davis", "edavis@yoooo.com", 80000.00, LocalDate.of(2018, 11, 5), "Marketing");
+		Employee employee5 = new Employee(5L, "David", "Wilson", "wilsond@sss.com", 70000.00, LocalDate.of(2022, 2, 18), "Sales");
+		Employee employee6 = new Employee(6L, "Sarah", "Brown", "sara@mail.com", 62000.00, LocalDate.of(2020, 9, 30), "Customer Service");
 
-	@GetMapping("/customers")
-	public String showForm(Model theModel) {
-		theModel.addAttribute("customers", customers);
-		Employee customer = new Employee();
-		customer.setId(0L);
-		theModel.addAttribute("customer", customer);
-
-		return "customer-form";
-	}
-
-	@PostMapping("/customers")
-	public String processForm(@Valid @ModelAttribute("customer") Employee theCustomer, BindingResult theBindingResult) {
+		//create list
+		employees = new ArrayList<>();
 		
-		if (!theBindingResult.hasErrors()) {
-			theCustomer.setId(0L);
-			customers.add(theCustomer);
-			return "redirect:/customers";
-		}
-		else 
-		{
-			return "customer-form";
-		}
-				
+		employees.addAll(Arrays.asList(employee1, employee2, employee3, employee4, employee5, employee6));
 	}*/
+	
+	@GetMapping("/list")
+	public String listEmployees(Model theModel) {
+		List <Employee> employees = new ArrayList<> ();
+		
+		employees = employeeService.findAll();
+		
+		theModel.addAttribute("employees", employees);
+		
+		return "list-employees";
+	}
+
 }
