@@ -22,6 +22,10 @@ javasbcrudmvc01 it's a Project developed as learning exercise the Spring Boot 3:
 	- Update an employee;
 	- Delete an employee;
 
+## MVC architecture 
+![MVC architecture](https://github.com/amac81/javasbcrudmvc01/blob/main/assets/raw/application_mvc_arch.png)
+
+
 ## Conceptual model
 ...
 
