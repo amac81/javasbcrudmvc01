@@ -9,6 +9,4 @@ public interface EmployeeService {
 	public Employee findById(Long id);
 	public Employee save(Employee obj);
 	public void delete(Long id);
-	public Employee update(Long id, Employee obj) ;
-	
 }
