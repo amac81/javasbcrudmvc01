@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Customer form</title>
+	<!-- Include Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<!-- Include jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<!-- Font Awesome icons -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+		integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+<body class="container">
+	<h1 class="py-5">Employee form</h1>
+	<i>Fill out the form. Asterisk (*) means required.</i>
+	<form method="post" th:action="@{/employees/save}" th:object="${employee}" class="col card p-3 mb-5">
+		<div class="form-group">
+			<label for="firstName">First Name (*)</label>
+			<input id="firstName" placeholder="Enter First Name" type="text" th:field="*{firstName}"
+				class="form-control" />
+			<label for="firstName"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></span>
+			</label>
+		</div>
+		<div class="form-group">
+			<label for="lastName">Last Name</label>
+			<input id="lastName" placeholder="Enter Last Name" type="text" th:field="*{lastName}"
+				class="form-control" />
+			<label for="lastName"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
+			</label>
+		</div>
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input id="email" placeholder="Enter Email" type="text" th:field="*{email}" class="form-control" />
+			<label for="email"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+			</label>
+		</div>
+		<div class="form-group">
+			<label for="salary">Salary</label>
+			<input id="salary" placeholder="Enter Salary" type="text" th:field="*{salary}" class="form-control" />
+			<label for="salary"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}" class="error"></span>
+			</label>
+		</div>
+		<div class="form-group">
+			<label for="hireDate">Hire Date</label>
+			<input id="datepicker" placeholder="Select Hire Date" type="date" th:field="*{hireDate}"
+				class="form-control" />
+			<label for="hireDate"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}" class="error"></span>
+			</label>
+		</div>
+		<div class="form-group">
+			<label for="department">Department (*)</label>
+			<input id="department" placeholder="Enter Department" type="text" th:field="*{department}"
+				class="form-control" />
+			<label for="department"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('department')}" th:errors="*{department}" class="error"></span>
+			</label>
+		</div>
+
+		<input type="submit" class="btn btn-primary" value="Save">
+	</form>
+	</div>
+</body>
+
+</html>

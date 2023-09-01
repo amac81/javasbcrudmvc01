@@ -9,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -21,14 +23,17 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Size(min = 1, message = "is required")
+	@NotNull(message = "is required")
 	private String firstName;
-	@Size(min = 1, message = "is required")
 	private String lastName;
+	
+	@NotNull(message = "is required")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email address")
 	private String email;
 	private double salary;
-	@Size(min = 1, message = "is required")
+		
 	private LocalDate hireDate;
+	
 	@Size(min = 1, message = "is required")
 	private String department;
 
@@ -115,6 +120,14 @@ public class Employee implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", salary=" + salary + ", hireDate=" + hireDate + ", department=" + department + "]";
+	}
+	
+	
+	
 	/*
 	 * private Long id;
 	 * 

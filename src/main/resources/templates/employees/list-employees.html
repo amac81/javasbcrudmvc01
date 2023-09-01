@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Employees Directory</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body class="container">
+	<div class="maindiv">
+		<h1>Employees Directory</h1>
+		<hr class="top_22">
+		<a th:href="@{/employees/showFormForAdd}" class="btn btn-primary mb-3">New Employee</a>
+		<table class="table table-bordered table-striped" >
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Salary</th>
+					<th>Hire Date</th>
+					<th>Department</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${#lists.isEmpty(employees)}">
+					<td colspan="7">No Employees found.</td>
+				</tr>
+				<tr th:each="employee : ${employees}">
+					<td th:text="${employee.id}"></td>
+					<td th:text="${employee.firstName}"></td>
+					<td th:text="${employee.lastName}"></td>
+					<td th:text="${employee.email}"></td>
+					<td th:text="${employee.salary}"></td>
+					<td th:text="${employee.hireDate}"></td>
+					<td th:text="${employee.department}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</div>
+</body>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script th:href="@{/js/scripts.js}" />
+
+</html>

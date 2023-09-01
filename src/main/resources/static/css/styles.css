@@ -2,17 +2,33 @@ body {
   background-color: #f9f9f9;
 }
 
+.maindiv{
+	margin-top:20px;
+	margin-left:20px;
+}
+
+hr.top_22 {
+  margin-top:22px;
+}
+
 .error{
 	font-size: 14px;
 	color:red;
 }
 
-.field{
+.title_h1{
 	font-size: 14px;
-	color:dodgerblue;
+	color:#067a00;
 }
 
-.maindiv{
-	margin-top:20px;
-	margin-left: 20px;
+.field{
+	font-size: 14px;
+	color:#067a00;
 }
+
+/* Styled Table */
+
+.table {
+    box-shadow: 0 0 1px #8c8c8c;
+}
+

@@ -33,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return obj.orElseThrow(()->  new ResourceNotFoundException(id));
 	}
 	
-	public Employee insert(Employee obj) {
+	public Employee save(Employee obj) {
 		return employeeRepository.save(obj);
 	}
 	

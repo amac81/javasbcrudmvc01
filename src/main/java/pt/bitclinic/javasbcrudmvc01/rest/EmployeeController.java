@@ -3,11 +3,18 @@ package pt.bitclinic.javasbcrudmvc01.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 
@@ -24,6 +31,52 @@ public class EmployeeController {
 		this.employeeService =  employeeService;
 	}
 	
+	// Pre-process all web requests coming into our Controller
+	// Pre-process every String form data; remove leading and trailing white space
+	// if String only has white space... "trim" it to null
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+		// removes whitespaces - leading and trailing
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+
+		webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
+	
+	@GetMapping("/list")
+	public String listEmployees(Model theModel) {
+		List <Employee> employees = new ArrayList<> ();
+		
+		employees = employeeService.findAll();
+		
+		theModel.addAttribute("employees", employees);
+		
+		return "employees/list-employees";
+	}
+	
+	@GetMapping("/showFormForAdd")
+	public String showFormForAdd(Model theModel) {
+		theModel.addAttribute("employee", new Employee());
+		return "employees/employee-form";
+	}
+	
+	@PostMapping("/save")
+	public String processForm(@Valid @ModelAttribute("employee") Employee theEmployee, BindingResult theBindingResult) {
+
+		if(!theBindingResult.hasErrors()) {
+			//save the employee to DB
+			employeeService.save(theEmployee);
+			
+			//use of redirect to prevent duplicate submissions
+			return "redirect:/employees/list";
+		}
+		else 
+		{
+			return "employees/employee-form";
+		}		
+		
+		
+				
+	}
 	/*@PostConstruct
 	private void loadInMemoryData() {
 		//create test data
@@ -40,15 +93,4 @@ public class EmployeeController {
 		employees.addAll(Arrays.asList(employee1, employee2, employee3, employee4, employee5, employee6));
 	}*/
 	
-	@GetMapping("/list")
-	public String listEmployees(Model theModel) {
-		List <Employee> employees = new ArrayList<> ();
-		
-		employees = employeeService.findAll();
-		
-		theModel.addAttribute("employees", employees);
-		
-		return "list-employees";
-	}
-
 }
