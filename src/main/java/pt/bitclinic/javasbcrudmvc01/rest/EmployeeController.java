@@ -19,6 +19,7 @@ public class EmployeeController {
 	
 	private EmployeeService employeeService;
 	
+	//constructor injection of EmployeeService @Autowired optional, we just have one constructor
 	public EmployeeController(EmployeeService employeeService) {
 		this.employeeService =  employeeService;
 	}
