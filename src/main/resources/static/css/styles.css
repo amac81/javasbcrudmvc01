@@ -3,7 +3,7 @@ body {
 }
 
 .maindiv{
-	margin-top:20px;
+	margin-top:10px;
 	margin-left:20px;
 }
 
@@ -32,3 +32,6 @@ hr.top_22 {
     box-shadow: 0 0 1px #8c8c8c;
 }
 
+.before {
+	margin-bottom: 1px;
+}

@@ -17,9 +17,9 @@
 		integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <body class="container">
-	<h1 class="py-5">Employee form</h1>
+	<h1 class="py-3">Employee form</h1>
 	<i>Fill out the form. Asterisk (*) means required.</i>
-	<form method="post" th:action="@{/employees/save}" th:object="${employee}" class="col card p-3 mb-5">
+	<form method="post" th:action="@{/employees/save}" th:object="${employee}" class="col card p-3 mb-3">
 		<div class="form-group">
 			<label for="firstName">First Name (*)</label>
 			<input id="firstName" placeholder="Enter First Name" type="text" th:field="*{firstName}"
@@ -66,9 +66,9 @@
 				<span th:if="${#fields.hasErrors('department')}" th:errors="*{department}" class="error"></span>
 			</label>
 		</div>
-
-		<input type="submit" class="btn btn-primary" value="Save">
+		<button type="submit" class="btn btn-info col-2">Save</button>
 	</form>
+	<a th:href="@{/employees/list}" class="before btn btn-primary mb-3">Back to employees list</a>
 	</div>
 </body>
 

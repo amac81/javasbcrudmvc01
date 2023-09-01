@@ -24,7 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 	@Transactional(readOnly = true)	
 	public List<Employee> findAll() {
-		return employeeRepository.findAll();
+		//employees sorted by last name
+		return employeeRepository.findAllByOrderByLastNameAsc();
 	}
 
 	@Transactional(readOnly = true)	
