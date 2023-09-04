@@ -1,8 +1,10 @@
 package pt.bitclinic.javasbcrudmvc01.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -23,16 +25,20 @@ public class SecurityConfig {
 
 		return new InMemoryUserDetailsManager(jonh, mary, susan);
 	}
-
+	
+	@Bean
+    WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(configurer -> configurer
-				.anyRequest().authenticated())
-				.formLogin(form -> form
-						.loginPage("/showMyLoginPage")
-						.loginProcessingUrl("/authenticateTheUser")
+				
+                .anyRequest().authenticated())
+				.formLogin(form -> form.loginPage("/showMyLoginPage").loginProcessingUrl("/authenticateTheUser")
 						.permitAll());
-		
 
 		/*
 		 * Cross-Site Request Forgery (CSRF) is an attack that forces authenticated
