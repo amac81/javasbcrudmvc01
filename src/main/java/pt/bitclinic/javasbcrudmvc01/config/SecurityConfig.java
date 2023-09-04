@@ -37,8 +37,12 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(configurer -> configurer
 				
                 .anyRequest().authenticated())
-				.formLogin(form -> form.loginPage("/showMyLoginPage").loginProcessingUrl("/authenticateTheUser")
-						.permitAll());
+				.formLogin(form -> form
+						.loginPage("/showMyLoginPage")
+						.loginProcessingUrl("/authenticateTheUser")
+						.permitAll()
+				
+				).logout(logout -> logout.permitAll());
 
 		/*
 		 * Cross-Site Request Forgery (CSRF) is an attack that forces authenticated

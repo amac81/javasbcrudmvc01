@@ -1,4 +1,0 @@
-/*!
-  * amac custom scripts
-  */
- 
