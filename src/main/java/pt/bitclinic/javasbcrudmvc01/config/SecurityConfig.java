@@ -15,7 +15,7 @@ public class SecurityConfig {
 
 	@Bean
 	InMemoryUserDetailsManager userDetailsManager() {
-		UserDetails jonh = User.builder().username("jonh").password("{noop}test123").roles("EMPLOYEE").build();
+		UserDetails jonh = User.builder().username("john").password("{noop}test123").roles("EMPLOYEE").build();
 
 		UserDetails mary = User.builder().username("mary").password("{noop}test123").roles("EMPLOYEE", "MANAGER")
 				.build();
@@ -35,25 +35,20 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(configurer -> configurer
-				
+				.requestMatchers("/").hasRole("EMPLOYEE")
+				.requestMatchers("/employees/leaders/**").hasRole("MANAGER")
+				.requestMatchers("/employees/systems/**").hasRole("ADMIN")
+
                 .anyRequest().authenticated())
+				
 				.formLogin(form -> form
 						.loginPage("/showMyLoginPage")
 						.loginProcessingUrl("/authenticateTheUser")
-						.permitAll()
-				
-				).logout(logout -> logout.permitAll());
+						.permitAll())
+				.logout(logout -> logout.permitAll())
+				.exceptionHandling(configurer -> configurer.accessDeniedPage("/denied"));
 
-		/*
-		 * Cross-Site Request Forgery (CSRF) is an attack that forces authenticated
-		 * users to submit a request to a Web application against which they are
-		 * currently authenticated. CSRF attacks exploit the trust a Web application has
-		 * in an authenticated user.
-		 *
-		 * In general CSRF protection is not required for stateless REST API's that use
-		 * POST, PUT, DELETE, and/or PATCH.
-		 *
-		 */
+
 		return http.build();
 	}
 

@@ -44,6 +44,16 @@ public class EmployeeController {
 		webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
+	@GetMapping("/leaders")
+	public String leadersPage() {
+	return "employees/leaders";
+	}
+	
+	@GetMapping("/systems")
+	public String systemsPage() {
+	return "employees/systems";
+	}
+	
 	@GetMapping("/list")
 	public String listEmployees(Model theModel) {
 		List<Employee> employees = new ArrayList<>();

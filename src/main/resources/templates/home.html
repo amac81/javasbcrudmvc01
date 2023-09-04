@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport"
@@ -7,13 +8,24 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Bitclinic Company homepage</title>
 </head>
+
 <body>
 	<h2>Bitclinic Company homepage</h2>
 	<hr>
 	Welcome to Bitclinic Company homepage
+	<hr>
+	<!-- Display username and role(s) -->
+	<p>Logged in user: <span sec:authentication="principal.username"></span></p>
+	<p>Role's: <span sec:authentication="principal.authorities"></span></p>
+	<hr>
+	<p><a th:href="@{/employees/leaders}" class="btn btn-primary mb-3">Leadership Meeting (Only for Managers)</a></p>
+	<p> <a th:href="@{/employees/systems}" class="btn btn-primary mb-3">System tools (Only for Admins)</a></p>
+	<hr>
 	<form action="#" method="post" th:action="@{/logout}">
 		<input type="submit" value="Logout">
 	</form>
+
+
 </body>
 
-</html> 
+</html>
