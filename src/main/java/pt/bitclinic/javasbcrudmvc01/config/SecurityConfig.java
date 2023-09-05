@@ -22,8 +22,11 @@ public class SecurityConfig {
 
 		UserDetails susan = User.builder().username("susan").password("{noop}test123")
 				.roles("EMPLOYEE", "MANAGER", "ADMIN").build();
+		
+		UserDetails amac = User.builder().username("amac").password("{noop}test123")
+				.roles("EMPLOYEE", "ADMIN").build();
 
-		return new InMemoryUserDetailsManager(jonh, mary, susan);
+		return new InMemoryUserDetailsManager(jonh, mary, susan, amac);
 	}
 	
 	@Bean
