@@ -1,4 +1,4 @@
-# Java Spring Boot application, with CRUD and Thymeleaf - Web UI for Employee Directory
+# Java Spring Boot application, CRUD, thymeleaf, MVC, Spring Security - Web UI for Employee Directory
 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/amac81/javasbcrudmvc01/blob/main/LICENSE) 
 
@@ -15,6 +15,10 @@ javasbcrudmvc01 it's a Project developed as learning exercise the Spring Boot 3:
 - Populate the database with test data(seed);
 - CRUD - Create, Retrieve, Update, Delete;
 - Handling exceptions;
+- Configure Spring Security;
+- Authenticate users;
+- Authorize users;
+- Control access to resources according with user ROLE;
 
 - Users should be able to:
 	- Get a list of employees;
@@ -33,6 +37,7 @@ javasbcrudmvc01 it's a Project developed as learning exercise the Spring Boot 3:
 ## Back end
 - Java
 - Spring Boot
+- Spring Security
 - MySql
 - Maven
 - Apache Tomcat
