@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,6 +24,10 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(configurer -> configurer
 				.requestMatchers("/").hasRole("EMPLOYEE")
+				
+				.requestMatchers("/employees/delete/**").hasRole("MANAGER")
+				.requestMatchers("/employees/edit/**").hasRole("MANAGER")
+				
 				.requestMatchers("/employees/leaders/**").hasRole("MANAGER")
 				.requestMatchers("/employees/systems/**").hasRole("ADMIN")
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
