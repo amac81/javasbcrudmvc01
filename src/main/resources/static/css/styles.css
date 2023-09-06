@@ -65,13 +65,24 @@ hr.top_22 {
 /* my buttons */
 
 .button-container {
-            display: flex;
-            justify-content: space-between; /* Align buttons at the left and right ends */
-            align-items: center; /* Center the buttons vertically */
-        }
+	display: flex;
+	justify-content: space-between;
+	/* Align buttons at the left and right ends */
+	align-items: center;
+	/* Center the buttons vertically */
+}
+
+.button-container-side-by-side {
+	
+	justify-content: space-between;
+	/* Align buttons at the left and right ends */
+	align-items: left;
+	/* Center the buttons vertically */
+}
 
 .my_button {
-    
-    border: none; /* Remove button borders */
-    cursor: pointer;
+
+	border: none;
+	/* Remove button borders */
+	cursor: pointer;
 }

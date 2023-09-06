@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport"
@@ -11,6 +12,7 @@
 	<link rel="stylesheet" th:href="@{/css/styles.css}" />
 	<title>Bitclinic Company homepage</title>
 </head>
+
 <body class="container">
 	<div class="maindiv">
 		<img th:src="@{/images/test.png}">
@@ -33,9 +35,11 @@
 			<hr>
 		</div>
 
-		<a th:href="@{/employees/list}" class="btn btn-success btn-primary mb-3">Employees list</a>
-		<hr>
-
+		<div class="button-container-side-by-side">
+			<a th:href="@{/employees/list}" class="btn btn-success btn-primary">Employees list</a>
+			<a th:href="@{/projects/list}" class="btn btn-success btn-primary">Projects list</a>
+			<hr>
+		</div>
 		<form action="#" method="post" th:action="@{/logout}">
 			<input type="submit" value="Logout" class="btn btn-secondary btn-primary mb-3">
 		</form>

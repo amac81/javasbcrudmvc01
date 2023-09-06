@@ -24,8 +24,6 @@ import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-	// private List <Employee> employees;
-
 	private EmployeeService employeeService;
 
 	// constructor injection of EmployeeService @Autowired optional, we just have
@@ -88,7 +86,6 @@ public class EmployeeController {
 		employeeService.delete(theId);
 		return "redirect:/employees/list";
 	}
-	
 	
 	@PostMapping("/save")
 	public String processForm(@Valid @ModelAttribute("employee") Employee theEmployee, BindingResult theBindingResult) {

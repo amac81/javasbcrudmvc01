@@ -60,7 +60,7 @@
 		</div>
 		<div class="form-group">
 			<label for="hireDate">Hire Date</label>
-			<input id="hireDate" placeholder="Select Hire Date" type="text" th:field="*{hireDate}"
+			<input id="hireDate" placeholder="Select Hire Date" type="date" th:field="*{hireDate}"
 				class="form-control" />
 			<label for="hireDate"> <!--Show error message (if present) -->
 				<span th:if="${#fields.hasErrors('hireDate')}" th:errors="*{hireDate}" class="error"></span>

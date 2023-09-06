@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_project")
@@ -23,11 +24,16 @@ public class Project implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@NotNull(message = "is required")
 	private String name;
 	@Column(columnDefinition = "TEXT") // more than 255 characters
+	@NotNull(message = "is required")
 	private String description;
 
+	@NotNull(message = "is required")
 	private LocalDateTime startDate;
+	
+	@NotNull(message = "is required")
 	private LocalDateTime endDate;
 
 	@ManyToOne
