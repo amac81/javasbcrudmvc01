@@ -2,6 +2,7 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -42,6 +44,12 @@ public class Employee implements Serializable {
 	//bidirectional relationship
 	@OneToOne (mappedBy = "employee", cascade = CascadeType.ALL) //dependent class
 	private EmployeeDetail employeeDetail;
+	
+	@OneToMany(mappedBy="employee", cascade= {CascadeType.PERSIST, 
+											  CascadeType.MERGE,
+											  CascadeType.DETACH,
+											  CascadeType.REFRESH}) //do not cascade Deletes
+	private List <Project> projects;
 
 	public Employee() {
 	}
@@ -119,6 +127,10 @@ public class Employee implements Serializable {
 
 	public void setEmployeeDetail(EmployeeDetail employeeDetail) {
 		this.employeeDetail = employeeDetail;
+	}
+	
+	public List<Project> getProjects() {
+		return projects;
 	}
 
 	@Override

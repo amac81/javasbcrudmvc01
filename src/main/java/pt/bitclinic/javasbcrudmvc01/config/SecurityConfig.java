@@ -28,6 +28,9 @@ public class SecurityConfig {
 				.requestMatchers("/employees/delete/**").hasRole("MANAGER")
 				.requestMatchers("/employees/edit/**").hasRole("MANAGER")
 				
+				.requestMatchers("/projects/delete/**").hasRole("MANAGER")
+				.requestMatchers("/projects/edit/**").hasRole("MANAGER")
+				
 				.requestMatchers("/employees/showDetails/**").hasRole("MANAGER")
 				.requestMatchers("/employees/saveDetails/**").hasRole("MANAGER")
 				
