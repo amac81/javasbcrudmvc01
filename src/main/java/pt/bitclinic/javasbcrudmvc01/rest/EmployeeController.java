@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
+import pt.bitclinic.javasbcrudmvc01.entities.EmployeeDetail;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 
 @Controller
@@ -102,6 +103,47 @@ public class EmployeeController {
 		}
 	}
 
+	/* Employee Details*/
+	@GetMapping("/showDetails")
+	public String employeeDetails(@RequestParam("employeeId") Long employeeId, Model theModel) {
+
+		// get the employee from the service
+		Employee employee = employeeService.findById(employeeId);
+		EmployeeDetail employeeDetail = employee.getEmployeeDetail();
+		
+		theModel.addAttribute("employeeDetail", employeeDetail);
+		
+		return "employees/employee-detail-form";
+	}
+	
+	@GetMapping("/showFormForAddDetails")
+	public String showFormForAddDetails(@RequestParam("employeeId") Long employeeId, Model theModel) {
+		EmployeeDetail employeeDetail = new EmployeeDetail();
+		employeeDetail.setEmployee(employeeService.findById(employeeId));
+		theModel.addAttribute("employeeDetail", employeeDetail);
+	
+		return "employees/employee-detail-form";
+	}	
+	
+	@PostMapping("/saveDetails")
+	public String saveDetails(@Valid @ModelAttribute("employeeDetail") EmployeeDetail employeeDetail, BindingResult theBindingResult) {
+		if (!theBindingResult.hasErrors()) {
+			
+		
+			
+			Employee employee = employeeService.findById(employeeDetail.getEmployee().getId());
+			employee.setEmployeeDetail(employeeDetail);
+			// save the employee to DB
+			employeeService.save(employee);
+
+			// use of redirect to prevent duplicate submissions
+			return "redirect:/employees/list";
+		} else {
+			return "employees/employee-form";
+		}
+	}
+	
+	
 	/*
 	 * @PostConstruct private void loadInMemoryData() { //create test data Employee
 	 * employee1 = new Employee(1L, "John", "Doe", "doe1122@yahoo.com", 60000.00,

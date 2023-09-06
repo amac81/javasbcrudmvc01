@@ -28,6 +28,9 @@ public class SecurityConfig {
 				.requestMatchers("/employees/delete/**").hasRole("MANAGER")
 				.requestMatchers("/employees/edit/**").hasRole("MANAGER")
 				
+				.requestMatchers("/employees/showDetails/**").hasRole("MANAGER")
+				.requestMatchers("/employees/saveDetails/**").hasRole("MANAGER")
+				
 				.requestMatchers("/employees/leaders/**").hasRole("MANAGER")
 				.requestMatchers("/employees/systems/**").hasRole("ADMIN")
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()

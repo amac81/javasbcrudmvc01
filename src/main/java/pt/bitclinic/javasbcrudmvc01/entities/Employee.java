@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -36,6 +38,10 @@ public class Employee implements Serializable {
 	
 	@Size(min = 1, message = "is required")
 	private String department;
+	
+	//bidirectional relationship
+	@OneToOne (mappedBy = "employee", cascade = CascadeType.ALL) //dependent class
+	private EmployeeDetail employeeDetail;
 
 	public Employee() {
 	}
@@ -107,6 +113,14 @@ public class Employee implements Serializable {
 		this.department = department;
 	}
 
+	public EmployeeDetail getEmployeeDetail() {
+		return employeeDetail;
+	}
+
+	public void setEmployeeDetail(EmployeeDetail employeeDetail) {
+		this.employeeDetail = employeeDetail;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -127,10 +141,11 @@ public class Employee implements Serializable {
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", salary=" + salary + ", hireDate=" + hireDate + ", department=" + department + "]";
+				+ ", salary=" + salary + ", hireDate=" + hireDate + ", department=" + department + ", employeeDetail="
+				+ employeeDetail + "]";
 	}
-	
-	
+
+
 	
 	/*
 	 * private Long id;

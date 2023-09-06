@@ -70,4 +70,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 		entity.setSalary(obj.getSalary());
 		entity.setDepartment(obj.getDepartment());
 	}
+
+	
 }
