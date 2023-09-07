@@ -6,14 +6,14 @@
 	<meta name="viewport"
 		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Customer form</title>
+	<title>Project form</title>
 	<!-- Include Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<!-- Custom CSS -->
 	<link rel="stylesheet" th:href="@{/css/styles.css}" />
 	<!-- Include jQuery -->
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+ 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -53,7 +53,7 @@
 		</div>
 		<div class="form-group">
 			<label for="endDate">End Date / time (*)</label>
-			<input id="endDate" placeholder="Select Date / time" type="datetime-local" th:field="*{endDate}"
+			<input id="endDate" placeholder="Select Date / time" value="*{endDate}"type="datetime-local" th:field="*{endDate}"
 				class="form-control" />
 			<label for="endDate"> <!--Show error message (if present) -->
 				<span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error"></span>
