@@ -23,7 +23,6 @@
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>Id</th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email</th>
@@ -31,16 +30,17 @@
 					<th>Hire Date</th>
 					<th>Department</th>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
+						<th colspan="1">Details</th>
+						<th colspan="1">Projects</th>
 						<th colspan="2">Actions</th>
 					</div>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:if="${#lists.isEmpty(employees)}">
-					<td colspan="8">No Employees found.</td>
+					<td colspan="7">No Employees found.</td>
 				</tr>
 				<tr th:each="tempEmployee : ${employees}">
-					<td th:text="${tempEmployee.id}"></td>
 					<td th:text="${tempEmployee.firstName}"></td>
 					<td th:text="${tempEmployee.lastName}"></td>
 					<td th:text="${tempEmployee.email}"></td>
@@ -48,6 +48,12 @@
 					<td th:text="${tempEmployee.hireDate}"></td>
 					<td th:text="${tempEmployee.department}"></td>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
+						<td>
+							<a th:if="${tempEmployee.employeeDetail == null}" th:href="@{/employees/showFormForAddDetails(employeeId=${tempEmployee.id})}" class="btn btn-success btn-sm">Add details</a>
+							<a th:if="${tempEmployee.employeeDetail != null}" th:href="@{/employees/showDetails(employeeId=${tempEmployee.id})}" class="btn btn-warning btn-sm">Show details</a>
+						</td>						
+						
+						<td><a th:href="@{/projects/showEmployeeProjects(employeeId=${tempEmployee.id})}" class="btn_0382ca btn btn-info btn-sm">My projects</a></td>						
 						<td><a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>
 						<td><a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"

@@ -86,3 +86,9 @@ hr.top_22 {
 	/* Remove button borders */
 	cursor: pointer;
 }
+
+.btn_0382ca{
+	background-color: #0382ca;
+	color:#fff;
+	border-color: #0382ca
+}

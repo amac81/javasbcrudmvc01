@@ -2,7 +2,6 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
@@ -11,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -50,9 +48,6 @@ public class Employee implements Serializable {
 	@JoinColumn(name="employee_detail_id")
 	private EmployeeDetail employeeDetail;
 	
-	@OneToMany(mappedBy="employee", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}) //do not cascade Deletes
-	private List <Project> projects;
-
 	public Employee() {
 	}
 
@@ -131,15 +126,6 @@ public class Employee implements Serializable {
 		this.employeeDetail = employeeDetail;
 	}
 	
-
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

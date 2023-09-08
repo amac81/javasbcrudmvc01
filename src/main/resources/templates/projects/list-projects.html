@@ -17,18 +17,18 @@
 	<div class="maindiv">
 		<h1 class="py-3">Projects</h1>
 		<hr class="top_22">
-		<div sec:authorize="hasRole('ROLE_MANAGER')">
+		<div th:if="${employeeId != null}" sec:authorize="hasRole('ROLE_MANAGER')">
 			<a th:href="@{/projects/showFormForAdd(employeeId=${employeeId})}" class="btn btn-primary mb-3">New Project</a>
 		</div>
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>Id</th>
 					<th>Name</th>
-					<th>Description</th>
-					<th>Start Date/time</th>
-					<th>End Date/time</th>
-					<div sec:authorize="hasRole('ROLE_MANAGER')">
+					<th>State</th>
+					<th>Phases</th>
+					<th>State</th>
+					<th>Team</th>
+					<div th:if="${employeeId != null}" sec:authorize="hasRole('ROLE_MANAGER')">
 						<th colspan="2">Actions</th>
 					</div>
 				</tr>
@@ -38,12 +38,13 @@
 					<td colspan="5">No Projects found.</td>
 				</tr>
 				<tr th:each="tempProject : ${projects}">
-					<td th:text="${tempProject.id}"></td>
 					<td th:text="${tempProject.name}"></td>
 					<td th:text="${tempProject.description}"></td>
 					<td th:text="${tempProject.startDate}"></td>
 					<td th:text="${tempProject.endDate}"></td>
-					<div sec:authorize="hasRole('ROLE_MANAGER')">
+					<!--td th:text="${tempProject.team}"></td-->
+					<td th:text="${tempProject.employee.firstName} + ' ' + ${tempProject.employee.lastName}"></td>
+					<div th:if="${employeeId != null}" sec:authorize="hasRole('ROLE_MANAGER')">
 						<td><a th:href="@{/projects/showFormForUpdate(projectId=${tempProject.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>
 						<td><a th:href="@{/projects/delete(projectId=${tempProject.id})}"
@@ -56,7 +57,7 @@
 			</tbody>
 		</table>
 		<div class="button-container">	
-			<div class="my_button">
+			<div th:if="${employeeId == null}" class="my_button">
 				<a th:href="@{/}" class="btn btn-secondary mb-3">Back to homepage</a>
 			</div>
 			<div th:if="${employeeId != null}" class="my_button">
