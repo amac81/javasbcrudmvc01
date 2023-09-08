@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
+import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 
 @Controller
@@ -24,11 +26,13 @@ import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 public class ProjectController {
 
 	private ProjectService projectService;
+	private EmployeeService employeeService;
 
 	// constructor injection of EmployeeService @Autowired optional, we just have
 	// one constructor
-	public ProjectController(ProjectService projectService) {
+	public ProjectController(ProjectService projectService, EmployeeService employeeService) {
 		this.projectService = projectService;
+		this.employeeService = employeeService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -48,23 +52,45 @@ public class ProjectController {
 		List<Project> projects = new ArrayList<>();
 
 		projects = projectService.findAll();
+
 		theModel.addAttribute("projects", projects);
+
+		return "projects/list-projects";
+	}
+	
+	@GetMapping("/showEmployeeProjects")
+	public String listEmployeeProjects(@RequestParam("employeeId") Long employeeId, Model theModel) {
+		List<Project> projects = new ArrayList<>();
+		
+		// get the employee from the service
+		Employee employee = employeeService.findById(employeeId);
+
+		projects = projectService.findAllByEmployee(employee);
+
+		//System.out.println("######## EMPLOYEE ID: " + employeeId);
+		//System.out.println("----------PROJECTS : " + projects);
+		
+		theModel.addAttribute("projects", projects);
+		theModel.addAttribute("employeeId", employeeId);
 
 		return "projects/list-projects";
 	}
 
 	@GetMapping("/showFormForAdd")
-	public String showFormForAdd(Model theModel) {
-		theModel.addAttribute("project", new Project());
+	public String showFormForAdd(@ModelAttribute("employeeId") Long employeeId, Model theModel) {
+		
+		theModel.addAttribute("employeeId", employeeId);
+		theModel.addAttribute("project", new Project());		
 		return "projects/project-form";
 	}
 	
 	@GetMapping("/showFormForUpdate")
-	public String showFormForUpdate(@RequestParam("projectId") Long theId, Model theModel) {
+	public String showFormForUpdate(@RequestParam("projectId") Long projectId, @ModelAttribute("employeeId") Long employeeId, Model theModel) {
 
 		// get the project from the service
-		Project project = projectService.findById(theId);
-
+		Project project = projectService.findById(projectId);
+		
+		theModel.addAttribute("employeeId", employeeId);
 		theModel.addAttribute("project", project);
 		return "projects/project-form";
 	}
@@ -77,11 +103,21 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/save")
-	public String processForm(@Valid @ModelAttribute("project") Project theEmployee, BindingResult theBindingResult) {
+	public String processForm(@Valid @ModelAttribute("project") Project theProject, @ModelAttribute("employeeId") Long employeeId, BindingResult theBindingResult) {
 		if (!theBindingResult.hasErrors()) {
-			// save the project to DB
-			projectService.save(theEmployee);
 
+			
+			System.out.println("######## SAVE EMPLOYEE ID: " + employeeId);
+			
+			Employee employee = employeeService.findById(employeeId);
+			theProject.setEmployee(employee);
+
+			// save the project to DB
+			projectService.save(theProject);
+			
+			
+			
+			
 			// use of redirect to prevent duplicate submissions
 			return "redirect:/projects/list";
 		} else {

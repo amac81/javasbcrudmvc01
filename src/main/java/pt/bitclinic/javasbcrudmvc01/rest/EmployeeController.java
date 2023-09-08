@@ -133,9 +133,6 @@ public class EmployeeController {
 		if (!theBindingResult.hasErrors()) {
 			
 			employeeDetailService.save(employeeDetail);
-
-			System.out.println("################ EMPLOYEE ID: " +  employeeId);
-			
 			Employee employee = employeeService.findById(employeeId);
 			employee.setEmployeeDetail(employeeDetail);
 			employeeService.save(employee);

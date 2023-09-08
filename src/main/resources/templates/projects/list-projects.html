@@ -18,7 +18,7 @@
 		<h1 class="py-3">Projects</h1>
 		<hr class="top_22">
 		<div sec:authorize="hasRole('ROLE_MANAGER')">
-			<a th:href="@{/projects/showFormForAdd}" class="btn btn-primary mb-3">New Project</a>
+			<a th:href="@{/projects/showFormForAdd(employeeId=${employeeId})}" class="btn btn-primary mb-3">New Project</a>
 		</div>
 		<table class="table table-bordered table-striped">
 			<thead>
@@ -55,7 +55,14 @@
 				</tr>
 			</tbody>
 		</table>
-		<p><a th:href="@{/}" class="btn btn-secondary mb-3">Back to homepage</a></p>
+		<div class="button-container">	
+			<div class="my_button">
+				<a th:href="@{/}" class="btn btn-secondary mb-3">Back to homepage</a>
+			</div>
+			<div th:if="${employeeId != null}" class="my_button">
+				<a th:href="@{/employees/showFormForUpdate(employeeId=${employeeId})}" class="btn btn-secondary mb-3">Back to employee form</a>
+			</div>
+		</div>		
 	</div>
 	</div>
 </body>

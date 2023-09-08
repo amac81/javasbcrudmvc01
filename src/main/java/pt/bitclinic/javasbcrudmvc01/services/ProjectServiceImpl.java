@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 import pt.bitclinic.javasbcrudmvc01.dao.ProjectRepository;
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
@@ -66,6 +67,12 @@ public class ProjectServiceImpl implements ProjectService{
 		entity.setName(obj.getName());
 		
 	}
+
+	@Override
+	public List<Project> findAllByEmployee(Employee employee) {
+		return projectRepository.findAllByEmployee(employee);
+	}
+
 
 	
 }
