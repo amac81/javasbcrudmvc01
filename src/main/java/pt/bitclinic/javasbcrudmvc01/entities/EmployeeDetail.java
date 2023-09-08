@@ -8,8 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,10 +19,11 @@ public class EmployeeDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@OneToOne //independent class
+
+	//Use for bidirectional relationship
+	/*@OneToOne //independent class
 	@MapsId
-	private Employee employee;
+	private Employee employee;*/
 
 	@Column(columnDefinition = "TEXT") //more than 255 characters
 	private String hobbies;
@@ -86,13 +85,14 @@ public class EmployeeDetail implements Serializable {
 		this.aditionalNotes = aditionalNotes;
 	}
 
-	public Employee getEmployee() {
+	//Use for bidirectional relationship
+/*	public Employee getEmployee() {
 		return employee;
 	}
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

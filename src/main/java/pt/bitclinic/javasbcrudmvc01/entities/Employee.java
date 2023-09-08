@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -42,13 +43,14 @@ public class Employee implements Serializable {
 	private String department;
 	
 	//bidirectional relationship
-	@OneToOne (mappedBy = "employee", cascade = CascadeType.ALL) //dependent class
+	//@OneToOne (mappedBy = "employee", cascade = CascadeType.ALL) //dependent class
+
+	//unidirectional relationship
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="employee_detail_id")
 	private EmployeeDetail employeeDetail;
 	
-	@OneToMany(mappedBy="employee", cascade= {CascadeType.PERSIST, 
-											  CascadeType.MERGE,
-											  CascadeType.DETACH,
-											  CascadeType.REFRESH}) //do not cascade Deletes
+	@OneToMany(mappedBy="employee", cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}) //do not cascade Deletes
 	private List <Project> projects;
 
 	public Employee() {
@@ -129,8 +131,13 @@ public class Employee implements Serializable {
 		this.employeeDetail = employeeDetail;
 	}
 	
+
 	public List<Project> getProjects() {
 		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
 	}
 
 	@Override

@@ -23,10 +23,9 @@
 <body class="container">
 	<h1 class="py-3">Employee Detail form</h1>
 	<i>Fill out the form.</i>
-	<form method="post" th:action="@{/employees/saveDetails}" th:object="${employeeDetail}" class="col card p-3 mb-3">
+	<form method="post" th:action="@{/employees/saveDetails(employeeId=${employeeId})}" th:object="${employeeDetail}" class="col card p-3 mb-3">
 		<!-- hidden form field for handle the update-->
 		<input type="hidden" name="employeeDetailId" th:field="*{id}"/>
-		<input type="hidden" name="employeeId" th:field="${employeeDetail.employee.id}">
 		
 		<div class="form-group">
 			<label for="driveLicenseNumber">Drive License Number</label>
@@ -61,10 +60,10 @@
 				<span th:if="${#fields.hasErrors('aditionalNotes')}" th:errors="*{aditionalNotes}" class="error"></span>
 			</label>
 		</div>
-		
+	
 		<button type="submit" class="btn btn-info col-2">Save</button>
 	</form>
-	<a th:href="@{/employees/showFormForUpdate(employeeId=${employeeDetail.employee.id})}" class="btn btn-secondary mb-3">Back to employee form</a>
+	<a th:href="@{/employees/showFormForUpdate(employeeId=${employeeId})}" class="btn btn-secondary mb-3">Back to employee form</a>
 	</div>
 </body>
 

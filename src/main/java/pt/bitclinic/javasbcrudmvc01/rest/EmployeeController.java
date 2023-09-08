@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.EmployeeDetail;
+import pt.bitclinic.javasbcrudmvc01.services.EmployeeDetailService;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 
 @Controller
@@ -25,11 +26,13 @@ import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 public class EmployeeController {
 
 	private EmployeeService employeeService;
+	private EmployeeDetailService employeeDetailService;
 
 	// constructor injection of EmployeeService @Autowired optional, we just have
 	// one constructor
-	public EmployeeController(EmployeeService employeeService) {
+	public EmployeeController(EmployeeService employeeService, EmployeeDetailService employeeDetailService) {
 		this.employeeService = employeeService;
+		this.employeeDetailService = employeeDetailService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -108,31 +111,35 @@ public class EmployeeController {
 		Employee employee = employeeService.findById(employeeId);
 		EmployeeDetail employeeDetail = employee.getEmployeeDetail();
 		
+		theModel.addAttribute("employeeId", employeeId);
 		theModel.addAttribute("employeeDetail", employeeDetail);
-		
+	
 		return "employees/employee-detail-form";
 	}
 	
 	@GetMapping("/showFormForAddDetails")
 	public String showFormForAddDetails(@RequestParam("employeeId") Long employeeId, Model theModel) {
 		EmployeeDetail employeeDetail = new EmployeeDetail();
-		employeeDetail.setEmployee(employeeService.findById(employeeId));
+	
+		theModel.addAttribute("employeeId", employeeId);
 		theModel.addAttribute("employeeDetail", employeeDetail);
 	
 		return "employees/employee-detail-form";
 	}	
 	
 	@PostMapping("/saveDetails")
-	public String saveDetails(@Valid @ModelAttribute("employeeDetail") EmployeeDetail employeeDetail, BindingResult theBindingResult) {
+	public String saveDetails(@Valid @ModelAttribute("employeeDetail") EmployeeDetail employeeDetail, 
+			@ModelAttribute("employeeId") Long employeeId,	BindingResult theBindingResult) {
 		if (!theBindingResult.hasErrors()) {
 			
-		
-			
-			Employee employee = employeeService.findById(employeeDetail.getEmployee().getId());
-			employee.setEmployeeDetail(employeeDetail);
-			// save the employee to DB
-			employeeService.save(employee);
+			employeeDetailService.save(employeeDetail);
 
+			System.out.println("################ EMPLOYEE ID: " +  employeeId);
+			
+			Employee employee = employeeService.findById(employeeId);
+			employee.setEmployeeDetail(employeeDetail);
+			employeeService.save(employee);
+			
 			// use of redirect to prevent duplicate submissions
 			return "redirect:/employees/list";
 		} else {
