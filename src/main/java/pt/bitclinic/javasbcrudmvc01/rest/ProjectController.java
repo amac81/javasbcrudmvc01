@@ -6,14 +6,19 @@ import java.util.List;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
+import pt.bitclinic.javasbcrudmvc01.entities.enums.ProjectStatus;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 
@@ -69,15 +74,15 @@ public class ProjectController {
 		return "projects/list-projects";
 	}
 
-/*	@GetMapping("/showFormForAdd")
-	public String showFormForAdd(@ModelAttribute("employeeId") Long employeeId, Model theModel) {
+	@GetMapping("/showFormForAdd")
+	public String showFormForAdd(Model theModel) {
 		
-		Project project = new Project();
-		project.setEmployee(employeeService.findById(employeeId));
+		Project project = new Project();	
+		project.setProjectStatus(ProjectStatus.PLANNING);//all projects begin with PLANNING State
 		
 		theModel.addAttribute("project", project);		
 		return "projects/project-form";
-	}*/
+	}
 	
 	@GetMapping("/showFormForUpdate")
 	public String showFormForUpdate(@RequestParam("projectId") Long projectId, Model theModel) {
@@ -96,19 +101,18 @@ public class ProjectController {
 		return "redirect:/projects/list";
 	}
 	
-	/*@PostMapping("/save")
+	@PostMapping("/save")
 	public String processForm(@Valid @ModelAttribute("project") Project project, BindingResult theBindingResult) {
 		if (!theBindingResult.hasErrors()) {
 
-			Long employeeId = project.getEmployee().getId();
 			// save the project to DB
 			projectService.save(project);
 			
 			// use of redirect to prevent duplicate submissions
-			return "redirect:/employees/showFormForUpdate?employeeId=" + employeeId;
+			return "redirect:/projects/list";
 		} else {
 			return "projects/project-form";
 		}
-	}*/
+	}
 
 }

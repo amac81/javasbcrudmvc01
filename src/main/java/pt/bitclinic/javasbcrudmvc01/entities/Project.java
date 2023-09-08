@@ -29,10 +29,10 @@ public class Project implements Serializable {
 	private String name;
 	
 	private Integer projectStatus;
-
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="project", 
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "project", 
 			cascade= {CascadeType.ALL}) 
-	private List <ProjectPhase> phases;
+	private List <Phase> projectPhases;
 	
 	public Project() {
 	}
@@ -67,12 +67,12 @@ public class Project implements Serializable {
 		this.projectStatus = projectStatus.getCode();
 	}
 	
-	public List<ProjectPhase> getPhases() {
-		return phases;
+	public List<Phase> getPhases() {
+		return projectPhases;
 	}
 
-	public void setPhases(List<ProjectPhase> phases) {
-		this.phases = phases;
+	public void setPhases(List<Phase> phases) {
+		this.projectPhases = phases;
 	}
 
 	@Override

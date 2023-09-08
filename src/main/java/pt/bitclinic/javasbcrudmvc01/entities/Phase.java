@@ -3,6 +3,7 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,7 +20,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_project_phase" )
-public class ProjectPhase implements Serializable {
+public class Phase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,12 +44,15 @@ public class ProjectPhase implements Serializable {
 	@JoinColumn(name="project_id")
 	private Project project;
 	
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "phase", 
+			cascade= {CascadeType.ALL}) 
 	private List <Employee> team;
 	
-	public ProjectPhase() {
+	public Phase() {
 	}
 
-	public ProjectPhase(Long id,  String name, String description, LocalDateTime startDate, LocalDateTime endDate, Project project) {
+	public Phase(Long id,  String name, String description, LocalDateTime startDate, LocalDateTime endDate, Project project) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -104,4 +108,39 @@ public class ProjectPhase implements Serializable {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+
+	public List<Employee> getTeam() {
+		return team;
+	}
+
+	public void setTeam(List<Employee> team) {
+		this.team = team;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Phase other = (Phase) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Phase [id=" + id + ", name=" + name + ", description=" + description + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", team=" + team + "]";
+	}
+
+	
+	
+	
 }

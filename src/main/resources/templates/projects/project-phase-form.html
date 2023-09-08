@@ -13,7 +13,7 @@
 	<link rel="stylesheet" th:href="@{/css/styles.css}" />
 	<!-- Include jQuery -->
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+ 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -35,28 +35,39 @@
 				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
 			</label>
 		</div>
-
 		<div class="form-group">
-			<select class="form-control" id="projectStatus" name="projectStatus">
-				<option th:each="state : ${T(pt.bitclinic.javasbcrudmvc01.entities.enums.ProjectStatus).values()}"
-					th:value="${state}" th:text="${state}"></option>
-			</select>
-			<label for="projectStatus"> <!--Show error message (if present) -->
-				<span th:if="${#fields.hasErrors('projectStatus')}" th:errors="*{projectStatus}" class="error"></span>
+			<label for="description">Description (*)</label>
+			<textarea id="description" placeholder="Enter Description" type="text" th:field="*{description}"
+				class="form-control" />
+			<label for="description"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
 			</label>
 		</div>
-
-
+		<div class="form-group">
+			<label for="startDate">Start Date / time (*)</label>
+			<input id="startDate" placeholder="Select Date / time" type="datetime-local" th:field="*{startDate}"
+				class="form-control" />
+			<label for="startDate"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error"></span>
+			</label>
+		</div>
+		<div class="form-group">
+			<label for="endDate">End Date / time (*)</label>
+			<input id="endDate" placeholder="Select Date / time" value="*{endDate}"type="datetime-local" th:field="*{endDate}"
+				class="form-control" />
+			<label for="endDate"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error"></span>
+			</label>
+		</div>
 		<div class="button-container">
 			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
 		</div>
 	</form>
-	<div class="button-container">
-		<div th:if="${employeeId != null}" class="my_button">
-			<a th:href="@{/employees/showFormForUpdate(employeeId=${employeeId})}" class="btn btn-secondary mb-3">Back
-				to employee form</a>
-		</div>
-	</div>
+		<div class="button-container">	
+			<div th:if="${employeeId != null}" class="my_button">
+				<a th:href="@{/employees/showFormForUpdate(employeeId=${employeeId})}" class="btn btn-secondary mb-3">Back to employee form</a>
+			</div>
+		</div>	
 	</div>
 </body>
 

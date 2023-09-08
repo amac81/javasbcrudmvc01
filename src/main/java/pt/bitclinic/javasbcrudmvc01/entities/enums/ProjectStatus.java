@@ -5,7 +5,7 @@ public enum ProjectStatus {
 
 	private Integer code;
 
-	private ProjectStatus(int i) {
+	private ProjectStatus(Integer i) {
 		this.code = i;
 	}
 
@@ -13,14 +13,14 @@ public enum ProjectStatus {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 
 	public static ProjectStatus valueOf(Integer code) {
-		for (ProjectStatus os : ProjectStatus.values()) {
-			if (os.getCode() == code) {
-				return os;
+		for (ProjectStatus ps : ProjectStatus.values()) {
+			if (ps.getCode() == code) {
+				return ps;
 			}
 		}
 

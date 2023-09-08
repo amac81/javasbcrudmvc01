@@ -31,7 +31,7 @@
 					<th>Department</th>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<th colspan="1">Details</th>
-						<th colspan="1">Projects</th>
+						<!--th colspan="1">Projects</th-->
 						<th colspan="2">Actions</th>
 					</div>
 				</tr>
@@ -53,7 +53,7 @@
 							<a th:if="${tempEmployee.employeeDetail != null}" th:href="@{/employees/showDetails(employeeId=${tempEmployee.id})}" class="btn btn-warning btn-sm">Show details</a>
 						</td>						
 						
-						<td><a th:href="@{/projects/showEmployeeProjects(employeeId=${tempEmployee.id})}" class="btn_0382ca btn btn-info btn-sm">My projects</a></td>						
+						<!--td><a th:href="@{/projects/showEmployeeProjects(employeeId=${tempEmployee.id})}" class="btn_0382ca btn btn-info btn-sm">My projects</a></td-->						
 						<td><a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>
 						<td><a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
