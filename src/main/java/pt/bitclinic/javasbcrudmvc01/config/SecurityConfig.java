@@ -29,7 +29,6 @@ public class SecurityConfig {
 				.requestMatchers("/employees/edit/**").hasRole("MANAGER")
 				.requestMatchers("/employees/showDetails/**").hasRole("MANAGER")
 				.requestMatchers("/employees/saveDetails/**").hasRole("MANAGER")
-				
 				.requestMatchers("/employees/showFormForAdd/**").hasRole("MANAGER")
 				.requestMatchers("/employees/showFormForUpdate/**").hasRole("MANAGER")
 				
@@ -38,6 +37,20 @@ public class SecurityConfig {
 				
 				.requestMatchers("/projects/delete/**").hasRole("MANAGER")
 				.requestMatchers("/projects/edit/**").hasRole("MANAGER")
+				.requestMatchers("/projects/showTasks/**").hasRole("MANAGER")
+				.requestMatchers("/projects/showFormForAdd/**").hasRole("MANAGER")
+				.requestMatchers("/projects/showFormForUpdate/**").hasRole("MANAGER")
+				
+				.requestMatchers("/tasks/delete/**").hasRole("MANAGER")
+				.requestMatchers("/tasks/edit/**").hasRole("MANAGER")
+				.requestMatchers("/tasks/showFormForAdd/**").hasRole("MANAGER")
+				.requestMatchers("/tasks/showFormForUpdate/**").hasRole("MANAGER")
+				
+				.requestMatchers("/teams/delete/**").hasRole("MANAGER")
+				.requestMatchers("/teams/edit/**").hasRole("MANAGER")
+				.requestMatchers("/teams/showMembers/**").hasRole("MANAGER")
+				.requestMatchers("/teams/showFormForAdd/**").hasRole("MANAGER")
+				.requestMatchers("/teams/showFormForUpdate/**").hasRole("MANAGER")
 				
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated())

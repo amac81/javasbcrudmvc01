@@ -92,3 +92,31 @@ hr.top_22 {
 	color:#fff;
 	border-color: #0382ca
 }
+
+/* Custom table */
+
+/* Define styles for the custom table */
+.custom-table {
+    border-collapse: collapse; /* Combine table cell borders */
+    width: 100%; /* Set the table width to 100% */
+}
+
+/* Define styles for table rows */
+.custom-table tr {
+    background-color: #E6F6FF; /* Add a background color to alternate rows */
+}
+
+/* Define styles for table cells */
+.custom-table td {
+    padding: 8px; /* Add padding for better spacing */
+    border: 1px solid #ddd; /* Add borders to table cells */
+}
+
+/* Define styles for table header (optional) */
+.custom-table th {
+    padding: 8px;
+    border: 1px solid #ddd;
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+

@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
-import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
-import pt.bitclinic.javasbcrudmvc01.entities.enums.ProjectStatus;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 
@@ -64,7 +62,7 @@ public class ProjectController {
 		List<Project> projects = new ArrayList<>();
 		
 		// get the employee from the service
-		Employee employee = employeeService.findById(employeeId);
+		//Employee employee = employeeService.findById(employeeId);
 
 	//	projects = projectService.findAllByEmployee(employee);
 		
@@ -78,7 +76,7 @@ public class ProjectController {
 	public String showFormForAdd(Model theModel) {
 		
 		Project project = new Project();	
-		project.setProjectStatus(ProjectStatus.PLANNING);//all projects begin with PLANNING State
+		//phase.setStatus(PhaseStatus.PLANNING);//all phases start with PLANNING State
 		
 		theModel.addAttribute("project", project);		
 		return "projects/project-form";

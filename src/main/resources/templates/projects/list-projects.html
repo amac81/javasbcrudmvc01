@@ -25,8 +25,8 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>State</th>
 					<th>Phases</th>
+
 					<div th:if="${employeeId != null}" sec:authorize="hasRole('ROLE_MANAGER')">
 						<th colspan="2">Actions</th>
 					</div>
@@ -38,8 +38,33 @@
 				</tr>
 				<tr th:each="tempProject : ${projects}">
 					<td th:text="${tempProject.name}"></td>
-					<td th:text="${tempProject.projectStatus}"></td>
-					<td th:text="${tempProject.phases}"></td>
+					
+
+					<td>
+						<table class="custom-table">
+							<thead>
+								<tr>
+									<th>Phase #</th>
+									<th>State</th>
+									<th>Name</th>								
+									<th>Description</th>
+									<th>Start Date</th>
+									<th>End Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="row,rowStat : ${tempProject.phases}">
+									<td th:text="${rowStat.count}"></td>
+									<td th:text="${row.status}"></td>
+									<td th:text="${row.name}"></td>
+									<td th:text="${row.description}"></td>
+									<td th:text="${row.startDate}"></td>
+									<td th:text="${row.endDate}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+
 
 					<div th:if="${employeeId != null}" sec:authorize="hasRole('ROLE_MANAGER')">
 						<td><a th:href="@{/projects/showFormForUpdate(projectId=${tempProject.id})}"

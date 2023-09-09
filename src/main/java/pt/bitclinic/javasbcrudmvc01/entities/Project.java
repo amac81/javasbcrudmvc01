@@ -1,6 +1,7 @@
 package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,12 +14,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import pt.bitclinic.javasbcrudmvc01.entities.enums.ProjectStatus;
 
 @Entity
 @Table(name = "tb_project")
 public class Project implements Serializable {
 
+	//TODO this is the many-to-many association entity!!!!
+	
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,19 +31,18 @@ public class Project implements Serializable {
 	@NotNull(message = "is required")
 	private String name;
 	
-	private Integer projectStatus;
-	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "project", 
 			cascade= {CascadeType.ALL}) 
-	private List <Phase> projectPhases;
+	private List <Task> tasks;
 	
 	public Project() {
+		tasks = new ArrayList<Task>();
 	}
 
-	public Project(long id, String name, ProjectStatus projectStatus) {
+	public Project(long id, String name, List<Task> tasks) {
 		this.id = id;
 		this.name = name;
-		setProjectStatus(projectStatus);
+		this.tasks = tasks;
 	}
 
 	public long getId() {
@@ -59,20 +61,12 @@ public class Project implements Serializable {
 		this.name = name;
 	}
 	
-	public ProjectStatus getProjectStatus() {
-		return ProjectStatus.valueOf(projectStatus);
-	}
-	
-	public void setProjectStatus(ProjectStatus projectStatus) {
-		this.projectStatus = projectStatus.getCode();
-	}
-	
-	public List<Phase> getPhases() {
-		return projectPhases;
+	public List<Task> getTasks() {
+		return tasks;
 	}
 
-	public void setPhases(List<Phase> phases) {
-		this.projectPhases = phases;
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	@Override

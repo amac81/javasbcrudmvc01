@@ -50,8 +50,8 @@ public class Employee implements Serializable {
 	private EmployeeDetail employeeDetail;
 	
 	@ManyToOne
-	@JoinColumn(name="phase_id")
-	private Phase phase;
+	@JoinColumn(name="team_id")
+	private Team team;
 	
 	public Employee() {
 	}

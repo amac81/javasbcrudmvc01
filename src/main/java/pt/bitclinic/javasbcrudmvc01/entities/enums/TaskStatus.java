@@ -1,11 +1,11 @@
 package pt.bitclinic.javasbcrudmvc01.entities.enums;
 
-public enum ProjectStatus {
+public enum TaskStatus {
 	PLANNING(1), IN_PROGRESS(2), ON_HOLD(3), COMPLETED(4), CANCELED(5);
 
 	private Integer code;
 
-	private ProjectStatus(Integer i) {
+	private TaskStatus(Integer i) {
 		this.code = i;
 	}
 
@@ -17,8 +17,8 @@ public enum ProjectStatus {
 		this.code = code;
 	}
 
-	public static ProjectStatus valueOf(Integer code) {
-		for (ProjectStatus ps : ProjectStatus.values()) {
+	public static TaskStatus valueOf(Integer code) {
+		for (TaskStatus ps : TaskStatus.values()) {
 			if (ps.getCode() == code) {
 				return ps;
 			}
