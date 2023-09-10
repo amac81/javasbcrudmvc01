@@ -31,7 +31,7 @@
 					<th>Tasks</th>
 
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
-						<th colspan="2">Actions</th>
+						<th colspan="3">Actions</th>
 					</div>
 				</tr>
 			</thead>
@@ -50,11 +50,13 @@
 							<thead>
 								<tr>
 									<th>Phase #</th>
-									<th>State</th>
-									<th>Name</th>								
+									<th>Status</th>
+									<th>Name</th>
 									<th>Description</th>
+									<th>Group Description</th>
 									<th>Start Date</th>
 									<th>End Date</th>
+									<th>Team</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -63,15 +65,17 @@
 									<td th:text="${row.status}"></td>
 									<td th:text="${row.name}"></td>
 									<td th:text="${row.description}"></td>
+									<td th:text="${row.groupDescription}"></td>
 									<td th:text="${row.startDate}"></td>
 									<td th:text="${row.endDate}"></td>
+									<td th:text="${row.team}"></td>
 								</tr>
 							</tbody>
 						</table>
 					</td>
-
-
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
+						<td><a th:href="@{/projects/showFormForAddTask(projectId=${tempProject.id})}"
+								class="btn btn-success btn-sm">Add task</a></td>
 						<td><a th:href="@{/projects/showFormForUpdate(projectId=${tempProject.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>
 						<td><a th:href="@{/projects/delete(projectId=${tempProject.id})}" class="btn btn-danger btn-sm"

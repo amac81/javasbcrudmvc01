@@ -50,13 +50,13 @@ public class Employee implements Serializable {
 	private EmployeeDetail employeeDetail;
 	
 	@ManyToOne
-	@JoinColumn(name="team_id")
-	private Team team;
+	@JoinColumn(name = "task_id")
+	private Task task;
 	
 	public Employee() {
 	}
 
-	public Employee(Long id, String firstName, String lastName, String email, double salary, LocalDate hireDate, String department) {
+	public Employee(Long id, String firstName, String lastName, String email, double salary, LocalDate hireDate, String department, Task task) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -64,6 +64,7 @@ public class Employee implements Serializable {
 		this.salary = salary;
 		this.hireDate = hireDate;
 		this.department = department;
+		this.task = task;
 	}
 
 	public Long getId() {
@@ -121,6 +122,14 @@ public class Employee implements Serializable {
 
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 
 	public EmployeeDetail getEmployeeDetail() {

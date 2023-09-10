@@ -18,23 +18,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Client;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
+import pt.bitclinic.javasbcrudmvc01.entities.Task;
 import pt.bitclinic.javasbcrudmvc01.services.ClientService;
-import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
+import pt.bitclinic.javasbcrudmvc01.services.TaskService;
 
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
 
 	private ProjectService projectService;
-	private EmployeeService employeeService;
+	private TaskService taskService;
 	private ClientService clientService;
 
 	// constructor injection of ProjectService @Autowired optional, we just have
 	// one constructor
-	public ProjectController(ProjectService projectService, EmployeeService employeeService, ClientService clientService) {
+	public ProjectController(ProjectService projectService, TaskService taskService, ClientService clientService) {
 		this.projectService = projectService;
-		this.employeeService = employeeService;
+		this.taskService = taskService;
 		this.clientService = clientService;
 	}
 
@@ -81,9 +82,7 @@ public class ProjectController {
 		
 		Project project = new Project();	
 		List <Client> clients = clientService.findAll();
-		
-		System.out.println("###### CLIENTS: " + clients);
-		
+				
 		theModel.addAttribute("project", project);		
 		theModel.addAttribute("clients", clients);
 		
@@ -121,6 +120,33 @@ public class ProjectController {
 			return "redirect:/projects/list";
 		} else {
 			return "projects/project-form";
+		}
+	}
+	
+	@GetMapping("/showFormForAddTask")
+	public String showFormForAddTask(@RequestParam("projectId") Long projectId, Model theModel) {
+		
+		Task task = new Task();	
+		task.setProject(projectService.findById(projectId));
+		
+		//assertEquals(EXPECTED_LIST, result); TEST!!
+				
+		theModel.addAttribute("task", task);		
+		
+		return "projects/project-task-form";
+	}
+	
+	@PostMapping("/taskSave")
+	public String processTaskForm(@Valid @ModelAttribute("task") Task task, BindingResult theBindingResult) {
+		if (!theBindingResult.hasErrors()) {
+
+			// save the task to DB
+			taskService.save(task);
+			
+			// use of redirect to prevent duplicate submissions
+			return "redirect:/projects/list";
+		} else {
+			return "projects/project-task-form";
 		}
 	}
 

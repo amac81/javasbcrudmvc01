@@ -4,7 +4,7 @@ public enum Status {
 	PLANNING(1), IN_PROGRESS(2), ON_HOLD(3), COMPLETED(4), CANCELED(5);
 
 	private Integer code;
-
+	
 	private Status(Integer i) {
 		this.code = i;
 	}
@@ -24,6 +24,8 @@ public enum Status {
 			}
 		}
 
-		throw new IllegalArgumentException("Invalid Project Status Code");
+		throw new IllegalArgumentException("Invalid Status Code");
 	}
+
+	
 }

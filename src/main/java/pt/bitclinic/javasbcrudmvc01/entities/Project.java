@@ -22,9 +22,6 @@ import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
 @Entity
 @Table(name = "tb_project")
 public class Project implements Serializable {
-
-	//TODO this is the many-to-many association entity!!!!
-	
 	
 	private static final long serialVersionUID = 1L;
 
