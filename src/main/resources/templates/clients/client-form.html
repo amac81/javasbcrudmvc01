@@ -6,14 +6,14 @@
 	<meta name="viewport"
 		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Project form</title>
+	<title>Client form</title>
 	<!-- Include Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<!-- Custom CSS -->
 	<link rel="stylesheet" th:href="@{/css/styles.css}" />
 	<!-- Include jQuery -->
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+ 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -23,50 +23,39 @@
 </head>
 
 <body class="container">
-	<h1 class="py-3">Project form</h1>
+	<h1 class="py-3">Client form</h1>
 	<i>Fill out the form. Asterisk (*) means required.</i>
-	<form method="post" th:action="@{/projects/save}" th:object="${project}" class="col card p-3 mb-3">
+	<form method="post" th:action="@{/clients/save}" th:object="${client}" class="col card p-3 mb-3">
 		<!-- hidden form field for handle the update-->
 		<input type="hidden" th:field="*{id}" />
 		<div class="form-group">
 			<label for="name">Name (*)</label>
-			<input id="name" placeholder="Enter Project Name" type="text" th:field="*{name}" class="form-control" />
+			<input id="name" placeholder="Enter Name" type="text" th:field="*{name}"
+				class="form-control" />
 			<label for="name"> <!--Show error message (if present) -->
 				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
 			</label>
 		</div>
-
 		<div class="form-group">
-			<label for="description">Description (*)</label>
-			<input id="description" placeholder="Enter Project Description" type="text" th:field="*{description}"
-				class="form-control" />
-			<label for="description"> <!--Show error message (if present) -->
-				<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
+			<label for="email">Email</label>
+			<input id="email" placeholder="Enter Email" type="text" th:field="*{email}" class="form-control" />
+			<label for="email"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+			</label>
+		</div>
+		<div class="form-group">
+			<label for="phone">Phone</label>
+			<input id="phone" placeholder="Enter phone" type="text" th:field="*{phone}" class="form-control" />
+			<label for="phone"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error"></span>
 			</label>
 		</div>
 
-		<div class="form-group">
-			<select class="form-control" id="client" name="client" th:field="*{client}">
-				<option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
-			</select>
-			<label for="client"> <!--Show error message (if present) -->
-				<span th:if="${#fields.hasErrors('client')}" th:errors="*{client}" class="error"></span>
-			</label>
-		</div>
-
-
-		<div class="button-container">
+		<div class="button-container">			
 			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
 		</div>
 	</form>
-	<a th:href="@{/projects/list}" class="btn btn-secondary mb-3">Back to projects list</a>
-
-	<div class="button-container">
-		<div th:if="${employeeId != null}" class="my_button">
-			<a th:href="@{/employees/showFormForUpdate(employeeId=${employeeId})}" class="btn btn-secondary mb-3">Back
-				to employee form</a>
-		</div>
-	</div>
+	<a th:href="@{/clients/list}" class="btn btn-secondary mb-3">Back to clients list</a>
 	</div>
 </body>
 

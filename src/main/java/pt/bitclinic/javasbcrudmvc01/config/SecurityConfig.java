@@ -25,6 +25,11 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(configurer -> configurer
 				.requestMatchers("/").hasRole("EMPLOYEE")
 				
+				.requestMatchers("/clients/delete/**").hasRole("MANAGER")
+				.requestMatchers("/clients/edit/**").hasRole("MANAGER")
+				.requestMatchers("/clients/showFormForAdd/**").hasRole("MANAGER")
+				.requestMatchers("/clients/showFormForUpdate/**").hasRole("MANAGER")
+				
 				.requestMatchers("/employees/delete/**").hasRole("MANAGER")
 				.requestMatchers("/employees/edit/**").hasRole("MANAGER")
 				.requestMatchers("/employees/showDetails/**").hasRole("MANAGER")

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import pt.bitclinic.javasbcrudmvc01.entities.enums.TaskStatus;
+import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
 
 @Entity
 @Table(name = "tb_project_task")
@@ -30,6 +31,7 @@ public class Task implements Serializable {
 	private String name;
 
 	@NotNull(message = "is required")
+	@Column(columnDefinition = "TEXT") //more than 255 characters 
 	private String description;
 
 	@NotNull(message = "is required")
@@ -40,6 +42,7 @@ public class Task implements Serializable {
 	private LocalDateTime startDate;
 
 	private Integer status;
+	
 	@ManyToOne
 	@JoinColumn(name = "project_id")
 	private Project project;
@@ -50,10 +53,11 @@ public class Task implements Serializable {
 	private Team team;
 
 	public Task() {
+		setStatus(Status.PLANNING); // initial state
 	}
 
 	public Task(Long id, String name, String groupDescription, String description, LocalDateTime startDate,
-			LocalDateTime endDate, Team team, Project project, TaskStatus status) {
+			LocalDateTime endDate, Project project, Status status) {
 		this.id = id;
 		this.name = name;
 		this.groupDescription = groupDescription;
@@ -61,7 +65,6 @@ public class Task implements Serializable {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.project = project;
-		this.team = team;
 		setStatus(status);
 	}
 
@@ -113,11 +116,11 @@ public class Task implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public TaskStatus getStatus() {
-		return TaskStatus.valueOf(status);
+	public Status getStatus() {
+		return Status.valueOf(status);
 	}
 
-	public void setStatus(TaskStatus status) {
+	public void setStatus(Status status) {
 		this.status = status.getCode();
 	}
 
@@ -131,10 +134,6 @@ public class Task implements Serializable {
 
 	public Team getTeam() {
 		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
 	}
 
 	@Override

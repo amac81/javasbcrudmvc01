@@ -5,40 +5,47 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "tb_task_team")
-public class Team implements Serializable {
-
+@Table(name = "tb_client" )
+public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
 	@NotNull(message = "is required")
 	private String name;
-	@Column(columnDefinition = "TEXT") // more than 255 characters
+	
 	@NotNull(message = "is required")
-	private String description;
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email address")
+	private String email;
 
-	private List<Employee> members;
+	@NotNull(message = "is required")
+	private String phone;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "client")
+	private List<Project> clientProjects = new ArrayList<>();
+	
+	public Client() {}
 
-	public Team() {
-		members = new ArrayList<Employee>();
-	}
-
-	public Team(Long id, String name, String description) {
+	public Client(Long id, String name, String email, String phone) {
 		this.id = id;
 		this.name = name;
-		this.description = description;
+		this.email = email;
+		this.phone = phone;
 	}
 
 	public Long getId() {
@@ -57,30 +64,26 @@ public class Team implements Serializable {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public List<Employee> getMembers() {
-		return members;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setMembers(List<Employee> members) {
-		this.members = members;
-	}
-
-	public void addMember(Employee member) {
-		members.add(member);
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
-	public boolean removeMember(Employee member) {
-		return members.remove(member);
+	public List<Project> getClientProjects() {
+		return clientProjects;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -94,13 +97,14 @@ public class Team implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Team other = (Team) obj;
-		return Objects.equals(id, other.id);
+		Client other = (Client) obj;
+		return id == other.id;
 	}
 
 	@Override
 	public String toString() {
-		return "Team [id=" + id + ", name=" + name + ", description=" + description + ", members=" + members + "]";
+		return "Client [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + "]";
 	}
-
+	
+	
 }

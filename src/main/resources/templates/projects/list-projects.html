@@ -25,9 +25,12 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>Phases</th>
+					<th>Description</th>
+					<th>Status</th>
+					<th>Client</th>
+					<th>Tasks</th>
 
-					<div th:if="${employeeId != null}" sec:authorize="hasRole('ROLE_MANAGER')">
+					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<th colspan="2">Actions</th>
 					</div>
 				</tr>
@@ -38,7 +41,9 @@
 				</tr>
 				<tr th:each="tempProject : ${projects}">
 					<td th:text="${tempProject.name}"></td>
-					
+					<td th:text="${tempProject.description}"></td>
+					<td th:text="${tempProject.status}"></td>
+					<td th:text="${tempProject.client}"></td>
 
 					<td>
 						<table class="custom-table">
@@ -53,7 +58,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="row,rowStat : ${tempProject.phases}">
+								<tr th:each="row,rowStat : ${tempProject.tasks}">
 									<td th:text="${rowStat.count}"></td>
 									<td th:text="${row.status}"></td>
 									<td th:text="${row.name}"></td>
@@ -66,7 +71,7 @@
 					</td>
 
 
-					<div th:if="${employeeId != null}" sec:authorize="hasRole('ROLE_MANAGER')">
+					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<td><a th:href="@{/projects/showFormForUpdate(projectId=${tempProject.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>
 						<td><a th:href="@{/projects/delete(projectId=${tempProject.id})}" class="btn btn-danger btn-sm"

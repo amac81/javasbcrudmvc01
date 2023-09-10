@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
+import pt.bitclinic.javasbcrudmvc01.entities.Client;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
+import pt.bitclinic.javasbcrudmvc01.services.ClientService;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 
@@ -26,12 +28,14 @@ public class ProjectController {
 
 	private ProjectService projectService;
 	private EmployeeService employeeService;
+	private ClientService clientService;
 
-	// constructor injection of EmployeeService @Autowired optional, we just have
+	// constructor injection of ProjectService @Autowired optional, we just have
 	// one constructor
-	public ProjectController(ProjectService projectService, EmployeeService employeeService) {
+	public ProjectController(ProjectService projectService, EmployeeService employeeService, ClientService clientService) {
 		this.projectService = projectService;
 		this.employeeService = employeeService;
+		this.clientService = clientService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -76,9 +80,13 @@ public class ProjectController {
 	public String showFormForAdd(Model theModel) {
 		
 		Project project = new Project();	
-		//phase.setStatus(PhaseStatus.PLANNING);//all phases start with PLANNING State
+		List <Client> clients = clientService.findAll();
+		
+		System.out.println("###### CLIENTS: " + clients);
 		
 		theModel.addAttribute("project", project);		
+		theModel.addAttribute("clients", clients);
+		
 		return "projects/project-form";
 	}
 	
@@ -87,8 +95,11 @@ public class ProjectController {
 
 		// get the project from the service
 		Project project = projectService.findById(projectId);
+		List <Client> clients = clientService.findAll();
 		
 		theModel.addAttribute("project", project);
+		theModel.addAttribute("clients", clients);
+
 		return "projects/project-form";
 	}
 	

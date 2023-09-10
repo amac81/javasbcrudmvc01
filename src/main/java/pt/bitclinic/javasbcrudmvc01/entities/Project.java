@@ -6,14 +6,18 @@ import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
 
 @Entity
 @Table(name = "tb_project")
@@ -31,18 +35,31 @@ public class Project implements Serializable {
 	@NotNull(message = "is required")
 	private String name;
 	
+	@NotNull(message = "is required")
+	@Column(columnDefinition = "TEXT") //more than 255 characters 
+	private String description;
+	
+	private Integer status;
+	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "project", 
 			cascade= {CascadeType.ALL}) 
 	private List <Task> tasks;
 	
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	@NotNull(message = "is required")
+	private Client client;
+	
 	public Project() {
 		tasks = new ArrayList<Task>();
+		setStatus(Status.PLANNING); // initial state
 	}
 
-	public Project(long id, String name, List<Task> tasks) {
+	public Project(long id, String name, Status status, Client client) {
 		this.id = id;
 		this.name = name;
-		this.tasks = tasks;
+		setStatus(status);
+		this.client = client;
 	}
 
 	public long getId() {
@@ -61,14 +78,42 @@ public class Project implements Serializable {
 		this.name = name;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public Status getStatus() {
+		return Status.valueOf(status);
+	}
+
+	public void setStatus(Status status) {
+		this.status = status.getCode();
+	}
+
 	public List<Task> getTasks() {
 		return tasks;
 	}
-
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+	
+	public Client getClient() {
+		return client;
 	}
 
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public void addTask(Task task) {
+		tasks.add(task);
+	}
+	
+	public boolean removeTask(Task task) {
+		return tasks.remove(task);
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
