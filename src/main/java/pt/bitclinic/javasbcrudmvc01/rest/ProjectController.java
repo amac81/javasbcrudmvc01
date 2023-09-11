@@ -110,7 +110,7 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/save")
-	public String processForm(@Valid @ModelAttribute("project") Project project, BindingResult theBindingResult) {
+	public String processForm(@Valid @ModelAttribute("project") Project project, BindingResult theBindingResult, Model theModel) {
 		if (!theBindingResult.hasErrors()) {
 
 			// save the project to DB
@@ -119,6 +119,9 @@ public class ProjectController {
 			// use of redirect to prevent duplicate submissions
 			return "redirect:/projects/list";
 		} else {
+			List <Client> clients = clientService.findAll();
+			
+			theModel.addAttribute("clients", clients);
 			return "projects/project-form";
 		}
 	}

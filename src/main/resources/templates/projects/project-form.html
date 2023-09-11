@@ -24,41 +24,48 @@
 
 <body class="container">
 	<h1 class="py-3">Project form</h1>
-	<i>Fill out the form. Asterisk (*) means required.</i>
-	<form method="post" th:action="@{/projects/save}" th:object="${project}" class="col card p-3 mb-3">
-		<!-- hidden form field for handle the update-->
-		<input type="hidden" th:field="*{id}" />
-		<div class="form-group">
-			<label for="name">Name (*)</label>
-			<input id="name" placeholder="Enter Project Name" type="text" th:field="*{name}" class="form-control" />
-			<label for="name"> <!--Show error message (if present) -->
-				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
-			</label>
-		</div>
 
-		<div class="form-group">
-			<label for="description">Description (*)</label>
-			<input id="description" placeholder="Enter Project Description" type="text" th:field="*{description}"
-				class="form-control" />
-			<label for="description"> <!--Show error message (if present) -->
-				<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
-			</label>
+	<!-- IF Clients List empty -->
+	<div th:if="${#lists.isEmpty(clients)}">
+		<h3 class="error">No Clients Found. You cannot add projects without clients...</h3>
+		<div sec:authorize="hasRole('ROLE_MANAGER')">
+			<a th:href="@{/clients/showFormForAdd}" class="btn btn-primary mb-3">Add Client...</a>
 		</div>
-
-		<div class="form-group">
-			<select class="form-control" id="client" name="client" th:field="*{client}">
-				<option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
-			</select>
-			<label for="client"> <!--Show error message (if present) -->
-				<span th:if="${#fields.hasErrors('client')}" th:errors="*{client}" class="error"></span>
-			</label>
-		</div>
-
-
-		<div class="button-container">
-			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
-		</div>
-	</form>
+	</div>
+	<!-- ELSE -->
+	<div th:unless="${#lists.isEmpty(clients)}">
+		<i>Fill out the form. Asterisk (*) means required.</i>
+		<form method="post" th:action="@{/projects/save}" th:object="${project}" class="col card p-3 mb-3">
+			<!-- hidden form field for handle the update-->
+			<input type="hidden" th:field="*{id}" />
+			<div class="form-group">
+				<label for="name">Name (*)</label>
+				<input id="name" placeholder="Enter Project Name" type="text" th:field="*{name}" class="form-control" />
+				<label for="name"> <!--Show error message (if present) -->
+					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
+				</label>
+			</div>
+			<div class="form-group">
+				<label for="description">Description (*)</label>
+				<input id="description" placeholder="Enter Project Description" type="text" th:field="*{description}"
+					class="form-control" />
+				<label for="description"> <!--Show error message (if present) -->
+					<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
+				</label>
+			</div>
+			<div class="form-group">
+				<select class="form-control" id="client" name="client" th:field="*{client}">
+					<option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
+				</select>
+				<label for="client"> <!--Show error message (if present) -->
+					<span th:if="${#fields.hasErrors('client')}" th:errors="*{client}" class="error"></span>
+				</label>
+			</div>
+			<div class="button-container">
+				<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
+			</div>
+		</form>
+	</div>
 	<a th:href="@{/projects/list}" class="btn btn-secondary mb-3">Back to projects list</a>
 
 	<div class="button-container">

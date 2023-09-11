@@ -45,11 +45,11 @@
 		</div>
 
 		<div class="form-group">
-			<label for="groupDescription">Group Description (tipology) (*)</label>
-			<textarea id="groupDescription" placeholder="Enter Group Description" type="text"
-				th:field="*{groupDescription}" class="form-control" />
-			<label for="groupDescription"> <!--Show error message (if present) -->
-				<span th:if="${#fields.hasErrors('groupDescription')}" th:errors="*{groupDescription}"
+			<label for="taskGroup">Task Group (*)</label>
+			<textarea id="taskGroup" placeholder="Enter Task Group" type="text"
+				th:field="*{taskGroup}" class="form-control" />
+			<label for="taskGroup"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('taskGroup')}" th:errors="*{taskGroup}"
 					class="error"></span>
 			</label>
 		</div>
@@ -72,23 +72,13 @@
 			</label>
 		</div>
 
-
-
-
-		<select name="status">
-			<option th:each="statusOpt : ${T(pt.bitclinic.javasbcrudmvc01.entities.enums.Status).values()}"
+		<div class="form-group">
+			<label for="status">Status</label>
+			<select name="status" class="form-control" >
+				<option th:each="statusOpt : ${T(pt.bitclinic.javasbcrudmvc01.entities.enums.Status).values()}"
 				th:value="${statusOpt}" th:text="${statusOpt}" th:field="*{status}"></option>
-		</select>
-
-		<!--div class="form-group">
-			<select class="form-control" id="status" name="status" th:field="*{status}">
-				<option th:each="stat : ${allStatus}" th:value="${stat.id}" th:text="${stat.description}"></option>
-			</select>
-			<label for="status"> <!--Show error message (if present) -->
-		<!--span th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="error"></span>
-			</label>
-		</div-->
-
+			</select>			
+		</div>		
 
 		<div class="button-container">
 			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>

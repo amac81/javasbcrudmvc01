@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
@@ -32,39 +33,41 @@ public class Task implements Serializable {
 	@NotNull(message = "is required")
 	private String name;
 
-	@Column(columnDefinition = "TEXT") //more than 255 characters 
+	@Column(columnDefinition = "TEXT") // more than 255 characters
 	@NotNull(message = "is required")
 	private String description;
 
+	// unidirectional relationship
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "taskgroup_id")
 	@NotNull(message = "is required")
-	private String groupDescription;
+	private TaskGroup taskGroup;
 
 	@NotNull(message = "is required")
 	private LocalDateTime endDate;
-	
+
 	@NotNull(message = "is required")
 	private LocalDateTime startDate;
-	
+
 	@NotNull(message = "is required")
 	private Integer status;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "project_id")
 	private Project project;
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "task", 
-			cascade= {CascadeType.ALL}) 
-	private List <Employee> team;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = { CascadeType.ALL })
+	private List<Employee> team;
 
 	public Task() {
 		setStatus(Status.PLANNING); // initial state
 	}
 
-	public Task(Long id, String name, String groupDescription, String description, LocalDateTime startDate,
+	public Task(Long id, String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
 			LocalDateTime endDate, Project project, Status status) {
 		this.id = id;
 		this.name = name;
-		this.groupDescription = groupDescription;
+		this.taskGroup = taskGroup;
 		this.description = description;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -88,12 +91,12 @@ public class Task implements Serializable {
 		this.name = name;
 	}
 
-	public String getGroupDescription() {
-		return groupDescription;
+	public TaskGroup getTaskGroup() {
+		return taskGroup;
 	}
 
-	public void setGroupDescription(String group) {
-		this.groupDescription = group;
+	public void setTaskGroup(TaskGroup taskGroup) {
+		this.taskGroup = taskGroup;
 	}
 
 	public String getDescription() {
@@ -155,13 +158,6 @@ public class Task implements Serializable {
 			return false;
 		Task other = (Task) obj;
 		return Objects.equals(id, other.id);
-	}
-
-	@Override
-	public String toString() {
-		return "Task [id=" + id + ", name=" + name + ", description=" + description + ", groupDescription="
-				+ groupDescription + ", endDate=" + endDate + ", startDate=" + startDate + ", status=" + status
-				+ ", team=" + team + "]";
 	}
 
 }
