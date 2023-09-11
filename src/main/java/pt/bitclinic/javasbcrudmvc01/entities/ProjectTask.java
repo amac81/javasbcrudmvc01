@@ -2,34 +2,30 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
+import pt.bitclinic.javasbcrudmvc01.entities.pks.TaskPK;
 
 @Entity
 @Table(name = "tb_project_task")
-public class Task implements Serializable {
+public class ProjectTask implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
+	@EmbeddedId
+	private TaskPK id = new TaskPK();
+	
 	@NotNull(message = "is required")
 	private String name;
 
@@ -50,37 +46,42 @@ public class Task implements Serializable {
 
 	@NotNull(message = "is required")
 	private Integer status;
-
-	@ManyToOne
-	@JoinColumn(name = "project_id")
-	private Project project;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = { CascadeType.ALL })
-	private List<Employee> team;
-
-	public Task() {
+	
+	public ProjectTask() {
 		setStatus(Status.PLANNING); // initial state
 	}
 
-	public Task(Long id, String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
-			LocalDateTime endDate, Project project, Status status) {
-		this.id = id;
+	public ProjectTask(Project project, Employee employee, String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
+			LocalDateTime endDate, Status status) {
+		id.setProject(project);
+		id.setEmployee(employee);
 		this.name = name;
 		this.taskGroup = taskGroup;
 		this.description = description;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.project = project;
 		setStatus(status);
 	}
 
-	public Long getId() {
-		return id;
+	
+	//in JEE what matters is the get method; to avoid "loop"
+	@JsonIgnore
+	public Project getProject() {
+		return id.getProject();
+	}
+	
+	public void setProject(Project project) {
+		id.setProject(project);
+	}		
+
+	public Employee getEmployee() {
+		return id.getEmployee();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setEmployee(Employee employee) {
+		id.setEmployee(employee);
 	}
+
 
 	public String getName() {
 		return name;
@@ -130,32 +131,20 @@ public class Task implements Serializable {
 		this.status = status.getCode();
 	}
 
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
-	public List<Employee> getTeam() {
-		return team;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) {	
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Task other = (Task) obj;
+		ProjectTask other = (ProjectTask) obj;
 		return Objects.equals(id, other.id);
 	}
 

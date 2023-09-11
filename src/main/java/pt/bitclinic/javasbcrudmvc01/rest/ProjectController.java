@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Client;
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
-import pt.bitclinic.javasbcrudmvc01.entities.Task;
+import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
 import pt.bitclinic.javasbcrudmvc01.entities.TaskGroup;
 import pt.bitclinic.javasbcrudmvc01.services.ClientService;
+import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 import pt.bitclinic.javasbcrudmvc01.services.TaskGroupService;
 import pt.bitclinic.javasbcrudmvc01.services.TaskService;
@@ -32,14 +34,16 @@ public class ProjectController {
 	private ProjectService projectService;
 	private TaskService taskService;
 	private ClientService clientService;
+	private EmployeeService employeeService;
 	private TaskGroupService taskGroupService;
 	
 	// constructor injection of ProjectService @Autowired optional, we just have
 	// one constructor
-	public ProjectController(ProjectService projectService, TaskService taskService, ClientService clientService, TaskGroupService taskGroupService) {
+	public ProjectController(ProjectService projectService, TaskService taskService, ClientService clientService, EmployeeService employeeService, TaskGroupService taskGroupService) {
 		this.projectService = projectService;
 		this.taskService = taskService;
 		this.clientService = clientService;
+		this.employeeService = employeeService;
 		this.taskGroupService = taskGroupService;
 	}
 
@@ -133,29 +137,32 @@ public class ProjectController {
 	@GetMapping("/showFormForAddTask")
 	public String showFormForAddTask(@RequestParam("projectId") Long projectId, Model theModel) {
 		
-		Task task = new Task();	
-		task.setProject(projectService.findById(projectId));
+		ProjectTask projectTask = new ProjectTask();	
+		
 		List <TaskGroup> taskGroups = taskGroupService.findAll();
-		//assertEquals(EXPECTED_LIST, result); TEST!!
+		List <Employee> employees = employeeService.findAll();
 				
-		theModel.addAttribute("task", task);
+		theModel.addAttribute("projectTask", projectTask);
 		theModel.addAttribute("taskGroups", taskGroups);
+		theModel.addAttribute("employees", employees);
 		
 		return "projects/project-task-form";
 	}
 	
 	@PostMapping("/taskSave")
-	public String processTaskForm(@Valid @ModelAttribute("task") Task task, BindingResult theBindingResult, Model theModel) {
+	public String processTaskForm(@Valid @ModelAttribute("projectTask") ProjectTask projectTask, BindingResult theBindingResult, Model theModel) {
 		if (!theBindingResult.hasErrors()) {
 
 			// save the task to DB
-			taskService.save(task);
+			taskService.save(projectTask);
 			
 			// use of redirect to prevent duplicate submissions
 			return "redirect:/projects/list";
 		} else {
 			List <TaskGroup> taskGroups = taskGroupService.findAll();
+			List <Employee> employees = employeeService.findAll();
 			
+			theModel.addAttribute("employees", employees);
 			theModel.addAttribute("taskGroups", taskGroups);
 			return "projects/project-task-form";
 		}

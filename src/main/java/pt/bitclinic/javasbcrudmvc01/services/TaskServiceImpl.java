@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 import pt.bitclinic.javasbcrudmvc01.dao.TaskRepository;
-import pt.bitclinic.javasbcrudmvc01.entities.Task;
+import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
 
@@ -23,18 +23,18 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Transactional(readOnly = true)	
-	public List<Task> findAll() {
+	public List<ProjectTask> findAll() {
 		
 		return taskRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)	
-	public Task findById(Long id) {
-		Optional<Task> obj = taskRepository.findById(id);
+	public ProjectTask findById(Long id) {
+		Optional<ProjectTask> obj = taskRepository.findById(id);
 		return obj.orElseThrow(()->  new ResourceNotFoundException(id));
 	}
 	
-	public Task save(Task obj) {
+	public ProjectTask save(ProjectTask obj) {
 		return taskRepository.save(obj);
 	}
 	
@@ -49,11 +49,11 @@ public class TaskServiceImpl implements TaskService{
 		}
 	}
 
-	public Task update(Long id, Task obj) {
+	public ProjectTask update(Long id, ProjectTask obj) {
 		try {
 			//getReferenceById more efficient than findById
 			//getReferenceById only "prepares" the monitored object 
-			Task entity = taskRepository.getReferenceById(id);
+			ProjectTask entity = taskRepository.getReferenceById(id);
 			updateData(entity, obj);
 			return taskRepository.save(entity);
 			
@@ -62,7 +62,7 @@ public class TaskServiceImpl implements TaskService{
 		}	
 	}
 	
-	private void updateData(Task entity, Task obj) {
+	private void updateData(ProjectTask entity, ProjectTask obj) {
 		entity.setName(obj.getName());
 		entity.setDescription(obj.getDescription());
 		entity.setStartDate(obj.getStartDate());

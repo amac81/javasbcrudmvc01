@@ -66,9 +66,9 @@ public class TaskGroup implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TaskGroup [id=" + id + ", description=" + description + ", getId()=" + getId() + ", getDescription()="
-				+ getDescription() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()="
-				+ super.toString() + "]";
+		return "TaskGroup [id=" + id + ", description=" + description + "]";
 	}
+
+
 
 }

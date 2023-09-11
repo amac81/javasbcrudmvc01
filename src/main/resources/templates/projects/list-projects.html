@@ -29,7 +29,6 @@
 					<th>Status</th>
 					<th>Client</th>
 					<th>Tasks</th>
-
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<th colspan="3">Actions</th>
 					</div>
@@ -43,32 +42,30 @@
 					<td th:text="${tempProject.name}"></td>
 					<td th:text="${tempProject.description}"></td>
 					<td th:text="${tempProject.status}"></td>
-					<td th:text="${tempProject.client}"></td>
+					<td th:text="${tempProject.client.name}"></td>
 
 					<td>
 						<table class="custom-table">
 							<thead>
 								<tr>
-									<th>Phase #</th>
-									<th>Status</th>
 									<th>Name</th>
 									<th>Description</th>
-									<th>Group Description</th>
+									<th>Group</th>
+									<th>Status</th>
 									<th>Start Date</th>
 									<th>End Date</th>
 									<th>Team</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="row,rowStat : ${tempProject.tasks}">
-									<td th:text="${rowStat.count}"></td>
-									<td th:text="${row.status}"></td>
-									<td th:text="${row.name}"></td>
-									<td th:text="${row.description}"></td>
-									<td th:text="${row.groupDescription}"></td>
-									<td th:text="${row.startDate}"></td>
-									<td th:text="${row.endDate}"></td>
-									<td th:text="${row.team}"></td>
+								<tr th:each="task : ${tempProject.tasks}">
+									<td th:text="${task.name}"></td>
+									<td th:text="${task.description}"></td>
+									<td th:text="${task.taskGroup.description}"></td>
+									<td th:text="${task.status}"></td>
+									<td th:text="${task.startDate}"></td>
+									<td th:text="${task.endDate}"></td>
+									<td th:text="${task.team}"></td>
 								</tr>
 							</tbody>
 						</table>

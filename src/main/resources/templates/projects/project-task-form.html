@@ -25,9 +25,10 @@
 <body class="container">
 	<h1 class="py-3">Task form</h1>
 	<i>Fill out the form. Asterisk (*) means required.</i>
-	<form method="post" th:action="@{/projects/taskSave}" th:object="${task}" class="col card p-3 mb-3">
+	<form method="post" th:action="@{/projects/taskSave}" th:object="${projectTask}" class="col card p-3 mb-3">
 		<!-- hidden form field for handle the update-->
-		<input type="hidden" th:field="*{id}" />
+		<!--input type="hidden" th:field="*{id}" /-->
+	
 		<div class="form-group">
 			<label for="name">Name (*)</label>
 			<input id="name" placeholder="Enter Task Name" type="text" th:field="*{name}" class="form-control" />
@@ -45,9 +46,9 @@
 		</div>
 
 		<div class="form-group">
-			<label for="taskGroup">Task Group</label>
-			<select class="form-control choose_text " id="taskGroup" name="taskGroup" th:field="*{taskGroup}">
-				<option th:each="taskGroup : ${taskGroups}" th:value="${taskGroup.id}" th:text="${taskGroup.description}"></option>
+			<select class="form-control choose_text" id="taskGroup" taskGroup="client" th:field="*{taskGroup}">
+				<option th:each="taskGroup : ${taskGroups}" th:value="${taskGroup.id}"
+					th:text="${taskGroup.description}"></option>
 			</select>
 		</div>
 
@@ -75,10 +76,17 @@
 					th:value="${statusOpt}" th:text="${statusOpt}" th:field="*{status}"></option>
 			</select>
 		</div>
+		
+		<div class="form-group">
+			<h1 style="font-size: 50px; color:crimson;"> HAVE TO ASSIGN TASK TO AT LEAST ONE EMPLOYEE !!!</h1>
+		
+		</div>
+		
+		
+		
 
 		<div class="button-container">
 			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
-			<div class="my_button"><a href="#" class="btn btn-secondary">Assign to team</a></div>
 		</div>
 	</form>
 	<div class="button-container">

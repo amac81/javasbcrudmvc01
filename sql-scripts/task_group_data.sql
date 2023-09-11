@@ -1,4 +1,5 @@
-	INSERT INTO tb_task_group (description) VALUES
+USE `javasbcrudmvc01_bd`;
+INSERT INTO tb_task_group (description) VALUES
 ('Project Planning'),
 ('Requirement Analysis'),
 ('Design and Development'),

@@ -2,7 +2,11 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -10,7 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -41,22 +45,18 @@ public class Employee implements Serializable {
 	@Size(min = 1, message = "is required")
 	private String department;
 	
-	//bidirectional relationship
-	//@OneToOne (mappedBy = "employee", cascade = CascadeType.ALL) //dependent class
-
 	//unidirectional relationship
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="employee_detail_id")
 	private EmployeeDetail employeeDetail;
 	
-	@ManyToOne
-	@JoinColumn(name = "task_id")
-	private Task task;
+	@OneToMany(mappedBy = "id.employee")
+	private Set<ProjectTask> tasks = new HashSet<>();	
 	
 	public Employee() {
 	}
 
-	public Employee(Long id, String firstName, String lastName, String email, double salary, LocalDate hireDate, String department, Task task) {
+	public Employee(Long id, String firstName, String lastName, String email, double salary, LocalDate hireDate, String department) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -64,7 +64,6 @@ public class Employee implements Serializable {
 		this.salary = salary;
 		this.hireDate = hireDate;
 		this.department = department;
-		this.task = task;
 	}
 
 	public Long getId() {
@@ -91,7 +90,6 @@ public class Employee implements Serializable {
 		this.lastName = lastName;
 	}
 	
-
 	public String getEmail() {
 		return email;
 	}
@@ -124,12 +122,16 @@ public class Employee implements Serializable {
 		this.department = department;
 	}
 
-	public Task getTask() {
-		return task;
-	}
-
-	public void setTask(Task task) {
-		this.task = task;
+	//in JEE what matters is the "get" word (to serialize to Json)
+	@JsonIgnore //to avoid "loop"
+	public Set<Project> getProjects() {
+		Set <Project> myProjects = new HashSet<> ();
+		
+		for(ProjectTask pt: tasks){
+			myProjects.add(pt.getProject());
+		}
+		
+		return myProjects;
 	}
 
 	public EmployeeDetail getEmployeeDetail() {

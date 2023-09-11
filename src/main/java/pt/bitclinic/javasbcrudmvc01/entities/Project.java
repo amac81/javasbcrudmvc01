@@ -1,14 +1,14 @@
 package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,17 +38,15 @@ public class Project implements Serializable {
 	
 	private Integer status;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "project", 
-			cascade= {CascadeType.ALL}) 
-	private List <Task> tasks;
-	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	@NotNull(message = "is required")
 	private Client client;
 	
+	@OneToMany(mappedBy = "id.project")
+	private Set<ProjectTask> tasks = new HashSet<>();
+		
 	public Project() {
-		tasks = new ArrayList<Task>();
 		setStatus(Status.PLANNING); // initial state
 	}
 
@@ -91,10 +89,6 @@ public class Project implements Serializable {
 		this.status = status.getCode();
 	}
 
-	public List<Task> getTasks() {
-		return tasks;
-	}
-	
 	public Client getClient() {
 		return client;
 	}
@@ -102,15 +96,23 @@ public class Project implements Serializable {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+		
+	//in JEE what matters is the "get" word (to serialize to Json)
+	@JsonIgnore //to avoid "loop"
+	public Set<Employee> getTeam() {
+		Set <Employee> employees = new HashSet<> ();
+		
+		for(ProjectTask pt: tasks){
+			employees.add(pt.getEmployee());
+		}
+		
+		return employees;
+	}
+	
+	public Set<ProjectTask> getTasks() {
+		return tasks;
+	}
 
-	public void addTask(Task task) {
-		tasks.add(task);
-	}
-	
-	public boolean removeTask(Task task) {
-		return tasks.remove(task);
-	}
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

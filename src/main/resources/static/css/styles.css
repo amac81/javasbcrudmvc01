@@ -3,8 +3,8 @@ body {
 }
 
 .maindiv {
-	margin-top: 10px;
-	margin-left: 20px;
+	margin-top: 1px;
+	margin-left: 2px;
 }
 
 hr.top_22 {
@@ -106,6 +106,7 @@ hr.top_22 {
 .custom-table {
     border-collapse: collapse; /* Combine table cell borders */
     width: 100%; /* Set the table width to 100% */
+    font-size: 14px;
 }
 
 /* Define styles for table rows */
