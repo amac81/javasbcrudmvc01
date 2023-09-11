@@ -19,8 +19,10 @@ import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Client;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
 import pt.bitclinic.javasbcrudmvc01.entities.Task;
+import pt.bitclinic.javasbcrudmvc01.entities.TaskGroup;
 import pt.bitclinic.javasbcrudmvc01.services.ClientService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
+import pt.bitclinic.javasbcrudmvc01.services.TaskGroupService;
 import pt.bitclinic.javasbcrudmvc01.services.TaskService;
 
 @Controller
@@ -30,13 +32,15 @@ public class ProjectController {
 	private ProjectService projectService;
 	private TaskService taskService;
 	private ClientService clientService;
-
+	private TaskGroupService taskGroupService;
+	
 	// constructor injection of ProjectService @Autowired optional, we just have
 	// one constructor
-	public ProjectController(ProjectService projectService, TaskService taskService, ClientService clientService) {
+	public ProjectController(ProjectService projectService, TaskService taskService, ClientService clientService, TaskGroupService taskGroupService) {
 		this.projectService = projectService;
 		this.taskService = taskService;
 		this.clientService = clientService;
+		this.taskGroupService = taskGroupService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -85,7 +89,7 @@ public class ProjectController {
 				
 		theModel.addAttribute("project", project);		
 		theModel.addAttribute("clients", clients);
-		
+				
 		return "projects/project-form";
 	}
 	
@@ -120,7 +124,7 @@ public class ProjectController {
 			return "redirect:/projects/list";
 		} else {
 			List <Client> clients = clientService.findAll();
-			
+
 			theModel.addAttribute("clients", clients);
 			return "projects/project-form";
 		}
@@ -131,16 +135,17 @@ public class ProjectController {
 		
 		Task task = new Task();	
 		task.setProject(projectService.findById(projectId));
-		
+		List <TaskGroup> taskGroups = taskGroupService.findAll();
 		//assertEquals(EXPECTED_LIST, result); TEST!!
 				
-		theModel.addAttribute("task", task);		
+		theModel.addAttribute("task", task);
+		theModel.addAttribute("taskGroups", taskGroups);
 		
 		return "projects/project-task-form";
 	}
 	
 	@PostMapping("/taskSave")
-	public String processTaskForm(@Valid @ModelAttribute("task") Task task, BindingResult theBindingResult) {
+	public String processTaskForm(@Valid @ModelAttribute("task") Task task, BindingResult theBindingResult, Model theModel) {
 		if (!theBindingResult.hasErrors()) {
 
 			// save the task to DB
@@ -149,6 +154,9 @@ public class ProjectController {
 			// use of redirect to prevent duplicate submissions
 			return "redirect:/projects/list";
 		} else {
+			List <TaskGroup> taskGroups = taskGroupService.findAll();
+			
+			theModel.addAttribute("taskGroups", taskGroups);
 			return "projects/project-task-form";
 		}
 	}

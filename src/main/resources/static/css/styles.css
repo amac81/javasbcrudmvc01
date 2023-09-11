@@ -16,6 +16,13 @@ hr.top_22 {
 	color: red;
 }
 
+.choose_text {
+	color:royalblue;
+	font-size: 14px;
+	font-weight: bold;
+	
+}
+
 .info-msg {
 	font-size: 16px;
 	color: #067a00;

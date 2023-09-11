@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_task_group" )
@@ -19,6 +20,7 @@ public class TaskGroup implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message = "is required")
 	private String description;
 
 	public TaskGroup() {
@@ -38,7 +40,7 @@ public class TaskGroup implements Serializable {
 	}
 
 	public String getDescription() {
-		return description;
+		return description.toUpperCase();
 	}
 
 	public void setDescription(String description) {

@@ -40,7 +40,6 @@ public class Task implements Serializable {
 	// unidirectional relationship
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "taskgroup_id")
-	@NotNull(message = "is required")
 	private TaskGroup taskGroup;
 
 	@NotNull(message = "is required")
