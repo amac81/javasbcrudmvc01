@@ -69,10 +69,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${#lists.isEmpty(employeesInTeam)}">
+				<tr th:if="${#lists.isEmpty(team.employees)}">
 					<td colspan="5">No employees at team.</td>
 				</tr>
-				<tr th:each="employeInTeam : ${employeesInTeam}">
+				<tr th:each="employeInTeam : ${team.employees}">
 					<td th:text="${employeInTeam.firstName}"></td>
 					<td th:text="${employeInTeam.lastName}"></td>
 				</tr>
@@ -95,12 +95,15 @@
 					<h5 class="modal-title" id="modal-title">Choose employee</h5>
 				</div>
 				<div class="modal-body">
-					
-<select th:onchange="'window.location.href = \'' + @{/teams/addEmployee} + '?teamId=1&employeeId=\' + this.value'">
-    <option th:each="emp : *{employees}" th:value="${emp.id} " th:text="${emp.firstName}"></option>
-</select>
-					
 
+					<div class="form-group">
+						<select class="form-control"
+							th:onchange="'window.location.href = \'' + @{/teams/addEmployee} + '?teamId=1&employeeId=\' + this.value'">
+							<option th:each="emp : *{allEmployees}" th:value="${emp.id} " th:text="${emp.firstName}">
+							</option>
+						</select>
+
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal"

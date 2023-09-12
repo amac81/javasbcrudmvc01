@@ -40,7 +40,7 @@
 					<td th:text="${tempTeam.name}"></td>
 					<td th:text="${tempTeam.createdAt}"></td>
 					<td th:text="${tempTeam.active}"></td>
-					<td th:text="${tempTeam.employeesInTeam}"></td>
+					<td th:text="${tempTeam.employees}"></td>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<td><a th:href="@{/teams/showFormForUpdate(teamId=${tempTeam.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>

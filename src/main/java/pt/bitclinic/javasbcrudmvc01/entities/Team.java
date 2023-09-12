@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,7 +39,7 @@ public class Team implements Serializable {
 	
 	private Boolean active;
 	
-	@OneToMany(mappedBy = "id.team")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id.team")
 	private Set<TeamItem> teamItems = new HashSet<>();
 
 	public Team() {		
@@ -74,9 +75,13 @@ public class Team implements Serializable {
 		return active;
 	}
 
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
 	//in JEE what matters is the "get" word (to serialize to Json)
 	@JsonIgnore //to avoid "loop"
-	public Set<Employee> getOrders() {
+	public Set<Employee> getEmployees() {
 		Set <Employee> employees = new HashSet<> ();
 		
 		for(TeamItem ti: teamItems){

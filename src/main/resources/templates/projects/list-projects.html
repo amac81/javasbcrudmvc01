@@ -36,7 +36,7 @@
 			</thead>
 			<tbody>
 				<tr th:if="${#lists.isEmpty(projects)}">
-					<td colspan="3">No Projects found.</td>
+					<td colspan="6">No Projects found.</td>
 				</tr>
 				<tr th:each="tempProject : ${projects}">
 					<td th:text="${tempProject.name}"></td>

@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Team;
+import pt.bitclinic.javasbcrudmvc01.entities.TeamItem;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
+import pt.bitclinic.javasbcrudmvc01.services.TeamItemService;
 import pt.bitclinic.javasbcrudmvc01.services.TeamService;
 
 @Controller
@@ -27,12 +29,14 @@ public class TeamController {
 
 	private TeamService teamService;
 	private EmployeeService employeeService;
+	private TeamItemService teamItemService;
 
 	// constructor injection of teamService @Autowired optional, we just have
 	// one constructor
-	public TeamController(TeamService teamService, EmployeeService employeeService) {
+	public TeamController(TeamService teamService, EmployeeService employeeService, TeamItemService teamItemService) {
 		this.teamService = teamService;
 		this.employeeService = employeeService;
+		this.teamItemService = teamItemService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -60,10 +64,10 @@ public class TeamController {
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
 		Team team = new Team();
-		List <Employee> employees = employeeService.findAll();
+		List <Employee> allEmployees = employeeService.findAll();
 		
 		theModel.addAttribute("team", team);
-		theModel.addAttribute("employees", employees);
+		theModel.addAttribute("allEmployees", allEmployees);
 				
 		return "teams/team-form";
 	}
@@ -74,8 +78,8 @@ public class TeamController {
 		// get the team from the service
 		Team team = teamService.findById(theId);
 		
-		List <Employee> employees = employeeService.findAll();
-		theModel.addAttribute("employees", employees);
+		List <Employee> allEmployees = employeeService.findAll();
+		theModel.addAttribute("allEmployees", allEmployees);
 		
 		theModel.addAttribute("team", team);
 		return "teams/team-form";
@@ -107,16 +111,11 @@ public class TeamController {
 			
 			Employee employee = employeeService.findById(employeeId);
 			Team team = teamService.findById(teamId);
-	
-			//team.addEmployee(employee);
-		
-			// save the team to DB
-			teamService.save(team);
 			
-						
-			// save the team to DB
+			TeamItem teamItem = new TeamItem(team, employee);
 			
-			//teamService.save(team);
+			// save the teamItem to DB
+			teamItemService.save(teamItem);
 
 			// use of redirect to prevent duplicate submissions
 			return "redirect:/teams/list";

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -50,7 +51,7 @@ public class Employee implements Serializable {
 	@JoinColumn(name="employee_detail_id")
 	private EmployeeDetail employeeDetail;
 	
-	@OneToMany(mappedBy = "id.employee")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id.employee")
 	private Set<TeamItem> teamItems = new HashSet<>();
 	
 	public Employee() {
