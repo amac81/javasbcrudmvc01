@@ -6,29 +6,21 @@ import java.util.Objects;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import pt.bitclinic.javasbcrudmvc01.entities.Project;
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Team;
 
 @Embeddable
-public class TaskPK implements Serializable{
+public class TeamItemPK implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "project_id")
-	private Project project;
-	
-	@ManyToOne
 	@JoinColumn(name = "team_id")
 	private Team team;
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
+	
+	@ManyToOne
+	@JoinColumn(name = "employee_id")
+	private Employee employee;
 
 	public Team getTeam() {
 		return team;
@@ -37,10 +29,18 @@ public class TaskPK implements Serializable{
 	public void setTeam(Team team) {
 		this.team = team;
 	}
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(project, team);
+		return Objects.hash(employee, team);
 	}
 
 	@Override
@@ -51,7 +51,8 @@ public class TaskPK implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TaskPK other = (TaskPK) obj;
-		return Objects.equals(project, other.project) && Objects.equals(team, other.team);
+		TeamItemPK other = (TeamItemPK) obj;
+		return Objects.equals(employee, other.employee) && Objects.equals(team, other.team);
 	}
 }
+

@@ -4,18 +4,17 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
-import pt.bitclinic.javasbcrudmvc01.entities.pks.TaskPK;
 
 @Entity
 @Table(name = "tb_project_task")
@@ -23,9 +22,10 @@ public class ProjectTask implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private TaskPK id = new TaskPK();
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+		
 	@NotNull(message = "is required")
 	private String name;
 
@@ -51,10 +51,9 @@ public class ProjectTask implements Serializable {
 		setStatus(Status.PLANNING); // initial state
 	}
 
-	public ProjectTask(Project project, Team team, String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
+	public ProjectTask(String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
 			LocalDateTime endDate, Status status) {
-		id.setProject(project);
-		id.setTeam(team);
+		
 		this.name = name;
 		this.taskGroup = taskGroup;
 		this.description = description;
@@ -63,25 +62,13 @@ public class ProjectTask implements Serializable {
 		setStatus(status);
 	}
 
-	//in JEE what matters is the get method; to avoid "loop"
-	@JsonIgnore
-	public Project getProject() {
-		return id.getProject();
+	public Long getId() {
+		return id;
 	}
-	
-	public void setProject(Project project) {
-		id.setProject(project);
-	}		
-	
-	//in JEE what matters is the get method; to avoid "loop"
-	@JsonIgnore
-	public Team getTeam() {
-		return id.getTeam();
+
+	public void setId(Long id) {
+		this.id = id;
 	}
-	
-	public void setTeam(Team team) {
-		id.setTeam(team);
-	}	
 
 	public String getName() {
 		return name;
@@ -137,7 +124,7 @@ public class ProjectTask implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {	
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)

@@ -2,7 +2,11 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -10,7 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -46,9 +50,8 @@ public class Employee implements Serializable {
 	@JoinColumn(name="employee_detail_id")
 	private EmployeeDetail employeeDetail;
 	
-	// Many employees can belong to one team
-	@ManyToOne
-	private Team team;	
+	@OneToMany(mappedBy = "id.employee")
+	private Set<TeamItem> teamItems = new HashSet<>();
 	
 	public Employee() {
 	}
@@ -127,6 +130,17 @@ public class Employee implements Serializable {
 		this.employeeDetail = employeeDetail;
 	}
 	
+	//in JEE what matters is the "get" word (to serialize to Json)
+	@JsonIgnore //to avoid "loop"
+	public Set<Team> getTeams() {
+		Set <Team> teams = new HashSet<> ();
+		
+		for(TeamItem ti: teamItems){
+			teams.add(ti.getTeam());
+		}
+		return teams;
+	}	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -151,35 +165,4 @@ public class Employee implements Serializable {
 				+ employeeDetail + "]";
 	}
 
-
-	
-	/*
-	 * private Long id;
-	 * 
-	 * @NotNull(message = "is required")
-	 * 
-	 * @Size(min = 1, message = "is required") private String firstName;
-	 * 
-	 * @NotNull(message = "is required")
-	 * 
-	 * @Size(min = 1, message = "is required") private String lastName;
-	 * 
-	 * @NotNull(message = "is required")
-	 * 
-	 * @Min(value = 0, message = "must be greater than or equal to zero")
-	 * 
-	 * @Max(value = 10, message = "must be less than or equal to ten") private
-	 * Integer freePasses;
-	 * 
-	 * @NotNull(message = "is required")
-	 * 
-	 * @Pattern(regexp = "^\\d{4}-\\d{3}$", message="must be in the form ####-###")
-	 * // PT postal code ####-### private String postalCode;
-	 * 
-	 * @CourseCode(value="TIC", message="must start with TIC") private String
-	 * courseCode;
-	 * 
-	 * 
-	 * 
-	 */
 }

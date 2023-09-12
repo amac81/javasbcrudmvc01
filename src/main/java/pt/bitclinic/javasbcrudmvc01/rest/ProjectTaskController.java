@@ -69,7 +69,7 @@ public class ProjectTaskController {
 		
 		ProjectTask projectTask = new ProjectTask();
 		
-		projectTask.setProject(projectService.findById(projectId));
+		
 		
 		List <TaskGroup> taskGroups = taskGroupService.findAll();
 		List <Employee> employees = employeeService.findAll();

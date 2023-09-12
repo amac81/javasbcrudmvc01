@@ -2,10 +2,15 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,22 +32,21 @@ public class Team implements Serializable {
 	@NotNull(message = "is required")
 	private String name;
 
+	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
 	private Instant createdAt;
+	
 	private Boolean active;
+	
+	@OneToMany(mappedBy = "id.team")
+	private Set<TeamItem> teamItems = new HashSet<>();
 
-	// One team can have many employees
-    @OneToMany(mappedBy = "team")
-	private List<Employee> employees;
-
-	public Team() {
-		createdAt = Instant.now();
-		employees = new ArrayList<>();
+	public Team() {		
 	}
 
-	public Team(Long id, @NotNull(message = "is required") String name, Instant createdAt, Boolean active) {
+	public Team(Long id, String name, Boolean active) {
 		this.id = id;
 		this.name = name;
-		this.createdAt = Instant.now();
 		this.active = active;
 	}
 
@@ -66,21 +70,22 @@ public class Team implements Serializable {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	public Boolean getActive() {
 		return active;
 	}
 
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
-	public List<Employee> getEmployees() {
+	//in JEE what matters is the "get" word (to serialize to Json)
+	@JsonIgnore //to avoid "loop"
+	public Set<Employee> getOrders() {
+		Set <Employee> employees = new HashSet<> ();
+		
+		for(TeamItem ti: teamItems){
+			employees.add(ti.getEmployee());
+		}
+		
 		return employees;
 	}
+	
 
 	@Override
 	public int hashCode() {
@@ -101,8 +106,7 @@ public class Team implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Team [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", active=" + active
-				+ ", employees=" + employees + "]";
+		return "Team [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", active=" + active + "]";
 	}
 
 }

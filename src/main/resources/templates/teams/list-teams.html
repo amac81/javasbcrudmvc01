@@ -26,8 +26,8 @@
 					<th>Name</th>
 					<th>Created At</th>
 					<th>Active</th>
+					<th>Employees In Team</th>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
-						<th colspan="1">Members</th>
 						<th colspan="2">Actions</th>
 					</div>
 				</tr>
@@ -40,7 +40,7 @@
 					<td th:text="${tempTeam.name}"></td>
 					<td th:text="${tempTeam.createdAt}"></td>
 					<td th:text="${tempTeam.active}"></td>
-					<td th:text="${tempTeam.employees}"></td>
+					<td th:text="${tempTeam.employeesInTeam}"></td>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<td><a th:href="@{/teams/showFormForUpdate(teamId=${tempTeam.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>

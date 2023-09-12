@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Team;
+import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.TeamService;
 
 @Controller
@@ -24,11 +26,13 @@ import pt.bitclinic.javasbcrudmvc01.services.TeamService;
 public class TeamController {
 
 	private TeamService teamService;
+	private EmployeeService employeeService;
 
 	// constructor injection of teamService @Autowired optional, we just have
 	// one constructor
-	public TeamController(TeamService teamService) {
+	public TeamController(TeamService teamService, EmployeeService employeeService) {
 		this.teamService = teamService;
+		this.employeeService = employeeService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -48,7 +52,6 @@ public class TeamController {
 		List<Team> teams = new ArrayList<>();
 
 		teams = teamService.findAll();
-
 		theModel.addAttribute("teams", teams);
 
 		return "teams/list-teams";
@@ -56,7 +59,12 @@ public class TeamController {
 
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
-		theModel.addAttribute("team", new Team());
+		Team team = new Team();
+		List <Employee> employees = employeeService.findAll();
+		
+		theModel.addAttribute("team", team);
+		theModel.addAttribute("employees", employees);
+				
 		return "teams/team-form";
 	}
 
@@ -65,7 +73,10 @@ public class TeamController {
 
 		// get the team from the service
 		Team team = teamService.findById(theId);
-
+		
+		List <Employee> employees = employeeService.findAll();
+		theModel.addAttribute("employees", employees);
+		
 		theModel.addAttribute("team", team);
 		return "teams/team-form";
 	}
@@ -90,5 +101,27 @@ public class TeamController {
 			return "teams/team-form";
 		}
 	}
+	
+	@GetMapping("/addEmployee")
+	public String addEmployee(@RequestParam("teamId") Long teamId, @RequestParam("employeeId") Long employeeId) { 
+			
+			Employee employee = employeeService.findById(employeeId);
+			Team team = teamService.findById(teamId);
+	
+			//team.addEmployee(employee);
+		
+			// save the team to DB
+			teamService.save(team);
+			
+						
+			// save the team to DB
+			
+			//teamService.save(team);
+
+			// use of redirect to prevent duplicate submissions
+			return "redirect:/teams/list";
+		
+	}
 
 }
+
