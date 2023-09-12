@@ -53,7 +53,6 @@ public class SecurityConfig {
 				
 				.requestMatchers("/teams/delete/**").hasRole("MANAGER")
 				.requestMatchers("/teams/edit/**").hasRole("MANAGER")
-				.requestMatchers("/teams/showMembers/**").hasRole("MANAGER")
 				.requestMatchers("/teams/showFormForAdd/**").hasRole("MANAGER")
 				.requestMatchers("/teams/showFormForUpdate/**").hasRole("MANAGER")
 				

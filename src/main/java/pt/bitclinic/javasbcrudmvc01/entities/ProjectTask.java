@@ -51,10 +51,10 @@ public class ProjectTask implements Serializable {
 		setStatus(Status.PLANNING); // initial state
 	}
 
-	public ProjectTask(Project project, Employee employee, String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
+	public ProjectTask(Project project, Team team, String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
 			LocalDateTime endDate, Status status) {
 		id.setProject(project);
-		id.setEmployee(employee);
+		id.setTeam(team);
 		this.name = name;
 		this.taskGroup = taskGroup;
 		this.description = description;
@@ -63,7 +63,6 @@ public class ProjectTask implements Serializable {
 		setStatus(status);
 	}
 
-	
 	//in JEE what matters is the get method; to avoid "loop"
 	@JsonIgnore
 	public Project getProject() {
@@ -73,15 +72,16 @@ public class ProjectTask implements Serializable {
 	public void setProject(Project project) {
 		id.setProject(project);
 	}		
-
-	public Employee getEmployee() {
-		return id.getEmployee();
+	
+	//in JEE what matters is the get method; to avoid "loop"
+	@JsonIgnore
+	public Team getTeam() {
+		return id.getTeam();
 	}
-
-	public void setEmployee(Employee employee) {
-		id.setEmployee(employee);
-	}
-
+	
+	public void setTeam(Team team) {
+		id.setTeam(team);
+	}	
 
 	public String getName() {
 		return name;

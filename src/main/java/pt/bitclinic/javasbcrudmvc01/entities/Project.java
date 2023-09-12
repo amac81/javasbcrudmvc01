@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -97,18 +95,6 @@ public class Project implements Serializable {
 		this.client = client;
 	}
 		
-	//in JEE what matters is the "get" word (to serialize to Json)
-	@JsonIgnore //to avoid "loop"
-	public Set<Employee> getTeam() {
-		Set <Employee> employees = new HashSet<> ();
-		
-		for(ProjectTask pt: tasks){
-			employees.add(pt.getEmployee());
-		}
-		
-		return employees;
-	}
-	
 	public Set<ProjectTask> getTasks() {
 		return tasks;
 	}

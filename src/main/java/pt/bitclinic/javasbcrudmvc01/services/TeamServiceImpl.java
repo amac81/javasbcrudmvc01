@@ -8,39 +8,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
-import pt.bitclinic.javasbcrudmvc01.dao.TaskRepository;
-import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
+import pt.bitclinic.javasbcrudmvc01.dao.TeamRepository;
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
+import pt.bitclinic.javasbcrudmvc01.entities.Team;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class TaskServiceImpl implements TaskService{
+public class TeamServiceImpl implements TeamService{
 
-	private TaskRepository taskRepository;
+	private TeamRepository teamRepository;
 	
-	public TaskServiceImpl(TaskRepository taskRepository) {
-		this.taskRepository = taskRepository;
+	public TeamServiceImpl(TeamRepository teamRepository) {
+		this.teamRepository = teamRepository;
 	}
 
 	@Transactional(readOnly = true)	
-	public List<ProjectTask> findAll() {
-		
-		return taskRepository.findAll();
+	public List<Team> findAll() {
+		return teamRepository.findAllByOrderByNameAsc();
 	}
 
 	@Transactional(readOnly = true)	
-	public ProjectTask findById(Long id) {
-		Optional<ProjectTask> obj = taskRepository.findById(id);
+	public Team findById(Long id) {
+		Optional<Team> obj = teamRepository.findById(id);
 		return obj.orElseThrow(()->  new ResourceNotFoundException(id));
 	}
 	
-	public ProjectTask save(ProjectTask obj) {
-		return taskRepository.save(obj);
+	public Team save(Team obj) {
+		return teamRepository.save(obj);
 	}
 	
 	public void delete(Long id) {
 		try {
-			taskRepository.deleteById(id);
+			teamRepository.deleteById(id);
 		}catch(EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
 		}
@@ -49,27 +49,37 @@ public class TaskServiceImpl implements TaskService{
 		}
 	}
 
-	public ProjectTask update(Long id, ProjectTask obj) {
+	public Team update(Long id, Team obj) {
 		try {
 			//getReferenceById more efficient than findById
 			//getReferenceById only "prepares" the monitored object 
-			ProjectTask entity = taskRepository.getReferenceById(id);
+			Team entity = teamRepository.getReferenceById(id);
 			updateData(entity, obj);
-			return taskRepository.save(entity);
+			return teamRepository.save(entity);
 			
 		}catch(EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}	
 	}
 	
-	private void updateData(ProjectTask entity, ProjectTask obj) {
+	private void updateData(Team entity, Team obj) {
+		entity.setActive(obj.getActive());
 		entity.setName(obj.getName());
-		entity.setDescription(obj.getDescription());
-		entity.setStartDate(obj.getStartDate());
-		entity.setEndDate(obj.getEndDate());
-		entity.setTaskGroup(obj.getTaskGroup());
-		entity.setStatus(obj.getStatus());
+		entity.setCreatedAt(obj.getCreatedAt());		
 	}
 
+	@Override
+	public void addEmployee(Long id, Employee employee) {
+		Team team = findById(id);
+		team.getEmployees().add(employee);
+		save(team);
+	}
+
+	@Override
+	public void removeEmployee(Long id, Employee employee) {
+		Team team = findById(id);
+		team.getEmployees().remove(employee);
+		save(team);		
+	}
 	
 }

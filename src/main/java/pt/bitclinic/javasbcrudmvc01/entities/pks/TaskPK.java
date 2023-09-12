@@ -6,8 +6,8 @@ import java.util.Objects;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
+import pt.bitclinic.javasbcrudmvc01.entities.Team;
 
 @Embeddable
 public class TaskPK implements Serializable{
@@ -19,8 +19,8 @@ public class TaskPK implements Serializable{
 	private Project project;
 	
 	@ManyToOne
-	@JoinColumn(name = "employee_id")
-	private Employee employee;
+	@JoinColumn(name = "team_id")
+	private Team team;
 
 	public Project getProject() {
 		return project;
@@ -30,17 +30,17 @@ public class TaskPK implements Serializable{
 		this.project = project;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public Team getTeam() {
+		return team;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(employee, project);
+		return Objects.hash(project, team);
 	}
 
 	@Override
@@ -52,6 +52,6 @@ public class TaskPK implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		TaskPK other = (TaskPK) obj;
-		return Objects.equals(employee, other.employee) && Objects.equals(project, other.project);
+		return Objects.equals(project, other.project) && Objects.equals(team, other.team);
 	}
 }

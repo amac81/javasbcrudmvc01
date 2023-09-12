@@ -25,7 +25,7 @@
 <body class="container">
 	<h1 class="py-3">Task form</h1>
 	<i>Fill out the form. Asterisk (*) means required.</i>
-	<form method="post" th:action="@{/projects/taskSave}" th:object="${projectTask}" class="col card p-3 mb-3">
+	<form method="post" th:action="@{/tasks/save}" th:object="${projectTask}" class="col card p-3 mb-3">
 		<!-- hidden form field for handle the update-->
 		<!--input type="hidden" th:field="*{id}" /-->
 	

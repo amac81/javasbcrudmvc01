@@ -2,11 +2,7 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -14,7 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -50,8 +46,9 @@ public class Employee implements Serializable {
 	@JoinColumn(name="employee_detail_id")
 	private EmployeeDetail employeeDetail;
 	
-	@OneToMany(mappedBy = "id.employee")
-	private Set<ProjectTask> tasks = new HashSet<>();	
+	// Many employees can belong to one team
+	@ManyToOne
+	private Team team;	
 	
 	public Employee() {
 	}
@@ -120,18 +117,6 @@ public class Employee implements Serializable {
 
 	public void setDepartment(String department) {
 		this.department = department;
-	}
-
-	//in JEE what matters is the "get" word (to serialize to Json)
-	@JsonIgnore //to avoid "loop"
-	public Set<Project> getProjects() {
-		Set <Project> myProjects = new HashSet<> ();
-		
-		for(ProjectTask pt: tasks){
-			myProjects.add(pt.getProject());
-		}
-		
-		return myProjects;
 	}
 
 	public EmployeeDetail getEmployeeDetail() {
