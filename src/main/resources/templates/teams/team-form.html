@@ -66,15 +66,22 @@
 				<tr>
 					<th>First Name</th>
 					<th>Last Name</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:if="${#lists.isEmpty(team.employees)}">
-					<td colspan="5">No employees at team.</td>
+					<td colspan="3">No employees at team.</td>
 				</tr>
 				<tr th:each="employeInTeam : ${team.employees}">
 					<td th:text="${employeInTeam.firstName}"></td>
 					<td th:text="${employeInTeam.lastName}"></td>
+					<div sec:authorize="hasRole('ROLE_MANAGER')">
+						<td><a th:href="@{/teams/deleteEmployee(teamId=${team.id}, employeeId=${employeInTeam.id})}" class="btn btn-danger btn-sm"
+								onclick=" if (!(confirm('Are you sure you want remove this employee from team?'))) return false">
+								Remove
+							</a></td>
+					</div>
 				</tr>
 			</tbody>
 		</table>

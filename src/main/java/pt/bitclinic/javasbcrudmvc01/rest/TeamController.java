@@ -121,6 +121,18 @@ public class TeamController {
 			return "redirect:/teams/list";
 		
 	}
+	
+	@GetMapping("/deleteEmployee")
+	public String removeEmployee(@RequestParam("teamId") Long teamId, @RequestParam("employeeId") Long employeeId) { 
+			
+		Employee employee = employeeService.findById(employeeId);
+		Team team = teamService.findById(teamId);
+		
+			teamItemService.delete(new TeamItem(team, employee));
+			
+			return "redirect:/teams/list";
+		
+	}
 
 }
 

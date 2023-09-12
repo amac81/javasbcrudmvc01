@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 import pt.bitclinic.javasbcrudmvc01.dao.TeamItemRepository;
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
+import pt.bitclinic.javasbcrudmvc01.entities.Team;
 import pt.bitclinic.javasbcrudmvc01.entities.TeamItem;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
@@ -65,5 +67,30 @@ public class TeamItemServiceImpl implements TeamItemService {
 		entity.setEmployee(obj.getEmployee());
 		entity.setTeam(obj.getTeam());
 	}
+
+	@Override
+	public void delete(TeamItem obj) {
+		try {
+			teamItemRepository.delete(obj);
+			
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(obj);
+		} catch (DataIntegrityViolationException e1) {
+			throw new DatabaseException(e1.getMessage());
+		}
+		
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public TeamItem findByIds(Team team, Employee employee) {
+		TeamItem temp = new TeamItem(team, employee);
+		
+		
+		return null;
+				
+		
+	}
+	
 
 }
