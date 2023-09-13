@@ -68,7 +68,7 @@ public class TeamController {
 		
 		theModel.addAttribute("team", team);
 		theModel.addAttribute("allEmployees", allEmployees);
-				
+			
 		return "teams/team-form";
 	}
 
@@ -118,7 +118,7 @@ public class TeamController {
 			teamItemService.save(teamItem);
 
 			// use of redirect to prevent duplicate submissions
-			return "redirect:/teams/list";
+			return "redirect:/teams/showFormForUpdate?teamId="+teamId;
 		
 	}
 	
@@ -130,7 +130,7 @@ public class TeamController {
 		
 			teamItemService.delete(new TeamEmployee(team, employee));
 			
-			return "redirect:/teams/list";
+			return	"redirect:/teams/showFormForUpdate?teamId="+teamId;
 		
 	}
 

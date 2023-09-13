@@ -1,20 +1,29 @@
 package pt.bitclinic.javasbcrudmvc01.entities;
 
+import java.time.Instant;
 import java.util.Objects;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import pt.bitclinic.javasbcrudmvc01.entities.pks.TeamEmployeePK;
 
+//Join table between tb_team and tb_employee	
 @Entity
 @Table(name = "tb_team_employee")
 public class TeamEmployee {
 	
 	@EmbeddedId
 	private TeamEmployeePK id = new TeamEmployeePK();
+	
+	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
+	private Instant createdAt;
 	
 	public TeamEmployee() {
 	}
@@ -40,6 +49,10 @@ public class TeamEmployee {
 
 	public void setEmployee(Employee employee) {
 		id.setEmployee(employee);
+	}
+	
+	public Instant getCreatedAt() {
+		return createdAt;
 	}
 	
 	@Override
