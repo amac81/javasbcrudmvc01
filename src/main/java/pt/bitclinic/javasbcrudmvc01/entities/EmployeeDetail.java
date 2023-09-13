@@ -32,6 +32,9 @@ public class EmployeeDetail implements Serializable {
 	private String projectExperience;
 	@Column(columnDefinition = "TEXT") //more than 255 characters	   
 	private String aditionalNotes;	
+	
+	@Column(columnDefinition = "TEXT") //more than 255 characters	   
+	private String skills; //TODO create object? / entity?
 
 	public EmployeeDetail() {
 	}
@@ -85,14 +88,13 @@ public class EmployeeDetail implements Serializable {
 		this.aditionalNotes = aditionalNotes;
 	}
 
-	//Use for bidirectional relationship
-/*	public Employee getEmployee() {
-		return employee;
+	public String getSkills() {
+		return skills;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}*/
+	public void setSkills(String skills) {
+		this.skills = skills;
+	}
 
 	@Override
 	public int hashCode() {
@@ -114,8 +116,9 @@ public class EmployeeDetail implements Serializable {
 	@Override
 	public String toString() {
 		return "EmployeeDetail [id=" + id + ", hobbies=" + hobbies + ", driveLicenseNumber=" + driveLicenseNumber
-				+ ", projectExperience=" + projectExperience + ", aditionalNotes=" + aditionalNotes + "]";
+				+ ", projectExperience=" + projectExperience + ", aditionalNotes=" + aditionalNotes + ", skills="
+				+ skills + "]";
 	}
 
-
+	
 }

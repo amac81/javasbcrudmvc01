@@ -56,7 +56,7 @@
 			employeeId=${XXXX} )}</h1>
 
 		<div th:if="*{id}!=null" class="form-group">
-			<select id="employeeSelect" th:onchange="updateEmpId();" th:with="empId='${selectedValue}'">
+			<select class="form-control choose_text" id="employeeSelect" th:onchange="updateEmpId();" th:with="empId='${selectedValue}'">
 				<option th:each="employee : ${allEmployees}" th:value="${employee.id}" th:text="${employee.firstName}">
 				</option>
 			</select>
@@ -70,8 +70,8 @@
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
+						<th>Name</th>
+						<th>Skills</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -80,8 +80,8 @@
 						<td colspan="3">No employees at team.</td>
 					</tr>
 					<tr th:each="employeInTeam : ${team.employees}">
-						<td th:text="${employeInTeam.firstName}"></td>
-						<td th:text="${employeInTeam.lastName}"></td>
+						<td th:text="${employeInTeam.firstName} + ' ' + ${employeInTeam.lastName}"></td>
+						<td th:text="${employeInTeam.employeeDetail.skills}"></td>
 						<div sec:authorize="hasRole('ROLE_MANAGER')">
 							<td><a th:href="@{/teams/deleteEmployee(teamId=${team.id}, employeeId=${employeInTeam.id})}"
 									class="btn btn-danger btn-sm"
