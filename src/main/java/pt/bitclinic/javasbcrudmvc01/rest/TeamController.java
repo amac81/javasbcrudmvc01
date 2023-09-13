@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Team;
-import pt.bitclinic.javasbcrudmvc01.entities.TeamItem;
+import pt.bitclinic.javasbcrudmvc01.entities.TeamEmployee;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
-import pt.bitclinic.javasbcrudmvc01.services.TeamItemService;
+import pt.bitclinic.javasbcrudmvc01.services.TeamEmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.TeamService;
 
 @Controller
@@ -29,11 +29,11 @@ public class TeamController {
 
 	private TeamService teamService;
 	private EmployeeService employeeService;
-	private TeamItemService teamItemService;
+	private TeamEmployeeService teamItemService;
 
 	// constructor injection of teamService @Autowired optional, we just have
 	// one constructor
-	public TeamController(TeamService teamService, EmployeeService employeeService, TeamItemService teamItemService) {
+	public TeamController(TeamService teamService, EmployeeService employeeService, TeamEmployeeService teamItemService) {
 		this.teamService = teamService;
 		this.employeeService = employeeService;
 		this.teamItemService = teamItemService;
@@ -112,7 +112,7 @@ public class TeamController {
 			Employee employee = employeeService.findById(employeeId);
 			Team team = teamService.findById(teamId);
 			
-			TeamItem teamItem = new TeamItem(team, employee);
+			TeamEmployee teamItem = new TeamEmployee(team, employee);
 			
 			// save the teamItem to DB
 			teamItemService.save(teamItem);
@@ -128,7 +128,7 @@ public class TeamController {
 		Employee employee = employeeService.findById(employeeId);
 		Team team = teamService.findById(teamId);
 		
-			teamItemService.delete(new TeamItem(team, employee));
+			teamItemService.delete(new TeamEmployee(team, employee));
 			
 			return "redirect:/teams/list";
 		

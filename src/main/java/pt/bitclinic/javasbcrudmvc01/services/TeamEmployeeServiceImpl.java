@@ -9,34 +9,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
-import pt.bitclinic.javasbcrudmvc01.dao.TeamItemRepository;
+import pt.bitclinic.javasbcrudmvc01.dao.TeamEmployeeRepository;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Team;
-import pt.bitclinic.javasbcrudmvc01.entities.TeamItem;
+import pt.bitclinic.javasbcrudmvc01.entities.TeamEmployee;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class TeamItemServiceImpl implements TeamItemService {
+public class TeamEmployeeServiceImpl implements TeamEmployeeService {
 
-	private TeamItemRepository teamItemRepository;
+	private TeamEmployeeRepository teamItemRepository;
 
-	public TeamItemServiceImpl(TeamItemRepository teamItemRepository) {
+	public TeamEmployeeServiceImpl(TeamEmployeeRepository teamItemRepository) {
 		this.teamItemRepository = teamItemRepository;
 	}
 
 	@Transactional(readOnly = true)
-	public List<TeamItem> findAll() {
+	public List<TeamEmployee> findAll() {
 		return teamItemRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)
-	public TeamItem findById(Long id) {
-		Optional<TeamItem> obj = teamItemRepository.findById(id);
+	public TeamEmployee findById(Long id) {
+		Optional<TeamEmployee> obj = teamItemRepository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
-	public TeamItem save(TeamItem obj) {
+	public TeamEmployee save(TeamEmployee obj) {
 		return teamItemRepository.save(obj);
 	}
 
@@ -50,11 +50,11 @@ public class TeamItemServiceImpl implements TeamItemService {
 		}
 	}
 
-	public TeamItem update(Long id, TeamItem obj) {
+	public TeamEmployee update(Long id, TeamEmployee obj) {
 		try {
 			// getReferenceById more efficient than findById
 			// getReferenceById only "prepares" the monitored object
-			TeamItem entity = teamItemRepository.getReferenceById(id);
+			TeamEmployee entity = teamItemRepository.getReferenceById(id);
 			updateData(entity, obj);
 			return teamItemRepository.save(entity);
 
@@ -63,13 +63,13 @@ public class TeamItemServiceImpl implements TeamItemService {
 		}
 	}
 
-	private void updateData(TeamItem entity, TeamItem obj) {
+	private void updateData(TeamEmployee entity, TeamEmployee obj) {
 		entity.setEmployee(obj.getEmployee());
 		entity.setTeam(obj.getTeam());
 	}
 
 	@Override
-	public void delete(TeamItem obj) {
+	public void delete(TeamEmployee obj) {
 		try {
 			teamItemRepository.delete(obj);
 			
@@ -83,9 +83,7 @@ public class TeamItemServiceImpl implements TeamItemService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public TeamItem findByIds(Team team, Employee employee) {
-		TeamItem temp = new TeamItem(team, employee);
-		
+	public TeamEmployee findByIds(Team team, Employee employee) {
 		
 		return null;
 				

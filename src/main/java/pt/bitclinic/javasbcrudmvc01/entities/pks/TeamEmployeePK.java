@@ -10,7 +10,7 @@ import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Team;
 
 @Embeddable
-public class TeamItemPK implements Serializable{
+public class TeamEmployeePK implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class TeamItemPK implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TeamItemPK other = (TeamItemPK) obj;
+		TeamEmployeePK other = (TeamEmployeePK) obj;
 		return Objects.equals(employee, other.employee) && Objects.equals(team, other.team);
 	}
 }

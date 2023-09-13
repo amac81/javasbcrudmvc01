@@ -52,7 +52,7 @@ public class Employee implements Serializable {
 	private EmployeeDetail employeeDetail;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id.employee")
-	private Set<TeamItem> teamItems = new HashSet<>();
+	private Set<TeamEmployee> teamItems = new HashSet<>();
 	
 	public Employee() {
 	}
@@ -136,7 +136,7 @@ public class Employee implements Serializable {
 	public Set<Team> getTeams() {
 		Set <Team> teams = new HashSet<> ();
 		
-		for(TeamItem ti: teamItems){
+		for(TeamEmployee ti: teamItems){
 			teams.add(ti.getTeam());
 		}
 		return teams;

@@ -7,19 +7,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import pt.bitclinic.javasbcrudmvc01.entities.pks.TeamItemPK;
+import pt.bitclinic.javasbcrudmvc01.entities.pks.TeamEmployeePK;
 
 @Entity
-@Table(name = "tb_team_item")
-public class TeamItem {
+@Table(name = "tb_team_employee")
+public class TeamEmployee {
 	
 	@EmbeddedId
-	private TeamItemPK id = new TeamItemPK();
+	private TeamEmployeePK id = new TeamEmployeePK();
 	
-	public TeamItem() {
+	public TeamEmployee() {
 	}
 
-	public TeamItem(Team team, Employee employee ) {
+	public TeamEmployee(Team team, Employee employee ) {
 		id.setTeam(team);
 		id.setEmployee(employee);
 	}
@@ -55,7 +55,7 @@ public class TeamItem {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TeamItem other = (TeamItem) obj;
+		TeamEmployee other = (TeamEmployee) obj;
 		return Objects.equals(id, other.id);
 	}
 }
