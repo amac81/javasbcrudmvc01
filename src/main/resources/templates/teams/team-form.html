@@ -55,17 +55,28 @@
 		<h1 style="font-size: 30px; color:red;">FALTA RESOLVER PROBLEMA DO LINK href="@{/teams/addEmployee(teamId=*{id},
 			employeeId=${XXXX} )}</h1>
 
-		<div th:if="*{id}!=null" class="form-group">
-			<select class="form-control choose_text" id="employeeSelect" th:onchange="updateEmpId();" th:with="empId='${selectedValue}'">
+		<div th:if="*{id}!=null">
+			<hr>
+			
+			<select class="form-control"
+							th:onchange="'window.location.href = \'' + @{/teams/addEmployee} + '?teamId=7&employeeId=\' + this.value'">
+											<option th:each="emp : ${allEmployees}" th:value="${emp.id} " th:text="${emp.firstName}">
+							</option>
+						</select>
+			
+			
+			<!--select class="form-control choose_text mb-3" id="employeeSelect" th:onchange="updateEmpId();"
+				th:with="empId='${selectedValue}'">
 				<option th:each="employee : ${allEmployees}" th:value="${employee.id}" th:text="${employee.firstName}">
 				</option>
-			</select>
-
-			<div sec:authorize="hasRole('ROLE_MANAGER')">
-				<a th:href="@{/teams/addEmployee(teamId=*{id}, employeeId=${3} )}" class="btn btn-info btn-sm">Add
+			</select -->
+			
+			<!--div sec:authorize="hasRole('ROLE_MANAGER')">
+				<a th:href="@{/teams/addEmployee(teamId=*{id}, employeeId=${varAux})}" class="btn btn-success mb-3 ">Add
 					to team</a>
-			</div>
-
+			</div-->
+			
+			<hr>
 			<p>Employees in team:</p>
 			<table class="table table-bordered table-striped">
 				<thead>
@@ -79,11 +90,11 @@
 					<tr th:if="${#lists.isEmpty(team.employees)}">
 						<td colspan="3">No employees at team.</td>
 					</tr>
-					<tr th:each="employeInTeam : ${team.employees}">
-						<td th:text="${employeInTeam.firstName} + ' ' + ${employeInTeam.lastName}"></td>
-						<td th:text="${employeInTeam.employeeDetail.skills}"></td>
+					<tr th:each="employeeInTeam : ${team.employees}">
+						<td th:text="${employeeInTeam.firstName} + ' ' + ${employeInTeam.lastName}"></td>
+						<td th:if="*{employeeInTeam.employeeDetail.skills}!=null" th:text="${employeeInTeam.employeeDetail.skills}"></td>
 						<div sec:authorize="hasRole('ROLE_MANAGER')">
-							<td><a th:href="@{/teams/deleteEmployee(teamId=${team.id}, employeeId=${employeInTeam.id})}"
+							<td><a th:href="@{/teams/deleteEmployee(teamId=${team.id}, employeeId=${employeeInTeam.id})}"
 									class="btn btn-danger btn-sm"
 									onclick=" if (!(confirm('Are you sure you want remove this employee from team?'))) return false">
 									Remove

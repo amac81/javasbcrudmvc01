@@ -80,8 +80,8 @@ public class TeamController {
 		
 		List <Employee> allEmployees = employeeService.findAll();
 		theModel.addAttribute("allEmployees", allEmployees);
-		
 		theModel.addAttribute("team", team);
+		
 		return "teams/team-form";
 	}
 

@@ -17,10 +17,9 @@ hr.top_22 {
 }
 
 .choose_text {
-	color:royalblue;
-	font-size: 16px;
-	font-weight: bold;
-	
+	color: royalblue;
+	font-size: 17px;
+
 }
 
 .info-msg {
@@ -80,7 +79,7 @@ hr.top_22 {
 }
 
 .button-container-side-by-side {
-	
+
 	justify-content: space-between;
 	/* Align buttons at the left and right ends */
 	align-items: left;
@@ -94,9 +93,9 @@ hr.top_22 {
 	cursor: pointer;
 }
 
-.btn_0382ca{
+.btn_0382ca {
 	background-color: #0382ca;
-	color:#fff;
+	color: #fff;
 	border-color: #0382ca
 }
 
@@ -104,36 +103,42 @@ hr.top_22 {
 
 /* Define styles for the custom table */
 .custom-table {
-    border-collapse: collapse; /* Combine table cell borders */
-    width: 100%; /* Set the table width to 100% */
-    font-size: 14px;
+	border-collapse: collapse;
+	/* Combine table cell borders */
+	width: 100%;
+	/* Set the table width to 100% */
+	font-size: 14px;
 }
 
 /* Define styles for table rows */
 .custom-table tr {
-    background-color: #E6F6FF; /* Add a background color to alternate rows */
+	background-color: #E6F6FF;
+	/* Add a background color to alternate rows */
 }
 
 /* Define styles for table cells */
 .custom-table td {
-    padding: 8px; /* Add padding for better spacing */
-    border: 1px solid #ddd; /* Add borders to table cells */
+	padding: 8px;
+	/* Add padding for better spacing */
+	border: 1px solid #ddd;
+	/* Add borders to table cells */
 }
 
 /* Define styles for table header (optional) */
 .custom-table th {
-    padding: 8px;
-    border: 1px solid #ddd;
-    background-color: #f2f2f2;
-    font-weight: bold;
+	padding: 8px;
+	border: 1px solid #ddd;
+	background-color: #f2f2f2;
+	font-weight: bold;
 }
 
 /* MODAL CONFIRM */
 
-.modal-confirm {		
+.modal-confirm {
 	color: #636363;
 	width: 400px;
 }
+
 .modal-confirm .modal-content {
 	padding: 20px;
 	border-radius: 5px;
@@ -141,33 +146,40 @@ hr.top_22 {
 	text-align: center;
 	font-size: 14px;
 }
+
 .modal-confirm .modal-header {
-	border-bottom: none;   
+	border-bottom: none;
 	position: relative;
 }
+
 .modal-confirm h4 {
 	text-align: center;
 	font-size: 26px;
 	margin: 30px 0 -10px;
 }
+
 .modal-confirm .close {
 	position: absolute;
 	top: -5px;
 	right: -2px;
 }
+
 .modal-confirm .modal-body {
 	color: #999;
 }
+
 .modal-confirm .modal-footer {
 	border: none;
-	text-align: center;		
+	text-align: center;
 	border-radius: 5px;
 	font-size: 13px;
 	padding: 10px 15px 25px;
 }
+
 .modal-confirm .modal-footer a {
 	color: #999;
-}		
+}
+
 .modal-confirm .icon-box {
 	width: 80px;
 	height: 80px;
@@ -177,13 +189,16 @@ hr.top_22 {
 	text-align: center;
 	border: 3px solid #f15e5e;
 }
+
 .modal-confirm .icon-box i {
 	color: #f15e5e;
 	font-size: 46px;
 	display: inline-block;
 	margin-top: 13px;
 }
-.modal-confirm .btn, .modal-confirm .btn:active {
+
+.modal-confirm .btn,
+.modal-confirm .btn:active {
 	color: #fff;
 	border-radius: 4px;
 	text-decoration: none;
@@ -196,13 +211,16 @@ hr.top_22 {
 	margin: 0 5px;
 }
 
-.modal-confirm .btn-secondary:hover, .modal-confirm .btn-secondary:focus {
+.modal-confirm .btn-secondary:hover,
+.modal-confirm .btn-secondary:focus {
 	background: #a8a8a8;
 }
+
 .modal-confirm .btn-danger {
 	background: #f15e5e;
 }
-.modal-confirm .btn-danger:hover, .modal-confirm .btn-danger:focus {
+
+.modal-confirm .btn-danger:hover,
+.modal-confirm .btn-danger:focus {
 	background: #ee3535;
 }
-
