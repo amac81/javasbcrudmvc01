@@ -64,12 +64,9 @@ public class ProjectServiceImpl implements ProjectService{
 	
 	private void updateData(Project entity, Project obj) {
 		entity.setName(obj.getName());
-		
+		entity.setDescription(obj.getDescription());
+		entity.setStatus(obj.getStatus());
+		entity.setClient(obj.getClient());	
 	}
-
-	/*@Override
-	public List<Project> findAllByEmployee(Employee employee) {
-		return projectRepository.findAllByEmployee(employee);
-	}*/
 	
 }

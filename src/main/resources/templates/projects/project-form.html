@@ -62,20 +62,20 @@
 					<span th:if="${#fields.hasErrors('client')}" th:errors="*{client}" class="error"></span>
 				</label>
 			</div>
-			<div class="button-container">
-				<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
-			</div>
+			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
 		</form>
-	</div>
-	<a th:href="@{/projects/list}" class="btn btn-secondary mb-3">Back to projects list</a>
-
-	<div class="button-container">
-		<div th:if="${employeeId != null}" class="my_button">
-			<a th:href="@{/employees/showFormForUpdate(employeeId=${employeeId})}" class="btn btn-secondary mb-3">Back
-				to employee form</a>
+		
+		<div class="button-container">
+			<div class="my_button">
+				<a th:href="@{/projects/list}" class="btn btn-secondary mb-3">Back to projects list</a></div>
+				<div class="my_button"><a th:href="@{/tasks/showFormForAdd(projectId=${project.id})}">
+					<button type="submit" class="btn btn-success">Add Task</button>
+				</a></div>
 		</div>
 	</div>
 	</div>
+	
+	
 </body>
 
 </html>

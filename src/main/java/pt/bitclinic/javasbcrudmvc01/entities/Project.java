@@ -1,9 +1,9 @@
 package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -44,7 +44,7 @@ public class Project implements Serializable {
 	private Client client;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade=CascadeType.ALL)
-	private Set<ProjectTask> tasks = new HashSet<>();
+	private List<ProjectTask> tasks = new ArrayList<>();
 		
 	public Project() {
 		setStatus(Status.PLANNING); // initial state
@@ -97,7 +97,7 @@ public class Project implements Serializable {
 		this.client = client;
 	}
 		
-	public Set<ProjectTask> getTasks() {
+	public List<ProjectTask> getTasks() {
 		return tasks;
 	}
 

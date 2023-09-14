@@ -54,7 +54,7 @@ public class ProjectTask implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "project_id")
-	Project project;
+	private Project project;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectTask", cascade= {CascadeType.PERSIST, 
 				CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}) //do not cascade Deletes

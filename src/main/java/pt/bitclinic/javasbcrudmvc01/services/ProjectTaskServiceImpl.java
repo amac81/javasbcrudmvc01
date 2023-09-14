@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 import pt.bitclinic.javasbcrudmvc01.dao.ProjectTaskRepository;
-import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
@@ -66,23 +65,11 @@ public class ProjectTaskServiceImpl implements ProjectTaskService{
 	private void updateData(ProjectTask entity, ProjectTask obj) {
 		entity.setName(obj.getName());
 		entity.setDescription(obj.getDescription());
+		entity.setTaskGroup(obj.getTaskGroup());
+		entity.setProject(obj.getProject());
+		entity.setStatus(obj.getStatus());
 		entity.setStartDate(obj.getStartDate());
 		entity.setEndDate(obj.getEndDate());
-		entity.setTaskGroup(obj.getTaskGroup());
-		entity.setStatus(obj.getStatus());
 	}
 
-	@Override
-	public void addEmployeeToTeam(Employee employee) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeEmployeeFromTeam(Employee employee) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 }

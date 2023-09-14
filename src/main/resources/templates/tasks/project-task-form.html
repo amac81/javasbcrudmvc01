@@ -28,7 +28,7 @@
 	<form method="post" th:action="@{/tasks/save}" th:object="${projectTask}" class="col card p-3 mb-3">
 		<!-- hidden form field for handle the update-->
 		<input type="hidden" th:field="*{id}" />
-		<input type="hidden" th:field="*{project}" th:value="${theProject}" />
+		<input type="hidden" th:field="*{project.id}" />
 		<div class="form-group">
 			<label for="name">Name (*)</label>
 			<input id="name" placeholder="Enter Task Name" type="text" th:field="*{name}" class="form-control" />
@@ -53,7 +53,7 @@
 			</div>
 			<!-- ELSE -->
 			<div th:unless="${#lists.isEmpty(taskGroups)}">
-				<select class="form-control choose_text" id="taskGroup" taskGroup="client" th:field="*{taskGroup}">
+				<select class="form-control choose_text" id="taskGroupSelect" taskGroup="client" th:field="*{taskGroup}">
 					<option th:each="taskGroup : ${taskGroups}" th:value="${taskGroup.id}"
 					th:text="${taskGroup.description}"></option>
 				</select>

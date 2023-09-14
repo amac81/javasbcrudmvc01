@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 import pt.bitclinic.javasbcrudmvc01.dao.TeamEmployeeRepository;
-import pt.bitclinic.javasbcrudmvc01.entities.Employee;
-import pt.bitclinic.javasbcrudmvc01.entities.Team;
 import pt.bitclinic.javasbcrudmvc01.entities.TeamEmployee;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
@@ -81,15 +79,7 @@ public class TeamEmployeeServiceImpl implements TeamEmployeeService {
 		
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public TeamEmployee findByIds(Team team, Employee employee) {
-		
-		
-		return null;
-				
-		
-	}
+
 	
 
 }

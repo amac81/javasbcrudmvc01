@@ -70,15 +70,13 @@ public class ProjectTaskController {
 		
 		ProjectTask projectTask = new ProjectTask();
 		Project project = projectService.findById(projectId);
+		
+		projectTask.setProject(project);
 
 		List <Team> allTeams = teamService.findAll();
 		List <TaskGroup> taskGroups = taskGroupService.findAll();
-		
-		
-		System.out.println("############################ projecTask ADD: " + project);
-						
+							
 		theModel.addAttribute("projectTask", projectTask);
-		theModel.addAttribute("theProject", project);
 		theModel.addAttribute("taskGroups", taskGroups);
 		theModel.addAttribute("allTeams", allTeams);
 		
@@ -106,8 +104,6 @@ public class ProjectTaskController {
 			BindingResult theBindingResult, Model theModel) {
 		if (!theBindingResult.hasErrors()) {
 
-			
-				
 			// save the task to DB
 			projectTaskService.save(projectTask);
 
