@@ -19,7 +19,14 @@ hr.top_22 {
 .choose_text {
 	color: royalblue;
 	font-size: 17px;
+}
 
+.list-condition-true {
+	background-color: lightgreen;
+}
+
+.list-condition-false {
+	background-color:lightcoral;
 }
 
 .info-msg {

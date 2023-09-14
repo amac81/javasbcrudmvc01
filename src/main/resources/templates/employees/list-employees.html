@@ -57,12 +57,11 @@
 							<table class="custom-table">
 								<tbody>
 									<tr th:each="t : ${tempEmployee.teams}">
-										<td th:text="${t.name}"></td>
+										<td th:class="'list-'+${t.active ? 'condition-true' : 'condition-false'}" th:text="${t.active} ? ${t.name} + ' [Active]' : ${t.name} + ' [Inactive]'"></td>
 									</tr>
 								</tbody>
 							</table>
-						</td>
-						
+						</td>						
 						<!--td><a th:href="@{/projects/showEmployeeProjects(employeeId=${tempEmployee.id})}" class="btn_0382ca btn btn-info btn-sm">My projects</a></td-->						
 						<td><a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}" class="btn btn-info btn-sm">Edit</a>
 							<a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}" class="btn btn-danger btn-sm"
