@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
-import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.Project;
 import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
 import pt.bitclinic.javasbcrudmvc01.entities.TaskGroup;
 import pt.bitclinic.javasbcrudmvc01.entities.Team;
-import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectTaskService;
 import pt.bitclinic.javasbcrudmvc01.services.TaskGroupService;
@@ -32,7 +30,6 @@ import pt.bitclinic.javasbcrudmvc01.services.TeamService;
 public class ProjectTaskController {
 
 	private ProjectTaskService projectTaskService;
-	private EmployeeService employeeService;
 	private TeamService teamService;
 	private TaskGroupService taskGroupService;
 	private ProjectService projectService;
@@ -40,10 +37,9 @@ public class ProjectTaskController {
 	// constructor injection of ProjectService @Autowired optional, we just have
 	// one constructor
 	public ProjectTaskController(ProjectTaskService projectTaskService, TeamService teamService,
-			EmployeeService employeeService, TaskGroupService taskGroupService, ProjectService projectService) {
+			TaskGroupService taskGroupService, ProjectService projectService) {
 		this.projectTaskService = projectTaskService;
 		this.teamService = teamService;
-		this.employeeService = employeeService;
 		this.taskGroupService = taskGroupService;
 		this.projectService = projectService;
 	}
@@ -74,15 +70,16 @@ public class ProjectTaskController {
 		
 		ProjectTask projectTask = new ProjectTask();
 		Project project = projectService.findById(projectId);
-			
-		projectTask.setProject(project);
-		
+
+		List <Team> allTeams = teamService.findAll();
 		List <TaskGroup> taskGroups = taskGroupService.findAll();
-		List <Employee> employees = employeeService.findAll();
-				
+		
+		System.out.println("############################ projecTask ADD: " + project);
+						
 		theModel.addAttribute("projectTask", projectTask);
+		theModel.addAttribute("theProject", project);
 		theModel.addAttribute("taskGroups", taskGroups);
-		theModel.addAttribute("employees", employees);
+		theModel.addAttribute("allTeams", allTeams);
 		
 		return "tasks/project-task-form";
 	}
@@ -93,10 +90,12 @@ public class ProjectTaskController {
 		// get the projectTask from the service
 		ProjectTask projectTask = projectTaskService.findById(projectTaskId);
 		List <Team> allTeams = teamService.findAll();
+		List <TaskGroup> taskGroups = taskGroupService.findAll();
 		
 		theModel.addAttribute("projectTask", projectTask);
 		theModel.addAttribute("allTeams", allTeams);
-
+		theModel.addAttribute("taskGroups", taskGroups);
+		
 		return "projects/project-form";
 	}
 		
@@ -107,20 +106,19 @@ public class ProjectTaskController {
 		if (!theBindingResult.hasErrors()) {
 
 			
-			System.out.println("############################ projecTask SAVE: " + projectTask);
-			
-			
+				
 			// save the task to DB
 			projectTaskService.save(projectTask);
 
 			// use of redirect to prevent duplicate submissions
 			return "redirect:/tasks/list";
 		} else {
-			List<TaskGroup> taskGroups = taskGroupService.findAll();
-			List<Employee> employees = employeeService.findAll();
-
-			theModel.addAttribute("employees", employees);
+			List <Team> allTeams = teamService.findAll();
+			List <TaskGroup> taskGroups = taskGroupService.findAll();
+	
+			theModel.addAttribute("allTeams", allTeams);
 			theModel.addAttribute("taskGroups", taskGroups);
+			
 			return "tasks/project-task-form";
 		}
 	}

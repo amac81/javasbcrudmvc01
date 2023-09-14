@@ -161,4 +161,13 @@ public class ProjectTask implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+	@Override
+	public String toString() {
+		return "ProjectTask [id=" + id + ", name=" + name + ", description=" + description + ", taskGroup=" + taskGroup
+				+ ", endDate=" + endDate + ", startDate=" + startDate + ", status=" + status + ", project=" + project
+				+ ", team=" + team + "]";
+	}
+
+	
+	
 }
