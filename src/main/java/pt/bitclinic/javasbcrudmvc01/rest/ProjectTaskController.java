@@ -95,7 +95,7 @@ public class ProjectTaskController {
 		theModel.addAttribute("allTeams", allTeams);
 		theModel.addAttribute("taskGroups", taskGroups);
 		
-		return "projects/project-form";
+		return "tasks/project-task-form";
 	}
 		
 

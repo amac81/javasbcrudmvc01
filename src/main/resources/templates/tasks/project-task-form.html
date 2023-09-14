@@ -53,7 +53,7 @@
 			</div>
 			<!-- ELSE -->
 			<div th:unless="${#lists.isEmpty(taskGroups)}">
-				<select class="form-control choose_text" id="taskGroupSelect" taskGroup="client" th:field="*{taskGroup}">
+				<select class="form-control choose_text" id="taskGroupSelect" th:field="*{taskGroup}">
 					<option th:each="taskGroup : ${taskGroups}" th:value="${taskGroup.id}"
 					th:text="${taskGroup.description}"></option>
 				</select>
@@ -87,10 +87,10 @@
 		
 		
 		<div class="form-group">
-			<label for="team">Select Teams from list</label>
+			<label for="teams">Select Teams from list</label>
 			<div th:if="*{id}!=null">
-			<hr>
-			<label for="selectTeam">Select Team from list:</label>
+	
+			
 			<select name="selectTeam" class="form-control choose_text"
 				th:onchange="'window.location.href = \'' + @{/tasks/addTeam} + '?taskId='+ *{id} +'&teamId=\' + this.value'">
 				<option th:each="team : ${allTeams}" th:value="${team.id} "
@@ -108,10 +108,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${#lists.isEmpty(task.teams)}">
+					<tr th:if="${#lists.isEmpty(projectTask.teams)}">
 						<td colspan="4">No teams working on task.</td>
 					</tr>
-					<tr th:each="teamWkTask : ${task.teams}">
+					<tr th:each="teamWkTask : ${projectTask.teams}">
 						<td th:text="${teamWkTask.name}"></td>
 						
 						<div sec:authorize="hasRole('ROLE_MANAGER')">
@@ -141,7 +141,7 @@
 										</div>
 									</div>
 								</div>
-								<a href="#myModal" class="btn btn-danger btn-sm" data-toggle="modal">Exclude from team</a>
+								<a href="#myModal" class="btn btn-danger btn-sm" data-toggle="modal">Remove from task</a>
 								<!-- Remove/Delete Modal HTML END-->
 							</td>
 						</div>

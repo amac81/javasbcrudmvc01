@@ -118,7 +118,10 @@ public class Team implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Team [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", active=" + active + "]";
+		return "Team [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", active=" + active + ", teamItems="
+				+ teamItems + "]";
 	}
+
+	
 
 }

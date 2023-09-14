@@ -71,4 +71,11 @@ public class TeamEmployee {
 		TeamEmployee other = (TeamEmployee) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "TeamEmployee [Employee=" + id.getEmployee().getFirstName() + "]";
+	}
+	
+	
 }

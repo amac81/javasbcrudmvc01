@@ -45,7 +45,7 @@
 					<td th:text="${tempProjTask.endDate}"></td>
 					<td th:text="${tempProjTask.status}"></td>
 					<td th:text="${tempProjTask.team}"></td>
-					
+			
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<td><a th:href="@{/tasks/showFormForUpdate(projectTaskId=${tempProjTask.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>

@@ -58,7 +58,7 @@ public class ProjectTask implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectTask", cascade= {CascadeType.PERSIST, 
 				CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}) //do not cascade Deletes
-	private Set<Team> team = new HashSet<>();
+	private Set<Team> teams = new HashSet<>();
 	
 	public ProjectTask() {
 		setStatus(Status.PLANNING); // initial state
@@ -140,8 +140,8 @@ public class ProjectTask implements Serializable {
 		this.project = project;
 	}
 
-	public Set<Team> getTeam() {
-		return team;
+	public Set<Team> getTeams() {
+		return teams;
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class ProjectTask implements Serializable {
 	public String toString() {
 		return "ProjectTask [id=" + id + ", name=" + name + ", description=" + description + ", taskGroup=" + taskGroup
 				+ ", endDate=" + endDate + ", startDate=" + startDate + ", status=" + status + ", project=" + project
-				+ ", team=" + team + "]";
+				+ ", team=" + teams + "]";
 	}
 
 	
