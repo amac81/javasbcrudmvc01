@@ -74,6 +74,7 @@ public class ProjectTaskController {
 		List <Team> allTeams = teamService.findAll();
 		List <TaskGroup> taskGroups = taskGroupService.findAll();
 		
+		
 		System.out.println("############################ projecTask ADD: " + project);
 						
 		theModel.addAttribute("projectTask", projectTask);
