@@ -8,7 +8,7 @@ import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
 //already has a default implementation for this specific type <User, Long>
 
 //@Repository optional (JpaRepository is already registered as a Spring component) 
-public interface TaskRepository extends JpaRepository<ProjectTask, Long> {
+public interface ProjectTaskRepository extends JpaRepository<ProjectTask, Long> {
 	
 	
 }

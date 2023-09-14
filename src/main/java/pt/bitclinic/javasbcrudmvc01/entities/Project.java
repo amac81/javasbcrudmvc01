@@ -5,13 +5,16 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
@@ -40,6 +43,7 @@ public class Project implements Serializable {
 	@NotNull(message = "is required")
 	private Client client;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade=CascadeType.ALL)
 	private Set<ProjectTask> tasks = new HashSet<>();
 		
 	public Project() {

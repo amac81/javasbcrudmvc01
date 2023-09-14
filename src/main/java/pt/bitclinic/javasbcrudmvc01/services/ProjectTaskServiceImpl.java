@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
-import pt.bitclinic.javasbcrudmvc01.dao.TaskRepository;
+import pt.bitclinic.javasbcrudmvc01.dao.ProjectTaskRepository;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
@@ -17,9 +17,9 @@ import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundExceptio
 @Service
 public class ProjectTaskServiceImpl implements ProjectTaskService{
 
-	private TaskRepository taskRepository;
+	private ProjectTaskRepository taskRepository;
 	
-	public ProjectTaskServiceImpl(TaskRepository taskRepository) {
+	public ProjectTaskServiceImpl(ProjectTaskRepository taskRepository) {
 		this.taskRepository = taskRepository;
 	}
 

@@ -19,26 +19,27 @@ import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
 import pt.bitclinic.javasbcrudmvc01.entities.TaskGroup;
+import pt.bitclinic.javasbcrudmvc01.entities.Team;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
-import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectTaskService;
 import pt.bitclinic.javasbcrudmvc01.services.TaskGroupService;
+import pt.bitclinic.javasbcrudmvc01.services.TeamService;
 
 @Controller
 @RequestMapping("/tasks")
 public class ProjectTaskController {
 
 	private ProjectTaskService projectTaskService;
-	private ProjectService projectService;
 	private EmployeeService employeeService;
+	private TeamService teamService;
 	private TaskGroupService taskGroupService;
 
 	// constructor injection of ProjectService @Autowired optional, we just have
 	// one constructor
-	public ProjectTaskController(ProjectTaskService projectTaskService, ProjectService projectService,
+	public ProjectTaskController(ProjectTaskService projectTaskService, TeamService teamService,
 			EmployeeService employeeService, TaskGroupService taskGroupService) {
 		this.projectTaskService = projectTaskService;
-		this.projectService = projectService;
+		this.teamService = teamService;
 		this.employeeService = employeeService;
 		this.taskGroupService = taskGroupService;
 	}
@@ -65,12 +66,10 @@ public class ProjectTaskController {
 	}
 
 	@GetMapping("/showFormForAdd")
-	public String showFormForAdd(@RequestParam("projectId") Long projectId, Model theModel) {
+	public String showFormForAdd(Model theModel) {
 		
 		ProjectTask projectTask = new ProjectTask();
-		
-		
-		
+			
 		List <TaskGroup> taskGroups = taskGroupService.findAll();
 		List <Employee> employees = employeeService.findAll();
 				
@@ -80,12 +79,26 @@ public class ProjectTaskController {
 		
 		return "tasks/project-task-form";
 	}
+		
+	@GetMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("projectTaskId") Long projectTaskId, Model theModel) {
+
+		// get the projectTask from the service
+		ProjectTask projectTask = projectTaskService.findById(projectTaskId);
+		List <Team> allTeams = teamService.findAll();
+		
+		theModel.addAttribute("projectTask", projectTask);
+		theModel.addAttribute("allTeams", allTeams);
+
+		return "projects/project-form";
+	}
+		
 
 	@PostMapping("/save")
 	public String processProjectTaskForm(@Valid @ModelAttribute("projectTask") ProjectTask projectTask,
 			BindingResult theBindingResult, Model theModel) {
 		if (!theBindingResult.hasErrors()) {
-
+				
 			// save the task to DB
 			projectTaskService.save(projectTask);
 

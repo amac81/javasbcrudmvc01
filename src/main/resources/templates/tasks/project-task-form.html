@@ -27,7 +27,7 @@
 	<i>Fill out the form. Asterisk (*) means required.</i>
 	<form method="post" th:action="@{/tasks/save}" th:object="${projectTask}" class="col card p-3 mb-3">
 		<!-- hidden form field for handle the update-->
-		<!--input type="hidden" th:field="*{id}" /-->
+		<input type="hidden" th:field="*{id}" />
 	
 		<div class="form-group">
 			<label for="name">Name (*)</label>
@@ -46,10 +46,18 @@
 		</div>
 
 		<div class="form-group">
-			<select class="form-control choose_text" id="taskGroup" taskGroup="client" th:field="*{taskGroup}">
-				<option th:each="taskGroup : ${taskGroups}" th:value="${taskGroup.id}"
+			<label for="taskGroup">Choose task group from list:</label>
+			<!-- IF taskGroups not emply -->
+			<div th:if="${#lists.isEmpty(taskGroups)}">
+				<p class="error">No task groups loaded...</p>
+			</div>
+			<!-- ELSE -->
+			<div th:unless="${#lists.isEmpty(taskGroups)}">
+				<select class="form-control choose_text" id="taskGroup" taskGroup="client" th:field="*{taskGroup}">
+					<option th:each="taskGroup : ${taskGroups}" th:value="${taskGroup.id}"
 					th:text="${taskGroup.description}"></option>
-			</select>
+				</select>
+			</div>
 		</div>
 
 		<div class="form-group">
@@ -61,7 +69,7 @@
 			</label>
 		</div>
 		<div class="form-group">
-			<label for="endDate">End Date / time (*)</label>
+			<label for="endDate">Planned End Date / time (*)</label>
 			<input id="endDate" placeholder="Select Date / time" value="*{endDate}" type="datetime-local"
 				th:field="*{endDate}" class="form-control" />
 			<label for="endDate"> <!--Show error message (if present) -->
@@ -77,18 +85,85 @@
 			</select>
 		</div>
 		
-		<div class="form-group">
-			<h1 style="font-size: 50px; color:crimson;"> HAVE TO ASSIGN TASK TO AT LEAST ONE EMPLOYEE !!!</h1>
 		
+		<div class="form-group">
+			<label for="team">Select Teams from list</label>
+			<div th:if="*{id}!=null">
+			<hr>
+			<label for="selectTeam">Select Team from list:</label>
+			<select name="selectTeam" class="form-control choose_text"
+				th:onchange="'window.location.href = \'' + @{/tasks/addTeam} + '?taskId='+ *{id} +'&teamId=\' + this.value'">
+				<option th:each="team : ${allTeams}" th:value="${team.id} "
+					th:text="${team.name}">
+				</option>
+			</select>
+						
+			<hr>
+			<p>Teams working on task:</p>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${#lists.isEmpty(task.teams)}">
+						<td colspan="4">No teams working on task.</td>
+					</tr>
+					<tr th:each="teamWkTask : ${task.teams}">
+						<td th:text="${teamWkTask.name}"></td>
+						
+						<div sec:authorize="hasRole('ROLE_MANAGER')">
+							<td>
+								<!-- Remove/Delete Modal HTML BEGIN-->
+								<div id="myModal" class="modal fade">
+									<div class="modal-dialog modal-confirm">
+										<div class="modal-content">
+											<div class="modal-header flex-column">
+												<div class="icon-box">
+													<i class="material-icons">&#xE5CD;</i>
+												</div>
+												<h4 class="modal-title w-100">Are you sure?</h4>
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+											</div>
+											<div class="modal-body">
+												<p style="font-size: 16px;">Do you really want to delete the record? This process cannot be
+													undone.</p>
+											</div>
+											<div class="modal-footer justify-content-center">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						
+												<a th:href="@{/tasks/deleteTeam(taskId=${id}, teamId=${teamWkTask.id})}">
+													<button type="button" class="btn btn-danger">Confirm</button>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<a href="#myModal" class="btn btn-danger btn-sm" data-toggle="modal">Exclude from team</a>
+								<!-- Remove/Delete Modal HTML END-->
+							</td>
+						</div>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		</div>
 		
 		
+		<div class="form-group">
+			<h1 style="font-size: 20px; color:crimson;"> HAVE TO ASSIGN TASK TO AT LEAST ONE TEAM !!!</h1>
 		
+		</div>
+		
+			
 
 		<div class="button-container">
 			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
 		</div>
 	</form>
+	<a th:href="@{/projects/list}" class="btn btn-secondary mb-3">Back to projects list</a>
 	<div class="button-container">
 		<div th:if="${projectId != null}" class="my_button">
 			<a th:href="@{/projects/showFormForUpdate(projectId=${projectId})}" class="btn btn-secondary mb-3">Back

@@ -17,6 +17,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -43,6 +45,10 @@ public class Team implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id.team", cascade=CascadeType.ALL)
 	private Set<TeamEmployee> teamItems = new HashSet<>();
 
+	@ManyToOne
+	@JoinColumn(name = "projectTask_id")
+	ProjectTask projectTask;
+	
 	public Team() {		
 	}
 
