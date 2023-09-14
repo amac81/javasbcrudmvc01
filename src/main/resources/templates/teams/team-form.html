@@ -91,8 +91,11 @@
 						<td colspan="3">No employees at team.</td>
 					</tr>
 					<tr th:each="employeeInTeam : ${team.employees}">
-						<td th:text="${employeeInTeam.firstName} + ' ' + ${employeInTeam.lastName}"></td>
-						<td th:if="*{employeeInTeam.employeeDetail.skills}!=null" th:text="${employeeInTeam.employeeDetail.skills}"></td>
+						<td th:text="${employeeInTeam.firstName} + ' ' + ${employeeInTeam.lastName}"></td>
+					
+						<td th:if="${employeeInTeam.employeeDetail}!=null" th:text="${employeeInTeam.employeeDetail.skills}" ></td>
+						<td th:unless="${employeeInTeam.employeeDetail}!=null" th:text="---">	
+					
 						<div sec:authorize="hasRole('ROLE_MANAGER')">
 							<td><a th:href="@{/teams/deleteEmployee(teamId=${team.id}, employeeId=${employeeInTeam.id})}"
 									class="btn btn-danger btn-sm"
@@ -112,16 +115,4 @@
 	<a th:href="@{/teams/list}" class="btn btn-secondary mb-3">Back to teams list</a>
 	</div>
 </body>
-<script type="text/javascript">
-	function updateEmpId() {
-		// Get the select element
-		var select = document.getElementById("employeeSelect");
-		// Add an event listener to handle selection change  select.addEventListener("change", function () {
-		// Get the selected option's value
-		var selectedValue = select.value;
-
-
-	};	
-</script>
-
 </html>
