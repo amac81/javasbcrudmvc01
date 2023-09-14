@@ -29,8 +29,9 @@
 					<th>Salary</th>
 					<th>Hire Date</th>
 					<th>Department</th>
+					<th colspan="1">Details</th>
+					<th colspan="1">My teams</th>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
-						<th colspan="1">Details</th>
 						<!--th colspan="1">Projects</th-->
 						<th colspan="2">Actions</th>
 					</div>
@@ -52,15 +53,23 @@
 							<a th:if="${tempEmployee.employeeDetail == null}" th:href="@{/employees/showFormForAddDetails(employeeId=${tempEmployee.id})}" class="btn btn-success btn-sm">Add details</a>
 							<a th:if="${tempEmployee.employeeDetail != null}" th:href="@{/employees/showDetails(employeeId=${tempEmployee.id})}" class="btn btn-warning btn-sm">Show details</a>
 						</td>						
+						<td>
+							<table class="custom-table">
+								<tbody>
+									<tr th:each="t : ${tempEmployee.teams}">
+										<td th:text="${t.name}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
 						
 						<!--td><a th:href="@{/projects/showEmployeeProjects(employeeId=${tempEmployee.id})}" class="btn_0382ca btn btn-info btn-sm">My projects</a></td-->						
-						<td><a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
-								class="btn btn-info btn-sm">Edit</a></td>
-						<td><a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
-								class="btn btn-danger btn-sm"
+						<td><a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}" class="btn btn-info btn-sm">Edit</a>
+							<a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}" class="btn btn-danger btn-sm"
 								onclick=" if (!(confirm('Are you sure you want to delete this employee?'))) return false">
 								Delete
-							</a></td>
+							</a>
+						</td>
 					</div>
 				</tr>
 			</tbody>

@@ -48,7 +48,15 @@
 					<td th:text="${tempTeam.name}"></td>
 					<td th:text="${tempTeam.createdAt}"></td>
 					<td th:text="${tempTeam.active}"></td>
-					<td th:text="${tempTeam.employees}"></td>
+					<td>
+						<table class="custom-table">
+							<tbody>
+								<tr th:each="emp : ${tempTeam.employees}">
+									<td th:text="${emp.firstName} + ' ' + ${emp.lastName} + ' [' + ${emp.department} + ']'"></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<td><a th:href="@{/teams/showFormForUpdate(teamId=${tempTeam.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>
@@ -66,16 +74,17 @@
 												aria-hidden="true">&times;</button>
 										</div>
 										<div class="modal-body">
-											<p style="font-size: 16px;">Do you really want to delete the record? This process cannot be
+											<p style="font-size: 16px;">Do you really want to delete the record? This
+												process cannot be
 												undone.</p>
 										</div>
 										<div class="modal-footer justify-content-center">
 											<button type="button" class="btn btn-secondary"
 												data-dismiss="modal">Cancel</button>
 
-												<a th:href="@{/teams/delete(teamId=${tempTeam.id})}">
-												  <button type="button" class="btn btn-danger">Confirm</button>
-												</a>											
+											<a th:href="@{/teams/delete(teamId=${tempTeam.id})}">
+												<button type="button" class="btn btn-danger">Confirm</button>
+											</a>
 										</div>
 									</div>
 								</div>
