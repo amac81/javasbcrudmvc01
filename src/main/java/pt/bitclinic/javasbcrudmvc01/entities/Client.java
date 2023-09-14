@@ -37,7 +37,7 @@ public class Client implements Serializable {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
-	private List<Project> clientProjects = new ArrayList<>();
+	private List<Project> myProjects = new ArrayList<>();
 	
 	public Client() {}
 
@@ -80,8 +80,8 @@ public class Client implements Serializable {
 		this.phone = phone;
 	}
 	
-	public List<Project> getClientProjects() {
-		return clientProjects;
+	public List<Project> getProjects() {
+		return myProjects;
 	}
 
 	@Override
