@@ -28,7 +28,6 @@
 	<form method="post" th:action="@{/tasks/save}" th:object="${projectTask}" class="col card p-3 mb-3">
 		<!-- hidden form field for handle the update-->
 		<input type="hidden" th:field="*{id}" />
-	
 		<div class="form-group">
 			<label for="name">Name (*)</label>
 			<input id="name" placeholder="Enter Task Name" type="text" th:field="*{name}" class="form-control" />

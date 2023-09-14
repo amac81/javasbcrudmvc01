@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
+import pt.bitclinic.javasbcrudmvc01.entities.Project;
 import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
 import pt.bitclinic.javasbcrudmvc01.entities.TaskGroup;
 import pt.bitclinic.javasbcrudmvc01.entities.Team;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
+import pt.bitclinic.javasbcrudmvc01.services.ProjectService;
 import pt.bitclinic.javasbcrudmvc01.services.ProjectTaskService;
 import pt.bitclinic.javasbcrudmvc01.services.TaskGroupService;
 import pt.bitclinic.javasbcrudmvc01.services.TeamService;
@@ -33,15 +35,17 @@ public class ProjectTaskController {
 	private EmployeeService employeeService;
 	private TeamService teamService;
 	private TaskGroupService taskGroupService;
+	private ProjectService projectService;
 
 	// constructor injection of ProjectService @Autowired optional, we just have
 	// one constructor
 	public ProjectTaskController(ProjectTaskService projectTaskService, TeamService teamService,
-			EmployeeService employeeService, TaskGroupService taskGroupService) {
+			EmployeeService employeeService, TaskGroupService taskGroupService, ProjectService projectService) {
 		this.projectTaskService = projectTaskService;
 		this.teamService = teamService;
 		this.employeeService = employeeService;
 		this.taskGroupService = taskGroupService;
+		this.projectService = projectService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -66,10 +70,13 @@ public class ProjectTaskController {
 	}
 
 	@GetMapping("/showFormForAdd")
-	public String showFormForAdd(Model theModel) {
+	public String showFormForAdd(@RequestParam("projectId") Long projectId, Model theModel) {
 		
 		ProjectTask projectTask = new ProjectTask();
+		Project project = projectService.findById(projectId);
 			
+		projectTask.setProject(project);
+		
 		List <TaskGroup> taskGroups = taskGroupService.findAll();
 		List <Employee> employees = employeeService.findAll();
 				
@@ -98,7 +105,11 @@ public class ProjectTaskController {
 	public String processProjectTaskForm(@Valid @ModelAttribute("projectTask") ProjectTask projectTask,
 			BindingResult theBindingResult, Model theModel) {
 		if (!theBindingResult.hasErrors()) {
-				
+
+			
+			System.out.println("############################ projecTask SAVE: " + projectTask);
+			
+			
 			// save the task to DB
 			projectTaskService.save(projectTask);
 
