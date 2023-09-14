@@ -51,47 +51,33 @@
 			<input type="checkbox" name="active" th:checked="${active} ? 'checked' : ''" th:field="*{active}"
 				class="checkmark">
 		</div>
-
-		<h1 style="font-size: 30px; color:red;">FALTA RESOLVER PROBLEMA DO LINK href="@{/teams/addEmployee(teamId=*{id},
-			employeeId=${XXXX} )}</h1>
-
 		<div th:if="*{id}!=null">
 			<hr>
-			
-			<select class="form-control"
-							th:onchange="'window.location.href = \'' + @{/teams/addEmployee} + '?teamId=7&employeeId=\' + this.value'">
-											<option th:each="emp : ${allEmployees}" th:value="${emp.id} " th:text="${emp.firstName}">
-							</option>
-						</select>
-			
-			
-			<!--select class="form-control choose_text mb-3" id="employeeSelect" th:onchange="updateEmpId();"
-				th:with="empId='${selectedValue}'">
-				<option th:each="employee : ${allEmployees}" th:value="${employee.id}" th:text="${employee.firstName}">
+			<select class="form-control choose_text"
+				th:onchange="'window.location.href = \'' + @{/teams/addEmployee} + '?teamId='+ *{id} +'&employeeId=\' + this.value'">
+				<option th:each="emp : ${allEmployees}" th:value="${emp.id} "
+					th:text="${emp.firstName} + ' ' + ${emp.lastName} + ' ['+${emp.department}+']'">
 				</option>
-			</select -->
-			
-			<!--div sec:authorize="hasRole('ROLE_MANAGER')">
-				<a th:href="@{/teams/addEmployee(teamId=*{id}, employeeId=${varAux})}" class="btn btn-success mb-3 ">Add
-					to team</a>
-			</div-->
-			
+			</select>
+						
 			<hr>
 			<p>Employees in team:</p>
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
 						<th>Name</th>
+						<th>Department</th>
 						<th>Skills</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:if="${#lists.isEmpty(team.employees)}">
-						<td colspan="3">No employees at team.</td>
+						<td colspan="4">No employees at team.</td>
 					</tr>
 					<tr th:each="employeeInTeam : ${team.employees}">
 						<td th:text="${employeeInTeam.firstName} + ' ' + ${employeeInTeam.lastName}"></td>
+						<td th:text="${employeeInTeam.department}"></td>
 					
 						<td th:if="${employeeInTeam.employeeDetail}!=null" th:text="${employeeInTeam.employeeDetail.skills}" ></td>
 						<td th:unless="${employeeInTeam.employeeDetail}!=null" th:text="---">	
