@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,9 +63,8 @@ public class Task implements Serializable, Comparable<Task>{
 	@JoinColumn(name = "project_id")
 	private Project project;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade= {CascadeType.PERSIST, 
-				CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}) //do not cascade Deletes
-	private Set<Team> teams = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id.task")
+	private Set<TeamTask> teamsTasks = new HashSet<>();
 	
 	public Task() {
 		setStatus(Status.PLANNING); // initial state
@@ -145,9 +146,16 @@ public class Task implements Serializable, Comparable<Task>{
 		this.project = project;
 	}
 
+	@JsonIgnore //to avoid "loop"
 	public Set<Team> getTeams() {
+		Set <Team> teams = new HashSet<> ();
+		
+		for(TeamTask tt: teamsTasks){
+			teams.add(tt.getTeam());
+		}
+		
 		return teams;
-	}
+	}	
 
 	@Override
 	public int hashCode() {
@@ -170,7 +178,7 @@ public class Task implements Serializable, Comparable<Task>{
 	public String toString() {
 		return "Task [id=" + id + ", name=" + name + ", description=" + description + ", taskGroup=" + taskGroup
 				+ ", endDate=" + endDate + ", startDate=" + startDate + ", status=" + status + ", project=" + project
-				+ ", team=" + teams + "]";
+				+ ", team=" + this.getTeams() + "]";
 	}
 
 	@Override //compare by startDate

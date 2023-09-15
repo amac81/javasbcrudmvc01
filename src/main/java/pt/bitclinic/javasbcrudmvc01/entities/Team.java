@@ -17,8 +17,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -43,11 +41,10 @@ public class Team implements Serializable {
 	private Boolean active;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id.team", cascade=CascadeType.ALL)
-	private Set<TeamEmployee> teamItems = new HashSet<>();
+	private Set<TeamEmployee> teamsEmployees = new HashSet<>();
 
-	@ManyToOne
-	@JoinColumn(name = "projectTask_id")
-	Task task;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id.team", cascade=CascadeType.ALL)
+	private Set<TeamTask> teamsTasks = new HashSet<>();
 	
 	public Team() {		
 	}
@@ -91,11 +88,24 @@ public class Team implements Serializable {
 	public Set<Employee> getEmployees() {
 		Set <Employee> employees = new HashSet<> ();
 		
-		for(TeamEmployee ti: teamItems){
-			employees.add(ti.getEmployee());
+		for(TeamEmployee te: teamsEmployees){
+			employees.add(te.getEmployee());
 		}
 		
 		return employees;
+	}
+	
+	
+	//in JEE what matters is the "get" word (to serialize to Json)
+	@JsonIgnore //to avoid "loop"
+	public Set<Task> getTasks() {
+		Set <Task> tasks = new HashSet<> ();
+		
+		for(TeamTask tt: teamsTasks){
+			tasks.add(tt.getTask());
+		}
+		
+		return tasks;
 	}
 	
 
@@ -118,8 +128,8 @@ public class Team implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Team [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", active=" + active + ", teamItems="
-				+ teamItems + "]";
+		return "Team [id=" + id + ", name=" + name + ", createdAt=" + createdAt + ", active=" + active + ", teamsEmployees="
+				+ teamsEmployees + "]";
 	}
 
 	

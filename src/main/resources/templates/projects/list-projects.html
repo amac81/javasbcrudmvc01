@@ -66,7 +66,7 @@
 									<th>Status</th>
 									<th>Start Date</th>
 									<th>End Date</th>
-									<th>Team</th>
+									<th>Teams (active)</th>
 									<div sec:authorize="hasRole('ROLE_MANAGER')">
 										<th colspan="2">Task actions</th>
 									</div>
@@ -80,7 +80,15 @@
 									<td th:text="${task.status}"></td>
 									<td th:text="${task.startDate}"></td>
 									<td th:text="${task.endDate}"></td>
-									<td th:text="${task.teams}"></td>
+									<td>
+										<table class="custom-table">
+											<tbody>
+												<tr th:each="team : ${task.teams}">
+													<td th:text="${team.name}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
 									<div sec:authorize="hasRole('ROLE_MANAGER')">
 										<td><a th:href="@{/tasks/showFormForUpdate(taskId=${task.id})}" class="btn btn-info btn-sm">Edit</a></td>
 									</div>

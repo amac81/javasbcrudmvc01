@@ -92,6 +92,7 @@
 		
 					<select name="selectTeam" class="form-control choose_text"
 						th:onchange="'window.location.href = \'' + @{/tasks/addTeam} + '?taskId='+ *{id} +'&teamId=\' + this.value'">
+						<option label="..."></option>
 						<option th:each="team : ${allTeams}" th:value="${team.id} " th:text="${team.name}">
 						</option>
 					</select>
@@ -109,8 +110,8 @@
 							<tr th:if="${#lists.isEmpty(task.teams)}">
 								<td colspan="4">No teams working on task.</td>
 							</tr>
-							<tr th:each="teamWkTask : ${task.teams}">
-								<td th:text="${teamWkTask.name}"></td>
+							<tr th:each="team : ${task.teams}">
+								<td th:text="${team.name}"></td>
 		
 								<div sec:authorize="hasRole('ROLE_MANAGER')">
 									<td>
@@ -133,10 +134,9 @@
 													</div>
 													<div class="modal-footer justify-content-center">
 														<button type="button" class="btn btn-secondary"
-															data-dismiss="modal">Cancel</button>
-		
+															data-dismiss="modal">Cancel</button>		
 														<a
-															th:href="@{/tasks/deleteTeam(taskId=${id}, teamId=${teamWkTask.id})}">
+															th:href="@{/tasks/deleteTeam(taskId=${id}, teamId=${task.id})}">
 															<button type="button" class="btn btn-danger">Confirm</button>
 														</a>
 													</div>

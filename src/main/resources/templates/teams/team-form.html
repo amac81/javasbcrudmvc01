@@ -51,9 +51,11 @@
 			<label for="selectEmployee">Select Employee from list:</label>
 			<select name="selectEmployee" class="form-control choose_text"
 				th:onchange="'window.location.href = \'' + @{/teams/addEmployee} + '?teamId='+ *{id} +'&employeeId=\' + this.value'">
+				<option label="..."></option>
 				<option th:each="emp : ${allEmployees}" th:value="${emp.id} "
 					th:text="${emp.firstName} + ' ' + ${emp.lastName} + ' ['+${emp.department}+']'">
 				</option>
+				
 			</select>
 						
 			<hr>

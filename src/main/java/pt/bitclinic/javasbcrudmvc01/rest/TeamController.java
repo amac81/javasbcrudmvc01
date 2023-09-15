@@ -29,14 +29,15 @@ public class TeamController {
 
 	private TeamService teamService;
 	private EmployeeService employeeService;
-	private TeamEmployeeService teamItemService;
+	private TeamEmployeeService teamEmployeeService;
 
 	// constructor injection of teamService @Autowired optional, we just have
 	// one constructor
-	public TeamController(TeamService teamService, EmployeeService employeeService, TeamEmployeeService teamItemService) {
+	public TeamController(TeamService teamService, EmployeeService employeeService,
+			TeamEmployeeService teamEmployeeService) {
 		this.teamService = teamService;
 		this.employeeService = employeeService;
-		this.teamItemService = teamItemService;
+		this.teamEmployeeService = teamEmployeeService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -50,7 +51,6 @@ public class TeamController {
 		webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
-	
 	@GetMapping("/list")
 	public String listTeams(Model theModel) {
 		List<Team> teams = new ArrayList<>();
@@ -64,11 +64,11 @@ public class TeamController {
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
 		Team team = new Team();
-		List <Employee> allEmployees = employeeService.findAll();
-		
+		List<Employee> allEmployees = employeeService.findAll();
+
 		theModel.addAttribute("team", team);
 		theModel.addAttribute("allEmployees", allEmployees);
-			
+
 		return "teams/team-form";
 	}
 
@@ -77,25 +77,25 @@ public class TeamController {
 
 		// get the team from the service
 		Team team = teamService.findById(theId);
-		
-		List <Employee> allEmployees = employeeService.findAll();
+
+		List<Employee> allEmployees = employeeService.findAll();
 		theModel.addAttribute("allEmployees", allEmployees);
 		theModel.addAttribute("team", team);
-		
+
 		return "teams/team-form";
 	}
 
 	@GetMapping("/delete")
 	public String delete(@RequestParam("teamId") Long theId) {
-		// delete the team 
+		// delete the team
 		teamService.delete(theId);
 		return "redirect:/teams/list";
 	}
-	
+
 	@PostMapping("/save")
 	public String processForm(@Valid @ModelAttribute("team") Team team, BindingResult theBindingResult) {
 		if (!theBindingResult.hasErrors()) {
-			
+
 			// save the team to DB
 			teamService.save(team);
 
@@ -105,34 +105,33 @@ public class TeamController {
 			return "teams/team-form";
 		}
 	}
-	
-	@GetMapping("/addEmployee")
-	public String addEmployee(@RequestParam("teamId") Long teamId, @RequestParam("employeeId") Long employeeId) { 
-			
-			Employee employee = employeeService.findById(employeeId);
-			Team team = teamService.findById(teamId);
-			
-			TeamEmployee teamItem = new TeamEmployee(team, employee);
-			
-			// save the teamItem to DB
-			teamItemService.save(teamItem);
 
-			// use of redirect to prevent duplicate submissions
-			return "redirect:/teams/showFormForUpdate?teamId="+teamId;
-		
-	}
-	
-	@GetMapping("/deleteEmployee")
-	public String removeEmployee(@RequestParam("teamId") Long teamId, @RequestParam("employeeId") Long employeeId) { 
-			
+	@GetMapping("/addEmployee")
+	public String addEmployee(@RequestParam("teamId") Long teamId, @RequestParam("employeeId") Long employeeId) {
+
 		Employee employee = employeeService.findById(employeeId);
 		Team team = teamService.findById(teamId);
-		
-			teamItemService.delete(new TeamEmployee(team, employee));
-			
-			return	"redirect:/teams/showFormForUpdate?teamId="+teamId;
-		
+
+		TeamEmployee teamEmployee = new TeamEmployee(team, employee);
+
+		// save the teamEmployee to DB
+		teamEmployeeService.save(teamEmployee);
+
+		// use of redirect to prevent duplicate submissions
+		return "redirect:/teams/showFormForUpdate?teamId=" + teamId;
+
+	}
+
+	@GetMapping("/deleteEmployee")
+	public String removeEmployee(@RequestParam("teamId") Long teamId, @RequestParam("employeeId") Long employeeId) {
+
+		Employee employee = employeeService.findById(employeeId);
+		Team team = teamService.findById(teamId);
+
+		teamEmployeeService.delete(new TeamEmployee(team, employee));
+
+		return "redirect:/teams/showFormForUpdate?teamId=" + teamId;
+
 	}
 
 }
-
