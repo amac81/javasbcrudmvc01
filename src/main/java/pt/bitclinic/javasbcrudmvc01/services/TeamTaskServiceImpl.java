@@ -9,38 +9,38 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
-import pt.bitclinic.javasbcrudmvc01.dao.TeamEmployeeRepository;
-import pt.bitclinic.javasbcrudmvc01.entities.TeamEmployee;
+import pt.bitclinic.javasbcrudmvc01.dao.TeamTaskRepository;
+import pt.bitclinic.javasbcrudmvc01.entities.TeamTask;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class TeamEmployeeServiceImpl implements TeamEmployeeService {
+public class TeamTaskServiceImpl implements TeamTaskService {
 
-	private TeamEmployeeRepository teamEmployeeRepository;
+	private TeamTaskRepository teamTaskRepository;
 
-	public TeamEmployeeServiceImpl(TeamEmployeeRepository teamEmployeeRepository) {
-		this.teamEmployeeRepository = teamEmployeeRepository;
+	public TeamTaskServiceImpl(TeamTaskRepository teamTaskRepository) {
+		this.teamTaskRepository = teamTaskRepository;
 	}
 
 	@Transactional(readOnly = true)
-	public List<TeamEmployee> findAll() {
-		return teamEmployeeRepository.findAll();
+	public List<TeamTask> findAll() {
+		return teamTaskRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)
-	public TeamEmployee findById(Long id) {
-		Optional<TeamEmployee> obj = teamEmployeeRepository.findById(id);
+	public TeamTask findById(Long id) {
+		Optional<TeamTask> obj = teamTaskRepository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
-	public TeamEmployee save(TeamEmployee obj) {
-		return teamEmployeeRepository.save(obj);
+	public TeamTask save(TeamTask obj) {
+		return teamTaskRepository.save(obj);
 	}
 
 	public void delete(Long id) {
 		try {
-			teamEmployeeRepository.deleteById(id);
+			teamTaskRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
 		} catch (DataIntegrityViolationException e1) {
@@ -48,38 +48,33 @@ public class TeamEmployeeServiceImpl implements TeamEmployeeService {
 		}
 	}
 
-	public TeamEmployee update(Long id, TeamEmployee obj) {
+	public TeamTask update(Long id, TeamTask obj) {
 		try {
 			// getReferenceById more efficient than findById
 			// getReferenceById only "prepares" the monitored object
-			TeamEmployee entity = teamEmployeeRepository.getReferenceById(id);
+			TeamTask entity = teamTaskRepository.getReferenceById(id);
 			updateData(entity, obj);
-			return teamEmployeeRepository.save(entity);
+			return teamTaskRepository.save(entity);
 
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
 	}
 
-	private void updateData(TeamEmployee entity, TeamEmployee obj) {
-		entity.setEmployee(obj.getEmployee());
+	private void updateData(TeamTask entity, TeamTask obj) {
 		entity.setTeam(obj.getTeam());
+		entity.setTask(obj.getTask());
 	}
 
 	@Override
-	public void delete(TeamEmployee obj) {
+	public void delete(TeamTask obj) {
 		try {
-			teamEmployeeRepository.delete(obj);
+			teamTaskRepository.delete(obj);
 			
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(obj);
 		} catch (DataIntegrityViolationException e1) {
 			throw new DatabaseException(e1.getMessage());
 		}
-		
 	}
-
-
-	
-
 }

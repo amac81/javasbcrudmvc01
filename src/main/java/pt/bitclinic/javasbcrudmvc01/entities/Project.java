@@ -2,6 +2,8 @@ package pt.bitclinic.javasbcrudmvc01.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -98,6 +100,11 @@ public class Project implements Serializable {
 	}
 		
 	public List<Task> getTasks() {
+
+		// Sort the tasks list by Task.startDate
+        Collections.sort(tasks, Comparator.comparing(Task::getStartDate));
+
+        // Return the sorted list		
 		return tasks;
 	}
 

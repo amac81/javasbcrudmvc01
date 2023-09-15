@@ -23,7 +23,7 @@ import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
 
 @Entity
 @Table(name = "tb_task")
-public class Task implements Serializable {
+public class Task implements Serializable, Comparable<Task>{
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,10 +44,15 @@ public class Task implements Serializable {
 	private TaskGroup taskGroup;
 
 	@NotNull(message = "is required")
-	private LocalDateTime endDate;
-
-	@NotNull(message = "is required")
+	//@FutureOrPresent (message = "must be a date/time in the present or future")
+	//@Column(nullable = false, updatable = false)
 	private LocalDateTime startDate;
+	
+	@NotNull(message = "is required")
+	//ensures that the endDate contain a value representing a date and time that is in the future.
+	//@Future(message = "must be a future date/time")
+	//@Column(nullable = false, updatable = false)
+	private LocalDateTime endDate;
 
 	@NotNull(message = "is required")
 	private Integer status;
@@ -166,6 +171,11 @@ public class Task implements Serializable {
 		return "Task [id=" + id + ", name=" + name + ", description=" + description + ", taskGroup=" + taskGroup
 				+ ", endDate=" + endDate + ", startDate=" + startDate + ", status=" + status + ", project=" + project
 				+ ", team=" + teams + "]";
+	}
+
+	@Override //compare by startDate
+	public int compareTo(Task otherTask) {
+		return this.startDate.compareTo(otherTask.startDate);
 	}
 		
 }

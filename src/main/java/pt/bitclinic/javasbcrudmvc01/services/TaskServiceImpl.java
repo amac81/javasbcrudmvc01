@@ -23,9 +23,8 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Transactional(readOnly = true)	
-	public List<Task> findAll() {
-		
-		return taskRepository.findAll();
+	public List<Task> findAll() {		
+		return taskRepository.findAllByOrderByStartDateAsc();
 	}
 
 	@Transactional(readOnly = true)	

@@ -11,26 +11,28 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import pt.bitclinic.javasbcrudmvc01.entities.pks.TeamEmployeePK;
+import pt.bitclinic.javasbcrudmvc01.entities.pks.TeamTaskPK;
 
-//Join table between tb_team and tb_employee	
+//Join table between tb_team and tb_task
+//Team could work at more than one ProjectTask
+//ProjectTask could have more than one Team Working on
 @Entity
-@Table(name = "tb_team_employee")
-public class TeamEmployee {
+@Table(name = "tb_team_task")
+public class TeamTask {
 	
 	@EmbeddedId
-	private TeamEmployeePK id = new TeamEmployeePK();
+	private TeamTaskPK id = new TeamTaskPK();
 	
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
 	private Instant createdAt;
 	
-	public TeamEmployee() {
+	public TeamTask() {
 	}
 
-	public TeamEmployee(Team team, Employee employee ) {
+	public TeamTask(Team team, Task task ) {
 		id.setTeam(team);
-		id.setEmployee(employee);
+		id.setTask(task);
 	}
 	
 	//in JEE what matters is the get method; to avoid "loop"
@@ -43,12 +45,12 @@ public class TeamEmployee {
 		id.setTeam(team);
 	}
 	
-	public Employee getEmployee() {
-		return id.getEmployee();
+	public Task getTask() {
+		return id.getTask();
 	}
-
-	public void setEmployee(Employee employee) {
-		id.setEmployee(employee);
+	
+	public void setTask(Task task) {
+		id.setTask(task);
 	}
 	
 	public Instant getCreatedAt() {
@@ -68,14 +70,13 @@ public class TeamEmployee {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TeamEmployee other = (TeamEmployee) obj;
+		TeamTask other = (TeamTask) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "TeamEmployee [Team=" + id.getTeam().getName() + ", Employee= " + id.getEmployee().getFirstName() + " " + 
-				id.getEmployee().getLastName() +"]";
+		return "TeamTask [Team=" + id.getTeam().getName() + ", Task= " + id.getTask().getName() +"]";
 	}
 	
 	

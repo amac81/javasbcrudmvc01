@@ -84,81 +84,76 @@
 			</select>
 		</div>
 
-
-		<div class="form-group">
-			<label for="teams">Select Teams from list</label>
-			<div th:if="*{id}!=null">
-
-
-				<select name="selectTeam" class="form-control choose_text"
-					th:onchange="'window.location.href = \'' + @{/tasks/addTeam} + '?taskId='+ *{id} +'&teamId=\' + this.value'">
-					<option th:each="team : ${allTeams}" th:value="${team.id} " th:text="${team.name}">
-					</option>
-				</select>
-
-				<hr>
-				<p>Teams working on task:</p>
-				<table class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:if="${#lists.isEmpty(task.teams)}">
-							<td colspan="4">No teams working on task.</td>
-						</tr>
-						<tr th:each="teamWkTask : ${task.teams}">
-							<td th:text="${teamWkTask.name}"></td>
-
-							<div sec:authorize="hasRole('ROLE_MANAGER')">
-								<td>
-									<!-- Remove/Delete Modal HTML BEGIN-->
-									<div id="myModal" class="modal fade">
-										<div class="modal-dialog modal-confirm">
-											<div class="modal-content">
-												<div class="modal-header flex-column">
-													<div class="icon-box">
-														<i class="material-icons">&#xE5CD;</i>
+		<!-- new task -->
+		<div th:if="${task.id != null}">
+			<div class="form-group">
+				<label for="teams">Select Teams from list</label>
+				<div th:if="*{id}!=null">
+		
+					<select name="selectTeam" class="form-control choose_text"
+						th:onchange="'window.location.href = \'' + @{/tasks/addTeam} + '?taskId='+ *{id} +'&teamId=\' + this.value'">
+						<option th:each="team : ${allTeams}" th:value="${team.id} " th:text="${team.name}">
+						</option>
+					</select>
+		
+					<hr>
+					<p>Teams working on task:</p>
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${#lists.isEmpty(task.teams)}">
+								<td colspan="4">No teams working on task.</td>
+							</tr>
+							<tr th:each="teamWkTask : ${task.teams}">
+								<td th:text="${teamWkTask.name}"></td>
+		
+								<div sec:authorize="hasRole('ROLE_MANAGER')">
+									<td>
+										<!-- Remove/Delete Modal HTML BEGIN-->
+										<div id="myModal" class="modal fade">
+											<div class="modal-dialog modal-confirm">
+												<div class="modal-content">
+													<div class="modal-header flex-column">
+														<div class="icon-box">
+															<i class="material-icons">&#xE5CD;</i>
+														</div>
+														<h4 class="modal-title w-100">Are you sure?</h4>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-hidden="true">&times;</button>
 													</div>
-													<h4 class="modal-title w-100">Are you sure?</h4>
-													<button type="button" class="close" data-dismiss="modal"
-														aria-hidden="true">&times;</button>
-												</div>
-												<div class="modal-body">
-													<p style="font-size: 16px;">Do you really want to delete the record?
-														This process cannot be
-														undone.</p>
-												</div>
-												<div class="modal-footer justify-content-center">
-													<button type="button" class="btn btn-secondary"
-														data-dismiss="modal">Cancel</button>
-
-													<a
-														th:href="@{/tasks/deleteTeam(taskId=${id}, teamId=${teamWkTask.id})}">
-														<button type="button" class="btn btn-danger">Confirm</button>
-													</a>
+													<div class="modal-body">
+														<p style="font-size: 16px;">Do you really want to delete the record?
+															This process cannot be
+															undone.</p>
+													</div>
+													<div class="modal-footer justify-content-center">
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Cancel</button>
+		
+														<a
+															th:href="@{/tasks/deleteTeam(taskId=${id}, teamId=${teamWkTask.id})}">
+															<button type="button" class="btn btn-danger">Confirm</button>
+														</a>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-									<a href="#myModal" class="btn btn-danger btn-sm" data-toggle="modal">Remove from
-										task</a>
-									<!-- Remove/Delete Modal HTML END-->
-								</td>
-							</div>
-						</tr>
-					</tbody>
-				</table>
+										<a href="#myModal" class="btn btn-danger btn-sm" data-toggle="modal">Remove from
+											task</a>
+										<!-- Remove/Delete Modal HTML END-->
+									</td>
+								</div>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-
-		<div class="form-group">
-			<h1 style="font-size: 20px; color:crimson;"> HAVE TO ASSIGN TASK TO AT LEAST ONE TEAM !!!</h1>
-
-		</div>
-
 		<div class="button-container">
 			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
 		</div>
