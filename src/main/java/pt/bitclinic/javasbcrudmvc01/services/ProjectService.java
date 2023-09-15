@@ -9,4 +9,5 @@ public interface ProjectService {
 	public Project findById(Long id);
 	public Project save(Project obj);
 	public void delete(Long id);
+	public void checkTasksAndUpdateProjectStatus(Long id);
 }

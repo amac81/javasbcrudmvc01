@@ -109,6 +109,9 @@ public class TaskController {
 
 			// save the task to DB
 			taskService.save(task);
+			
+			//update project status
+		    projectService.checkTasksAndUpdateProjectStatus(task.getProject().getId());
 
 			// use of redirect to prevent duplicate submissions
 			// back to projects list
