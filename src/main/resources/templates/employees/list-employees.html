@@ -29,10 +29,9 @@
 					<th>Salary</th>
 					<th>Hire Date</th>
 					<th>Department</th>
-					<th colspan="1">Details</th>
-					<th colspan="1">My teams</th>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
-						<!--th colspan="1">Projects</th-->
+						<th colspan="1">Details</th>
+						<th colspan="1">My teams</th>
 						<th colspan="2">Actions</th>
 					</div>
 				</tr>
