@@ -98,12 +98,61 @@ public class Project implements Serializable {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+	
+	
+	//use this method to set attribute status of project
+	// count # number of tasks
+	// IF (TOTAL # number of tasks status == CANCELED(5))
+	//  	=> project.Status = CANCELED
+	// ELSE IF (any task status of total # tasks == PLANNING(1) || IN_PROGRESS(2) || ON_HOLD(3))  
+	//     => project.Status = IN_PROGRESS 
+	// ELSE
+	//     => project.Status = COMPLETED
+	private void checkTasksAndUpdateProjectStatus() {
+		List<Status> allTasksStatus = new ArrayList<>();
+		
+		for(Task t: tasks) {
+			allTasksStatus.add(t.getStatus());
+		}
+		
+		int cancelled = 0;
+		int completed = 0;
+		int other = 0;
+		int all = allTasksStatus.size();
+		
+		for (Status s: allTasksStatus) {
+			if(s.equals(Status.CANCELED)) {
+				cancelled ++;
+			}
+			else if (s.equals(Status.COMPLETED)) {
+				completed ++;
+			}
+			else {
+				other ++;
+			}
+		}
+		
+		if(all == cancelled) {
+			this.setStatus(Status.CANCELED);
+		}
+		else if((other == 0) && (all == completed + cancelled)) {
+			this.setStatus(Status.COMPLETED);
+		}
+		else {
+			this.setStatus(Status.IN_PROGRESS);
+		}			
+		
+		System.out.print("########## AQUI: " + this.getStatus());
+		//TODO SAVE TO BD!!?!?
+		
+	}
 		
 	public List<Task> getTasks() {
-
+		
+		checkTasksAndUpdateProjectStatus();
 		// Sort the tasks list by Task.startDate
         Collections.sort(tasks, Comparator.comparing(Task::getStartDate));
-
+        
         // Return the sorted list		
 		return tasks;
 	}

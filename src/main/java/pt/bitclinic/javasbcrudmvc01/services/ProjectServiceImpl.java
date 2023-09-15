@@ -24,7 +24,7 @@ public class ProjectServiceImpl implements ProjectService{
 
 	@Transactional(readOnly = true)	
 	public List<Project> findAll() {
-		//employees sorted by last name
+		//projects sorted by name
 		return projectRepository.findAllByOrderByNameAsc();
 	}
 
