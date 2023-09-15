@@ -103,6 +103,7 @@
 						<thead>
 							<tr>
 								<th>Name</th>
+								<th>Active ?</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -112,7 +113,7 @@
 							</tr>
 							<tr th:each="team : ${task.teams}">
 								<td th:text="${team.name}"></td>
-		
+								<td th:class="'list-'+${team.active ? 'condition-true' : 'condition-false'}" th:text="${team.active} ? ${team.name} + ' [Active]' : ${team.name} + ' [Inactive]'"></td>
 								<div sec:authorize="hasRole('ROLE_MANAGER')">
 									<td>
 										<!-- Remove/Delete Modal HTML BEGIN-->

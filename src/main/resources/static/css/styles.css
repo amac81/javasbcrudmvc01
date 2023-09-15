@@ -2,6 +2,11 @@ body {
 	background-color: #f9f9f9;
 }
 
+.mycontainer{
+	padding-right: 15px;    
+	padding-left: 15px;
+}
+
 .maindiv {
 	margin-top: 1px;
 	margin-left: 2px;

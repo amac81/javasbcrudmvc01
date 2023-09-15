@@ -21,7 +21,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 
-<body class="container">
+<body class="mycontainer">
 	<div class="maindiv">
 		<h1 class="py-3">Projects</h1>
 		<hr class="top_22">
@@ -66,7 +66,7 @@
 									<th>Status</th>
 									<th>Start Date</th>
 									<th>End Date</th>
-									<th>Teams (active)</th>
+									<th>Allocated Teams</th>
 									<div sec:authorize="hasRole('ROLE_MANAGER')">
 										<th colspan="2">Task actions</th>
 									</div>
@@ -84,7 +84,7 @@
 										<table class="custom-table">
 											<tbody>
 												<tr th:each="team : ${task.teams}">
-													<td th:text="${team.name}"></td>
+													<td th:class="'list-'+${team.active ? 'condition-true' : 'condition-false'}" th:text="${team.active} ? ${team.name} + ' [Active]' : ${team.name} + ' [Inactive]'"></td>
 												</tr>
 											</tbody>
 										</table>
