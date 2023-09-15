@@ -8,33 +8,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
-import pt.bitclinic.javasbcrudmvc01.dao.ProjectTaskRepository;
-import pt.bitclinic.javasbcrudmvc01.entities.ProjectTask;
+import pt.bitclinic.javasbcrudmvc01.dao.TaskRepository;
+import pt.bitclinic.javasbcrudmvc01.entities.Task;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.DatabaseException;
 import pt.bitclinic.javasbcrudmvc01.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class ProjectTaskServiceImpl implements ProjectTaskService{
+public class TaskServiceImpl implements TaskService{
 
-	private ProjectTaskRepository taskRepository;
+	private TaskRepository taskRepository;
 	
-	public ProjectTaskServiceImpl(ProjectTaskRepository taskRepository) {
+	public TaskServiceImpl(TaskRepository taskRepository) {
 		this.taskRepository = taskRepository;
 	}
 
 	@Transactional(readOnly = true)	
-	public List<ProjectTask> findAll() {
+	public List<Task> findAll() {
 		
 		return taskRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)	
-	public ProjectTask findById(Long id) {
-		Optional<ProjectTask> obj = taskRepository.findById(id);
+	public Task findById(Long id) {
+		Optional<Task> obj = taskRepository.findById(id);
 		return obj.orElseThrow(()->  new ResourceNotFoundException(id));
 	}
 	
-	public ProjectTask save(ProjectTask obj) {
+	public Task save(Task obj) {
 		return taskRepository.save(obj);
 	}
 	
@@ -49,11 +49,11 @@ public class ProjectTaskServiceImpl implements ProjectTaskService{
 		}
 	}
 
-	public ProjectTask update(Long id, ProjectTask obj) {
+	public Task update(Long id, Task obj) {
 		try {
 			//getReferenceById more efficient than findById
 			//getReferenceById only "prepares" the monitored object 
-			ProjectTask entity = taskRepository.getReferenceById(id);
+			Task entity = taskRepository.getReferenceById(id);
 			updateData(entity, obj);
 			return taskRepository.save(entity);
 			
@@ -62,7 +62,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService{
 		}	
 	}
 	
-	private void updateData(ProjectTask entity, ProjectTask obj) {
+	private void updateData(Task entity, Task obj) {
 		entity.setName(obj.getName());
 		entity.setDescription(obj.getDescription());
 		entity.setTaskGroup(obj.getTaskGroup());

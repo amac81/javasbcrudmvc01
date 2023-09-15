@@ -47,7 +47,7 @@ public class Team implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "projectTask_id")
-	ProjectTask projectTask;
+	Task task;
 	
 	public Team() {		
 	}

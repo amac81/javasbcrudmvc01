@@ -44,7 +44,7 @@ public class Project implements Serializable {
 	private Client client;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade=CascadeType.ALL)
-	private List<ProjectTask> tasks = new ArrayList<>();
+	private List<Task> tasks = new ArrayList<>();
 		
 	public Project() {
 		setStatus(Status.PLANNING); // initial state
@@ -97,7 +97,7 @@ public class Project implements Serializable {
 		this.client = client;
 	}
 		
-	public List<ProjectTask> getTasks() {
+	public List<Task> getTasks() {
 		return tasks;
 	}
 

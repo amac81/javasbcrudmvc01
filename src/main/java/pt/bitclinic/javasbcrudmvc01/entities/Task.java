@@ -22,8 +22,8 @@ import jakarta.validation.constraints.NotNull;
 import pt.bitclinic.javasbcrudmvc01.entities.enums.Status;
 
 @Entity
-@Table(name = "tb_project_task")
-public class ProjectTask implements Serializable {
+@Table(name = "tb_task")
+public class Task implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -56,15 +56,15 @@ public class ProjectTask implements Serializable {
 	@JoinColumn(name = "project_id")
 	private Project project;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projectTask", cascade= {CascadeType.PERSIST, 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade= {CascadeType.PERSIST, 
 				CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}) //do not cascade Deletes
 	private Set<Team> teams = new HashSet<>();
 	
-	public ProjectTask() {
+	public Task() {
 		setStatus(Status.PLANNING); // initial state
 	}
 	
-	public ProjectTask(String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
+	public Task(String name, TaskGroup taskGroup, String description, LocalDateTime startDate,
 			LocalDateTime endDate, Status status, Project project) {
 		
 		this.name = name;
@@ -157,17 +157,15 @@ public class ProjectTask implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProjectTask other = (ProjectTask) obj;
+		Task other = (Task) obj;
 		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "ProjectTask [id=" + id + ", name=" + name + ", description=" + description + ", taskGroup=" + taskGroup
+		return "Task [id=" + id + ", name=" + name + ", description=" + description + ", taskGroup=" + taskGroup
 				+ ", endDate=" + endDate + ", startDate=" + startDate + ", status=" + status + ", project=" + project
 				+ ", team=" + teams + "]";
 	}
-
-	
-	
+		
 }

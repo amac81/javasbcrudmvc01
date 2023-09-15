@@ -25,7 +25,7 @@
 <body class="container">
 	<h1 class="py-3">Task form</h1>
 	<i>Fill out the form. Asterisk (*) means required.</i>
-	<form method="post" th:action="@{/tasks/save}" th:object="${projectTask}" class="col card p-3 mb-3">
+	<form method="post" th:action="@{/tasks/save}" th:object="${task}" class="col card p-3 mb-3">
 		<!-- hidden form field for handle the update-->
 		<input type="hidden" th:field="*{id}" />
 		<input type="hidden" th:field="*{project.id}" />
@@ -108,10 +108,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${#lists.isEmpty(projectTask.teams)}">
+					<tr th:if="${#lists.isEmpty(task.teams)}">
 						<td colspan="4">No teams working on task.</td>
 					</tr>
-					<tr th:each="teamWkTask : ${projectTask.teams}">
+					<tr th:each="teamWkTask : ${task.teams}">
 						<td th:text="${teamWkTask.name}"></td>
 						
 						<div sec:authorize="hasRole('ROLE_MANAGER')">

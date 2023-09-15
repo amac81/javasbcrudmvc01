@@ -34,22 +34,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${#lists.isEmpty(projectTasks)}">
+				<tr th:if="${#lists.isEmpty(tasks)}">
 					<td colspan="8">No Project Tasks found.</td>
 				</tr>
-				<tr th:each="tempProjTask : ${projectTasks}">
-					<td th:text="${tempProjTask.name}"></td>
-					<td th:text="${tempProjTask.description}"></td>
-					<td th:text="${tempProjTask.taskGroup.description}"></td>
-					<td th:text="${tempProjTask.startDate}"></td>
-					<td th:text="${tempProjTask.endDate}"></td>
-					<td th:text="${tempProjTask.status}"></td>
-					<td th:text="${tempProjTask.team}"></td>
+				<tr th:each="tempTask : ${tasks}">
+					<td th:text="${tempTask.name}"></td>
+					<td th:text="${tempTask.description}"></td>
+					<td th:text="${tempTask.taskGroup.description}"></td>
+					<td th:text="${tempTask.startDate}"></td>
+					<td th:text="${tempTask.endDate}"></td>
+					<td th:text="${tempTask.status}"></td>
+					<td th:text="${tempTask.teams}"></td>
 			
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
-						<td><a th:href="@{/tasks/showFormForUpdate(projectTaskId=${tempProjTask.id})}"
+						<td><a th:href="@{/tasks/showFormForUpdate(taskId=${tempTask.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>
-						<td><a th:href="@{/tasks/delete(projectTaskId=${tempProjTask.id})}" class="btn btn-danger btn-sm"
+						<td><a th:href="@{/tasks/delete(taskId=${tempTask.id})}" class="btn btn-danger btn-sm"
 								onclick=" if (!(confirm('Are you sure you want to delete this project?'))) return false">
 								Delete
 							</a></td>
