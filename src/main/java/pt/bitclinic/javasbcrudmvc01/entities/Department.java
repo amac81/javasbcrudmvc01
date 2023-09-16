@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -35,7 +36,7 @@ public class Department implements Serializable{
     
     //unidirectional relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  	@JoinColumn(name="employee_id")
+  	@JoinColumn(name="hod_employee_id")
     private Employee headOfDepartment; // Reference to the department head
     
   	private LocalDate establishedDate;
