@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport"
@@ -28,15 +29,32 @@
 		<input type="hidden" th:field="*{id}" />
 		<div class="form-group">
 			<label for="name">Name (*)</label>
-			<input id="name" placeholder="Enter Name" type="text" th:field="*{name}"
-				class="form-control" />
+			<input id="name" placeholder="Enter Name" type="text" th:field="*{name}" class="form-control" />
 			<label for="name"> <!--Show error message (if present) -->
 				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
 			</label>
 		</div>
-		
+		<div class="form-group">
+			<label for="description">Description (*)</label>
+			<input id="description" placeholder="Enter Description" type="text" th:field="*{description}"
+				class="form-control" />
+			<label for="description"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
+			</label>
+		</div>
+		<div class="form-group">Head OfDepartment - LIST OF EMPLOYEES</div>
 
-		<div class="button-container">			
+		<div class="form-group">
+			<label for="establishedDate">Established Date (*)</label>
+			<input id="establishedDate" placeholder="Select Date / time" type="date" th:field="*{establishedDate}"
+				class="form-control" />
+			<label for="establishedDate"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('establishedDate')}" th:errors="*{establishedDate}"
+					class="error"></span>
+			</label>
+		</div>
+
+		<div class="button-container">
 			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
 		</div>
 	</form>

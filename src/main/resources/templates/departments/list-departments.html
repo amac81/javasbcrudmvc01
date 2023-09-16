@@ -32,8 +32,9 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<!-- -->
-					
+					<th>Description</th>
+					<th>Head Of Department</th>
+					<th>Established Date</th>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<th colspan="1">Employees in</th>
 							<th colspan="2">Actions</th>
@@ -42,17 +43,19 @@
 			</thead>
 			<tbody>
 				<tr th:if="${#lists.isEmpty(departments)}">
-					<td colspan="5">No Departmetns found.</td>
+					<td colspan="6">No Departmetns found.</td>
 				</tr>
 				<tr th:each="tempDepartment : ${departments}">
 					<td th:text="${tempDepartment.name}"></td>
-					<!-- -->
+					<td th:text="${tempDepartment.description}"></td>
+					<td th:text="${tempDepartment.headOfDepartment}"></td>
+					<td th:text="${tempDepartment.establishedDate}"></td>
 			
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<td>
 							<table class="custom-table">
 								<tbody>
-									<tr th:each="e : ${tempDepartment.projects}">
+									<tr th:each="e : ${tempDepartment.employees}">
 										<td th:text="${e.firstName} + ' ' + ${e.lastName}"></td>
 									</tr>
 								</tbody>
