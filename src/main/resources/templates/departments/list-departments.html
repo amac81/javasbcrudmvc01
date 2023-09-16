@@ -26,7 +26,7 @@
 		<h1 class="py-3">Departments</h1>
 		<hr class="top_22">
 		<div sec:authorize="hasRole('ROLE_MANAGER')">
-			<a th:href="@{/clients/showFormForAdd}" class="btn btn-primary mb-3">New Department</a>
+			<a th:href="@{/departments/showFormForAdd}" class="btn btn-primary mb-3">New Department</a>
 		</div>
 		<table class="table table-bordered table-striped">
 			<thead>
