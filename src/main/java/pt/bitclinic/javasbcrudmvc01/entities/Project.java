@@ -49,7 +49,7 @@ public class Project implements Serializable {
 	private List<Task> tasks = new ArrayList<>();
 		
 	public Project() {
-		setStatus(Status.PLANNING); // initial state
+		setStatus(Status.IN_PROGRESS); // initial state
 	}
 
 	public Project(long id, String name, Status status, Client client) {

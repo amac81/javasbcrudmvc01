@@ -48,60 +48,72 @@
 				<tr th:each="tempProject : ${projects}">
 					<td th:text="${tempProject.name}"></td>
 					<td th:text="${tempProject.description}"></td>
-					<td th:text="${tempProject.status}"></td>
+					<!--td th:text="${tempProject.status}"></td-->
+
+					<div th:switch="${#strings.toString(tempProject.status)}">
+						<td th:case="'CANCELED'" class="project-canceled">CANCELED</td>
+						<td th:case="'COMPLETED'" class="project-completed">COMPLETED</td>
+						<!-- default case -->
+						<td th:case="*" th:text="${#strings.toString(tempProject.status)}" class="project-in-progress">IN_PROGRESS</td>
+					</div>
+
 					<td th:text="${tempProject.client.name}"></td>
 					<td>
 						<!-- IF Project has no TASKS -->
 						<div th:if="${#lists.isEmpty(tempProject.tasks)}">
-						   <div>No Tasks found...</div>
+							<div>No Tasks found...</div>
 						</div>
 						<!-- ELSE -->
 						<div th:unless="${#lists.isEmpty(tempProject.tasks)}">
-						<table class="custom-table">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Description</th>
-									<th>Group</th>
-									<th>Status</th>
-									<th>Start Date</th>
-									<th>End Date</th>
-									<th>Allocated Teams</th>
-									<div sec:authorize="hasRole('ROLE_MANAGER')">
-										<th colspan="2">Task actions</th>
-									</div>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="task : ${tempProject.tasks}">
-									<td th:text="${task.name}"></td>
-									<td th:text="${task.description}"></td>
-									<td th:text="${task.taskGroup.description}"></td>
-									<td th:text="${task.status}"></td>
-									<td th:text="${task.startDate}"></td>
-									<td th:text="${task.endDate}"></td>
-									<td>
-										<table class="custom-table">
-											<tbody>
-												<tr th:each="team : ${task.teams}">
-													<td th:class="'list-'+${team.active ? 'condition-true' : 'condition-false'}" th:text="${team.active} ? ${team.name} + ' [Active]' : ${team.name} + ' [Inactive]'"></td>
-												</tr>
-											</tbody>
-										</table>
-									</td>
-									<div sec:authorize="hasRole('ROLE_MANAGER')">
-										<td><a th:href="@{/tasks/showFormForUpdate(taskId=${task.id})}" class="btn btn-info btn-sm">Edit</a></td>
-									</div>
-									<div sec:authorize="hasRole('ROLE_MANAGER')">
-										<td><a th:href="@{/tasks/delete(taskId=${task.id})}" class="btn btn-danger btn-sm"
-												onclick=" if (!(confirm('Are you sure you want to delete this Task?'))) return false">
-												Delete
-											</a></td>
-									</div>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Group</th>
+										<th>Status</th>
+										<th>Start Date</th>
+										<th>End Date</th>
+										<th>Allocated Teams</th>
+										<div sec:authorize="hasRole('ROLE_MANAGER')">
+											<th colspan="2">Task actions</th>
+										</div>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="task : ${tempProject.tasks}">
+										<td th:text="${task.name}"></td>
+										<td th:text="${task.description}"></td>
+										<td th:text="${task.taskGroup.description}"></td>
+										<td th:text="${task.status}"></td>
+										<td th:text="${task.startDate}"></td>
+										<td th:text="${task.endDate}"></td>
+										<td>
+											<table class="custom-table">
+												<tbody>
+													<tr th:each="team : ${task.teams}">
+														<td th:class="'list-'+${team.active ? 'condition-true' : 'condition-false'}"
+															th:text="${team.active} ? ${team.name} + ' [Active]' : ${team.name} + ' [Inactive]'">
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+										<div sec:authorize="hasRole('ROLE_MANAGER')">
+											<td><a th:href="@{/tasks/showFormForUpdate(taskId=${task.id})}"
+													class="btn btn-info btn-sm">Edit</a></td>
+										</div>
+										<div sec:authorize="hasRole('ROLE_MANAGER')">
+											<td><a th:href="@{/tasks/delete(taskId=${task.id})}"
+													class="btn btn-danger btn-sm"
+													onclick=" if (!(confirm('Are you sure you want to delete this Task?'))) return false">
+													Delete
+												</a></td>
+										</div>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
 					</td>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
@@ -129,4 +141,5 @@
 	</div>
 	</div>
 </body>
+
 </html>

@@ -26,6 +26,15 @@ hr.top_22 {
 	font-size: 17px;
 }
 
+
+/* PROJECT state colors */
+
+.project-canceled {background-color:tomato;}
+
+.project-completed {background-color: lightgreen;}
+
+.project-in-progress{background-color:darkorange;}
+
 .list-condition-true {
 	background-color: lightgreen;
 }
