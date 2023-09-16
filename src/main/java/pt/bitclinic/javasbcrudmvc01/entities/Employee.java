@@ -15,12 +15,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_employee" )
@@ -43,8 +43,9 @@ public class Employee implements Serializable {
 		
 	private LocalDate hireDate;
 	
-	@Size(min = 1, message = "is required")
-	private String department;
+	@ManyToOne
+	@JoinColumn(name = "department_id")
+	private Department department;
 	
 	//unidirectional relationship
 	@OneToOne(cascade = CascadeType.ALL)
@@ -57,7 +58,7 @@ public class Employee implements Serializable {
 	public Employee() {
 	}
 
-	public Employee(Long id, String firstName, String lastName, String email, double salary, LocalDate hireDate, String department) {
+	public Employee(Long id, String firstName, String lastName, String email, double salary, LocalDate hireDate, Department department) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -115,11 +116,11 @@ public class Employee implements Serializable {
 		this.hireDate = hireDate;
 	}
 
-	public String getDepartment() {
+	public Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(String department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 

@@ -56,6 +56,16 @@ public class SecurityConfig {
 				.requestMatchers("/teams/showFormForAdd/**").hasRole("MANAGER")
 				.requestMatchers("/teams/showFormForUpdate/**").hasRole("MANAGER")
 				
+				.requestMatchers("/departments/delete/**").hasRole("MANAGER")
+				.requestMatchers("/departments/edit/**").hasRole("MANAGER")
+				.requestMatchers("/departments/showFormForAdd/**").hasRole("MANAGER")
+				.requestMatchers("/departments/showFormForUpdate/**").hasRole("MANAGER")
+				
+				.requestMatchers("/taskgroups/delete/**").hasRole("MANAGER")
+				.requestMatchers("/taskgroups/edit/**").hasRole("MANAGER")
+				.requestMatchers("/taskgroups/showFormForAdd/**").hasRole("MANAGER")
+				.requestMatchers("/taskgroups/showFormForUpdate/**").hasRole("MANAGER")
+						
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated())
 
