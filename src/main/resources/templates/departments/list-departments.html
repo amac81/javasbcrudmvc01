@@ -43,12 +43,12 @@
 			</thead>
 			<tbody>
 				<tr th:if="${#lists.isEmpty(departments)}">
-					<td colspan="6">No Departmetns found.</td>
+					<td colspan="6">No Departments found.</td>
 				</tr>
 				<tr th:each="tempDepartment : ${departments}">
 					<td th:text="${tempDepartment.name}"></td>
 					<td th:text="${tempDepartment.description}"></td>
-					<td th:text="${tempDepartment.headOfDepartment}"></td>
+					<td th:text="${tempDepartment.headOfDepartment.firstName} + ' ' + ${tempDepartment.headOfDepartment.lastName}"></td>
 					<td th:text="${tempDepartment.establishedDate}"></td>
 			
 					<div sec:authorize="hasRole('ROLE_MANAGER')">

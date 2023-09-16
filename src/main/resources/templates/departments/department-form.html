@@ -42,7 +42,15 @@
 				<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></span>
 			</label>
 		</div>
-		<div class="form-group">Head OfDepartment - LIST OF EMPLOYEES</div>
+		<div class="form-group">
+			<label for="headOfDepartment">Select Head Of Department from Employee list:</label>
+			<select class="form-control choose_text" id="headOfDepartment" name="headOfDepartment" th:field="*{headOfDepartment}">
+				<option th:each="emp : ${allEmployees}" th:value="${emp.id}" th:text="${emp.firstName} + ' ' + ${emp.lastName}"></option>
+			</select>
+			<label for="headOfDepartment"> <!--Show error message (if present) -->
+				<span th:if="${#fields.hasErrors('headOfDepartment')}" th:errors="*{headOfDepartment}" class="error"></span>
+			</label>
+		</div>
 
 		<div class="form-group">
 			<label for="establishedDate">Established Date (*)</label>

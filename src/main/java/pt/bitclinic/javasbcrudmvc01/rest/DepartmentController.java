@@ -17,18 +17,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import pt.bitclinic.javasbcrudmvc01.entities.Department;
+import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.services.DepartmentService;
+import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 
 @Controller
 @RequestMapping("/departments")
 public class DepartmentController {
 
 	private DepartmentService departmentService;
+	private EmployeeService employeeService;
 
 	// constructor injection of departmentService @Autowired optional, we just have
 	// one constructor
-	public DepartmentController(DepartmentService departmentService) {
+	public DepartmentController(DepartmentService departmentService, EmployeeService employeeService) {
 		this.departmentService = departmentService;
+		this.employeeService = employeeService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -56,17 +60,23 @@ public class DepartmentController {
 
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
+		List<Employee> allEmployees = employeeService.findAll();
+		theModel.addAttribute("allEmployees", allEmployees);
 		theModel.addAttribute("department", new Department());
+	
 		return "departments/department-form";
 	}
 
 	@GetMapping("/showFormForUpdate")
 	public String showFormForUpdate(@RequestParam("clientId") Long theId, Model theModel) {
-
+		List<Employee> allEmployees = employeeService.findAll();
+		
+	
 		// get the department from the service
 		Department department = departmentService.findById(theId);
 
 		theModel.addAttribute("department", department);
+		theModel.addAttribute("allEmployees", allEmployees);
 		return "departments/department-form";
 	}
 
