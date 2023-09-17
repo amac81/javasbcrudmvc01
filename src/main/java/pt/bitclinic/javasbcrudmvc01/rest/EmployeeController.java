@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
+import pt.bitclinic.javasbcrudmvc01.entities.Department;
 import pt.bitclinic.javasbcrudmvc01.entities.Employee;
 import pt.bitclinic.javasbcrudmvc01.entities.EmployeeDetail;
+import pt.bitclinic.javasbcrudmvc01.services.DepartmentService;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeDetailService;
 import pt.bitclinic.javasbcrudmvc01.services.EmployeeService;
 
@@ -27,12 +29,14 @@ public class EmployeeController {
 
 	private EmployeeService employeeService;
 	private EmployeeDetailService employeeDetailService;
+	private DepartmentService departmentService;
 
 	// constructor injection of EmployeeService @Autowired optional, we just have
 	// one constructor
-	public EmployeeController(EmployeeService employeeService, EmployeeDetailService employeeDetailService) {
+	public EmployeeController(EmployeeService employeeService, EmployeeDetailService employeeDetailService, DepartmentService departmentService) {
 		this.employeeService = employeeService;
 		this.employeeDetailService = employeeDetailService;
+		this.departmentService = departmentService;
 	}
 
 	// Pre-process all web requests coming into our Controller
@@ -69,6 +73,10 @@ public class EmployeeController {
 
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model theModel) {
+		
+		List<Department> allDepartments = departmentService.findAll();
+		theModel.addAttribute("allDepartments", allDepartments);
+		
 		theModel.addAttribute("employee", new Employee());
 		return "employees/employee-form";
 	}
@@ -76,10 +84,14 @@ public class EmployeeController {
 	@GetMapping("/showFormForUpdate")
 	public String showFormForUpdate(@RequestParam("employeeId") Long theId, Model theModel) {
 
+		List<Department> allDepartments = departmentService.findAll();
+		
 		// get the employee from the service
 		Employee employee = employeeService.findById(theId);
 
 		theModel.addAttribute("employee", employee);
+		theModel.addAttribute("allDepartments", allDepartments);
+		
 		return "employees/employee-form";
 	}
 

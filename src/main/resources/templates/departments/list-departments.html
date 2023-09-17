@@ -48,7 +48,10 @@
 				<tr th:each="tempDepartment : ${departments}">
 					<td th:text="${tempDepartment.name}"></td>
 					<td th:text="${tempDepartment.description}"></td>
-					<td th:text="${tempDepartment.headOfDepartment.firstName} + ' ' + ${tempDepartment.headOfDepartment.lastName}"></td>
+					
+					<td th:text="${tempDepartment.headOfDepartment} != null 
+					? ${tempDepartment.headOfDepartment.firstName + ' '+ tempDepartment.headOfDepartment.lastName} : 'Not assigned'"></td>
+					
 					<td th:text="${tempDepartment.establishedDate}"></td>
 			
 					<div sec:authorize="hasRole('ROLE_MANAGER')">

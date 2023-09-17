@@ -118,7 +118,7 @@ public class Department implements Serializable{
 	@Override
 	public String toString() {
 		return "Department [id=" + id + ", name=" + name + ", description=" + description + ", headOfDepartment="
-				+ headOfDepartment + ", establishedDate=" + establishedDate + ", employees=" + employees + "]";
+				+ headOfDepartment.getFirstName() + " " + headOfDepartment.getLastName()+ ", establishedDate=" + establishedDate + "]";
 	}
 
 }

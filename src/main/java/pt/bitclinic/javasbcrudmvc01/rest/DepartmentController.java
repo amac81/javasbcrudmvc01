@@ -68,10 +68,9 @@ public class DepartmentController {
 	}
 
 	@GetMapping("/showFormForUpdate")
-	public String showFormForUpdate(@RequestParam("clientId") Long theId, Model theModel) {
+	public String showFormForUpdate(@RequestParam("departmentId") Long theId, Model theModel) {
 		List<Employee> allEmployees = employeeService.findAll();
 		
-	
 		// get the department from the service
 		Department department = departmentService.findById(theId);
 

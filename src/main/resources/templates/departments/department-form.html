@@ -45,6 +45,7 @@
 		<div class="form-group">
 			<label for="headOfDepartment">Select Head Of Department from Employee list:</label>
 			<select class="form-control choose_text" id="headOfDepartment" name="headOfDepartment" th:field="*{headOfDepartment}">
+				
 				<option th:each="emp : ${allEmployees}" th:value="${emp.id}" th:text="${emp.firstName} + ' ' + ${emp.lastName}"></option>
 			</select>
 			<label for="headOfDepartment"> <!--Show error message (if present) -->

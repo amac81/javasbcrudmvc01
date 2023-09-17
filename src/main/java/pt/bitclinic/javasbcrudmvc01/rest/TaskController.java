@@ -1,6 +1,5 @@
 package pt.bitclinic.javasbcrudmvc01.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -58,7 +57,7 @@ public class TaskController {
 		webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
-	@GetMapping("/list")
+	/*@GetMapping("/list")
 	public String listtasks(Model theModel) {
 		List<Task> tasks = new ArrayList<>();
 
@@ -67,7 +66,7 @@ public class TaskController {
 		theModel.addAttribute("tasks", tasks);
 
 		return "tasks/list-tasks";
-	}
+	}*/
 
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(@RequestParam("projectId") Long projectId, Model theModel) {

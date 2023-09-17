@@ -53,6 +53,7 @@
 			<!-- ELSE -->
 			<div th:unless="${#lists.isEmpty(taskGroups)}">
 				<select class="form-control choose_text" id="taskGroupSelect" th:field="*{taskGroup}">
+					<option label="..."></option>
 					<option th:each="taskGroup : ${taskGroups}" th:value="${taskGroup.id}"
 						th:text="${taskGroup.description}"></option>
 				</select>

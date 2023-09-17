@@ -55,7 +55,7 @@
 			<div class="form-group">
 				<label for="client">Select Client from list:</label>
 				<select class="form-control choose_text" id="client" name="client" th:field="*{client}">
-					<option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
+					<option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>			
 				</select>
 				<label for="client"> <!--Show error message (if present) -->
 					<span th:if="${#fields.hasErrors('client')}" th:errors="*{client}" class="error"></span>
