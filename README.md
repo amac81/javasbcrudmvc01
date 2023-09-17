@@ -45,6 +45,9 @@ This project evolved from a simple employee directory to a more complex project 
 ## MVC architecture 
 ![MVC architecture](https://github.com/amac81/javasbcrudmvc01/blob/main/assets/raw/application_mvc_arch.png)
 
+## Database ER 
+![MVC architecture](https://github.com/amac81/javasbcrudmvc01/blob/main/assets/raw/bdER.png)
+
 
 ## Conceptual model
 ...
