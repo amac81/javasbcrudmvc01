@@ -53,7 +53,14 @@
 							<table class="custom-table">
 								<tbody>
 									<tr th:each="p : ${tempClient.projects}">
-										<td th:text="${p.name} + ' ['+ ${p.status} + ']'"></td>
+										
+										<div th:switch="${#strings.toString(p.status)}">
+											<td th:case="'CANCELED'" th:text="${p.name} + ' [' + ${#strings.toString(p.status)} + ']'" class="project-canceled"></td>
+											<td th:case="'COMPLETED'" th:text="${p.name} + ' [' + ${#strings.toString(p.status)} + ']'" class="project-completed"></td>
+											<!-- default case -->
+											<td th:case="*" th:text="${p.name} + ' [' + ${#strings.toString(p.status)} + ']'" class="project-in-progress"></td>
+										</div>
+										
 									</tr>
 								</tbody>
 							</table>							

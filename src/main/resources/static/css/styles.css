@@ -35,11 +35,11 @@ hr.top_22 {
 
 .project-in-progress{background-color:darkorange;}
 
-.list-condition-true {
+.list-condition-true, .condition-true {
 	background-color: lightgreen;
 }
 
-.list-condition-false {
+.list-condition-false, .condition-false{
 	background-color:lightcoral;
 }
 

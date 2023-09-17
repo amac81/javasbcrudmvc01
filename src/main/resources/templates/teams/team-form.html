@@ -52,8 +52,8 @@
 			<select name="selectEmployee" class="form-control choose_text"
 				th:onchange="'window.location.href = \'' + @{/teams/addEmployee} + '?teamId='+ *{id} +'&employeeId=\' + this.value'">
 				<option label="..."></option>
-				<option th:each="emp : ${allEmployees}" th:value="${emp.id} "
-					th:text="${emp.firstName} + ' ' + ${emp.lastName} + ' ['+${emp.department}+']'">
+				<option th:each="emp : ${allEmployees}" th:value="${emp.id}"
+					th:text="${emp.department != null} ? ${emp.firstName} + ' ' + ${emp.lastName} +' ['+ ${emp.department.name} + ']': ${emp.firstName} +  ' ' + ${emp.lastName} + ' [No department selected]'">
 				</option>
 				
 			</select>
@@ -75,8 +75,7 @@
 					</tr>
 					<tr th:each="employeeInTeam : ${team.employees}">
 						<td th:text="${employeeInTeam.firstName} + ' ' + ${employeeInTeam.lastName}"></td>
-						<td th:text="${employeeInTeam.department}"></td>
-					
+						<td th:text="${employeeInTeam.department != null} ? ${employeeInTeam.department.name} : 'No department selected'">
 						<td th:if="${employeeInTeam.employeeDetail}!=null" th:text="${employeeInTeam.employeeDetail.skills}" ></td>
 						<td th:unless="${employeeInTeam.employeeDetail}!=null" th:text="---">	
 					

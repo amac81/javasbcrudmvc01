@@ -46,10 +46,11 @@
 					<td th:text="${tempEmployee.email}"></td>
 					<td th:text="${tempEmployee.salary}"></td>
 					<td th:text="${tempEmployee.hireDate}"></td>
-					<td th:text="${tempEmployee.department.name} + 
-						' [HOD: ' + ${tempEmployee.department.headOfDepartment.firstName} + ' '+
-						${tempEmployee.department.headOfDepartment.lastName}  +
-						']'"></td>
+					
+					<td th:text="${tempEmployee.department} != null 
+					? ${tempEmployee.department.name + 
+						' [HOD: ' + tempEmployee.department.headOfDepartment.firstName + ' '+
+						tempEmployee.department.headOfDepartment.lastName  + ']'} : 'Department not selected'"></td>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<td>
 							<a th:if="${tempEmployee.employeeDetail == null}" th:href="@{/employees/showFormForAddDetails(employeeId=${tempEmployee.id})}" class="btn btn-success btn-sm">Add details</a>

@@ -47,16 +47,32 @@
 				<tr th:each="tempTeam : ${teams}">
 					<td th:text="${tempTeam.name}"></td>
 					<td th:text="${tempTeam.createdAt}"></td>
-					<td th:text="${tempTeam.active}"></td>
-					<td>
-						<table class="custom-table">
-							<tbody>
-								<tr th:each="emp : ${tempTeam.employees}">
-									<td th:text="${emp.firstName} + ' ' + ${emp.lastName} + ' [' + ${emp.department} + ']'"></td>
-								</tr>
-							</tbody>
-						</table>
-					</td>
+					<!-- IF team.active IS TRUE -->
+					<div th:if="${tempTeam.active}">
+					   <td class="condition-true">Yes</td>
+					</div>
+					<!-- ELSE -->
+					<div th:unless="${tempTeam.active}">
+					   <td class="condition-false">No</td>
+					</div>
+					
+					<!-- IF NO EMPLOYEES IN TEAM -->
+					<div th:if="${#lists.isEmpty(tempTeam.employees)}">
+						<td>No employees in Team</td>
+					</div>
+					<!-- ELSE -->
+					<div th:unless="${#lists.isEmpty(tempTeam.employees)}">
+					
+						<td>
+							<table class="custom-table">
+								<tbody>
+									<tr th:each="emp : ${tempTeam.employees}">
+										<td th:text="${emp.department != null} ? ${emp.firstName} + ' ' + ${emp.lastName} + ' ['+ ${emp.department.name} + ']': ${emp.firstName} + ' ' + ${emp.lastName} +  ' [No department selected]'"></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</div>	
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
 						<td><a th:href="@{/teams/showFormForUpdate(teamId=${tempTeam.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>

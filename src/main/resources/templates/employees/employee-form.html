@@ -78,13 +78,13 @@
 		</div>
 
 		<div class="button-container">
+			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
 			<div th:if="${employee.id != null} and  ${employee.employeeDetail == null}" class="my_button"><a
 					th:href="@{/employees/showFormForAddDetails(employeeId=${employee.id})}" class="btn btn-success">Add
 					details</a></div>
 			<div th:if="${employee.employeeDetail != null}" class="my_button"><a
 					th:href="@{/employees/showDetails(employeeId=${employee.id})}" class="btn btn-warning">Show
 					details</a></div>
-			<div class="my_button"><button type="submit" class="btn btn-info">Save</button></div>
 		</div>
 	</form>
 	<a th:href="@{/employees/list}" class="btn btn-secondary mb-3">Back to employees list</a>
