@@ -120,6 +120,11 @@ hr.top_22 {
 	border-color: #0382ca
 }
 
+.table td, .table th {
+	padding-top: .30rem;
+	padding-bottom: .20rem;
+}
+
 /* Custom table */
 
 /* Define styles for the custom table */

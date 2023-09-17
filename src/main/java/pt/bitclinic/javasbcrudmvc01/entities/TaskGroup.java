@@ -40,7 +40,7 @@ public class TaskGroup implements Serializable {
 	}
 
 	public String getDescription() {
-		return description.toUpperCase();
+		return description;
 	}
 
 	public void setDescription(String description) {

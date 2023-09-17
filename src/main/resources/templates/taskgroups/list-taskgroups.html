@@ -6,7 +6,7 @@
 	<meta name="viewport"
 		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Clients</title>
+	<title>Task Groups</title>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -21,54 +21,35 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 
-<body class="mycontainer">
+<body class="container">
 	<div class="maindiv">
-		<h1 class="py-3">Clients</h1>
+		<h1 class="py-3">Task Groups</h1>
 		<hr class="top_22">
 		<div sec:authorize="hasRole('ROLE_MANAGER')">
-			<a th:href="@{/clients/showFormForAdd}" class="btn btn-primary mb-3">New Client</a>
+			<a th:href="@{/taskgroups/showFormForAdd}" class="btn btn-primary mb-3">New Task Group</a>
 		</div>
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Phone</th>
+					<th>Description</th>
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
-						<th colspan="1">My Projects</th>
-							<th colspan="2">Actions</th>
+						<th colspan="2">Actions</th>
 					</div>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${#lists.isEmpty(clients)}">
-					<td colspan="5">No clients found.</td>
+				<tr th:if="${#lists.isEmpty(taskGroups)}">
+					<td colspan="2">No Task Groups found.</td>
 				</tr>
-				<tr th:each="tempClient : ${clients}">
-					<td th:text="${tempClient.name}"></td>
-					<td th:text="${tempClient.email}"></td>
-					<td th:text="${tempClient.phone}"></td>
+				<tr th:each="tg : ${taskGroups}">
+					<td th:text="${tg.description}"></td>
+					
 					<div sec:authorize="hasRole('ROLE_MANAGER')">
-						<td>
-							<table class="custom-table">
-								<tbody>
-									<tr th:each="p : ${tempClient.projects}">
-										
-										<div th:switch="${#strings.toString(p.status)}">
-											<td th:case="'CANCELED'" th:text="${p.name} + ' [' + ${#strings.toString(p.status)} + ']'" class="project-canceled"></td>
-											<td th:case="'COMPLETED'" th:text="${p.name} + ' [' + ${#strings.toString(p.status)} + ']'" class="project-completed"></td>
-											<!-- default case -->
-											<td th:case="*" th:text="${p.name} + ' [' + ${#strings.toString(p.status)} + ']'" class="project-in-progress"></td>
-										</div>
-										
-									</tr>
-								</tbody>
-							</table>							
-						</td>
-						<td><a th:href="@{/clients/showFormForUpdate(clientId=${tempClient.id})}"
+			
+						<td><a th:href="@{/taskgroups/showFormForUpdate(taskGroupId=${tg.id})}"
 								class="btn btn-info btn-sm">Edit</a></td>
-						<td><a th:href="@{/clients/delete(clientId=${tempClient.id})}" class="btn btn-danger btn-sm"
-								onclick=" if (!(confirm('Are you sure you want to delete this client?'))) return false">
+						<td><a th:href="@{/taskgroups/delete(taskGroupId=${tg.id})}" class="btn btn-danger btn-sm"
+								onclick=" if (!(confirm('Are you sure you want to delete this Task Group?'))) return false">
 								Delete
 							</a></td>
 					</div>
